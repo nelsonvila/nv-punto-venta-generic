@@ -10,10 +10,10 @@
     <title>Proyecto</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js">
-  
+
     <!-- Icons -->
     <link href="css/plantilla.css" rel="stylesheet">
-   
+
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
@@ -33,7 +33,7 @@
             <li class="nav-item px-3">
                 <a class="nav-link" href="#">Dashbord</a>
             </li>
-           
+
         </ul>
         <ul class="nav navbar-nav ml-auto">
 
@@ -46,12 +46,12 @@
                     <div class="dropdown-header text-center">
                         <strong>Cuenta</strong>
                     </div>
-                    <a class="dropdown-item" href="{{ route('logout') }}" 
+                    <a class="dropdown-item" href="{{ route('logout') }}"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="fa fa-lock"></i> Cerrar sesión</a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                       {{ csrf_field() }} 
+                       {{ csrf_field() }}
                     </form>
                 </div>
             </li>
@@ -76,19 +76,13 @@
         <!-- Contenido Principal -->
           @yield('contenido')
         <!-- /Fin del contenido principal -->
-    </div> 
-    
+    </div>
+
 </div>
-
-    <footer class="app-footer">
-        <span><a href="https://www.linkedin.com/in/jos%C3%A9-fernando-frugone-jaramillo-b297a6113/">www.linkedin.com/in/jos%C3%A9-fernando-frugone-jaramillo-b297a6113/</a> &copy; 2019</span>
-        <span class="ml-auto">Desarrollado por <a href="https://www.linkedin.com/in/jos%C3%A9-fernando-frugone-jaramillo-b297a6113/">www.linkedin.com/in/jos%C3%A9-fernando-frugone-jaramillo-b297a6113/</a></span>
-    </footer>
-
     <!-- Bootstrap and necessary plugins -->
     <script src="js/app.js"></script>
     <script src="js/plantilla.js"></script>
-   
+
 </body>
 
 </html>

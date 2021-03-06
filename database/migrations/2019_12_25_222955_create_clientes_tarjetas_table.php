@@ -21,17 +21,14 @@ class CreateClientesTarjetasTable extends Migration
                  Schema::create('clientes_tarjetas', function (Blueprint $table){
                      $table->increments('id');
                      $table->integer('idcliente')->unsigned();
-                     $table->foreign('idcliente')->references('id')->on('clientes')->onDelete('cascade');
                      $table->integer('idtarjeta')->unsigned();
-                     $table->foreign('idtarjeta')->references('id')->on('tarjeta')->onDelete('cascade');
                      $table->string('tarjeta', 50)->nullable();
                      $table->integer('idbanco')->unsigned();
-                     $table->foreign('idbanco')->references('id')->on('bancos')->onDelete('cascade');
                      $table->string('ntarjeta', 80)->nullable();
                      $table->string('estado', 20);
                      $table->timestamps();
                  });
-        }         
+        }
     }
 
     /**

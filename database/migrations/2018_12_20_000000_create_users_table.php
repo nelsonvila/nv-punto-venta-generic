@@ -30,14 +30,13 @@ class CreateUsersTable extends Migration
                 $table->string('password');
                 $table->boolean('condicion')->default(1);
                 $table->integer('idrol')->unsigned();
-                $table->foreign('idrol')->references('id')->on('roles');
                 $table->string('imagen');
-                $table->rememberToken(); 
+                $table->rememberToken();
                 $table->timestamps();
             });
 
         }
-        
+
     }
 
     /**

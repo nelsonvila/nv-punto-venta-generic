@@ -23,14 +23,13 @@ class CreateClientesBancoTable extends Migration
                     $table->integer('idcliente')->unsigned();
                     $table->foreign('idcliente')->references('id')->on('clientes')->onDelete('cascade');
                     $table->integer('idbanco')->unsigned();
-                    $table->foreign('idbanco')->references('id')->on('bancos')->onDelete('cascade');
                     $table->string('banco',50)->nullable();
                     $table->string('tipo_cta',10);
                     $table->string('cuenta',50)->nullable();
                     $table->string('estado', 20);
                     $table->timestamps();
                 });
-        }        
+        }
     }
 
     /**

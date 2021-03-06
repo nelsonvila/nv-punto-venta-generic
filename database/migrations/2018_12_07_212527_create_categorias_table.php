@@ -23,13 +23,12 @@ class CreateCategoriasTable extends Migration
                 $table->increments('id');
                 $table->string('nombre',50)->unique();
                 $table->string('descripcion',256)->nullable();
-                $table->string('imagen');
                 $table->boolean('condicion')->default(1);
                 $table->timestamps();
             });
 
         }
-        
+
     }
 
     /**

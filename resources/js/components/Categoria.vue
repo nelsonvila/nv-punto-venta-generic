@@ -37,7 +37,6 @@
 
                                     <th>Categoría</th>
                                     <th>Descripción</th>
-                                    <th>Imagen</th>
                                     <th>Estado</th>
                                     <th>Editar</th>
                                     <th>Cambiar Estado</th>
@@ -49,11 +48,6 @@
 
                                     <td v-text="categoria.nombre"></td>
                                     <td v-text="categoria.descripcion"></td>
-
-                                    <td>
-                                        <img :src="'img/categoria/' + categoria.imagen" class="img-responsive" width="100px" heigth="100px">
-                                    </td>
-
                                     <td>
                                         <button type="button" class="btn btn-success btn-md" v-if="categoria.condicion">
 
@@ -151,30 +145,6 @@
                                         <input type="email" v-model="descripcion" class="form-control" placeholder="Ingrese descripcion">
                                     </div>
                                 </div>
-
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Imagen</label>
-                                    <div class="col-md-9">
-                                        <!--poniendo :src se llama a la variable imagen-->
-
-                                        <div v-if="tipoAccion==1">
-                                             <input type="file" @change="subirImagen" class="form-control" placeholder="">
-                                             <img :src="imagen" class="img-responsive" width="100px" heigth="100px">
-
-                                        </div>
-
-                                        <div v-if="tipoAccion==2">
-                                            <input type="file" @change="subirImagen" class="form-control" placeholder="">
-                                            <img :src="imagen" class="img-responsive" width="100px" height="100px">
-
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -208,7 +178,6 @@
                 arrayCategoria:[],
                 modal:0,
                 tituloModal:'',
-                imagen:'',
                 tipoAccion:0,
                 errorCategoria:0,
                 errorMostrarMsjCategoria:[],
@@ -326,7 +295,6 @@
 
                  'nombre':me.nombre,
                  'descripcion':me.descripcion,
-                 'imagen':me.imagen
 
 
                }).then(function (response) {
@@ -357,7 +325,6 @@
 
                  'nombre':this.nombre,
                  'descripcion':this.descripcion,
-                 'imagen':this.imagen,
                  'id':this.categoria_id
 
 
@@ -373,28 +340,6 @@
                 });
 
             },
-
-            subirImagen(e){
-
-                let me = this;
-
-                let file = e.target.files[0];
-
-                // console.log(file);
-
-                let reader = new FileReader();
-
-                reader.onloadend = (file) => {
-
-                    me.imagen = reader.result;
-
-                }
-                reader.readAsDataURL(file);
-
-
-            },
-
-
             desactivarCategoria(id){
 
                 const swalWithBootstrapButtons = Swal.mixin({
@@ -511,8 +456,6 @@
                  this.errorMostrarMsjCategoria=[];
 
                  if(!this.nombre)  this.errorMostrarMsjCategoria.push("(*)El nombre de la categoria no puede estar vacio");
-                 if(!this.imagen) this.errorMostrarMsjCategoria.push("(*)Debe subir una imagen");
-
                  if(this.errorMostrarMsjCategoria.length) this.errorCategoria=1;
 
                  return this.errorCategoria;
@@ -524,7 +467,6 @@
                this.tituloModal="";
                this.nombre="";
                this.descripcion="";
-               this.imagen="";
 
            },
 

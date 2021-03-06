@@ -40,7 +40,6 @@
                                     <th>Codigo</th>
                                     <th>Precio Venta (USD$)</th>
                                     <th>Stock</th>
-                                    <th>Imagen</th>
                                     <th>Estado</th>
                                     <th>Editar</th>
                                     <th>Cambiar Estado</th>
@@ -55,11 +54,6 @@
                                     <td v-text="producto.codigo"></td>
                                     <td v-text="producto.precio_venta"></td>
                                     <td v-text="producto.stock"></td>
-
-                                    <td>
-                                        <img :src="'img/producto/' + producto.imagen" class="img-responsive" width="100px" heigth="100px">
-                                    </td>
-
                                     <td>
                                         <button type="button" class="btn btn-success btn-md" v-if="producto.condicion">
 
@@ -203,29 +197,6 @@
 
                                     </div>
                                 </div>
-
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Imagen</label>
-                                    <div class="col-md-9">
-                                        <!--poniendo :src se llama a la variable imagen-->
-
-                                        <div v-if="tipoAccion==1">
-                                             <input type="file" @change="subirImagen" class="form-control" placeholder="">
-                                             <img :src="imagen" class="img-responsive" width="100px" heigth="100px">
-
-                                        </div>
-
-                                        <div v-if="tipoAccion==2">
-                                            <input type="file" @change="subirImagen" class="form-control" placeholder="">
-                                            <img :src="imagen" class="img-responsive" width="100px" height="100px">
-
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -263,7 +234,6 @@
                 nombre:'',
                 precio_venta:0,
                 stock:0,
-                imagen:'',
                 arrayProducto:[],
                 modal:0,
                 tituloModal:'',
@@ -414,8 +384,7 @@
                      "codigo":this.codigo,
                      "nombre":this.nombre,
                      "stock":this.stock,
-                     "precio_venta":this.precio_venta,
-                     "imagen":this.imagen
+                     "precio_venta":this.precio_venta
 
 
                }).then(function (response) {
@@ -449,7 +418,6 @@
                      "nombre":this.nombre,
                      "stock":this.stock,
                      "precio_venta":this.precio_venta,
-                     "imagen":this.imagen,
                      "id":this.producto_id
 
 
@@ -465,28 +433,6 @@
                 });
 
             },
-
-            subirImagen(e){
-
-                let me = this;
-
-                let file = e.target.files[0];
-
-                // console.log(file);
-
-                let reader = new FileReader();
-
-                reader.onloadend = (file) => {
-
-                    me.imagen = reader.result;
-
-                }
-                reader.readAsDataURL(file);
-
-
-            },
-
-
             desactivarProducto(id){
 
                 const swalWithBootstrapButtons = Swal.mixin({
@@ -606,7 +552,6 @@
                  if(!this.nombre) this.errorMostrarMsjProducto.push("(*)El nombre del producto no puede estar vacio");
                  if(!this.precio_venta) this.errorMostrarMsjProducto.push("(*)El precio venta del producto debe ser un numero y no puede estar vacio");
                  if(!this.stock) this.errorMostrarMsjProducto.push("(*)El stock del producto debe ser un numero y no puede estar vacio");
-                 if(!this.imagen) this.errorMostrarMsjProducto.push("(*)Debe subir una imagen");
 
                  if(this.errorMostrarMsjProducto.length) this.errorProducto=1;
 
@@ -623,7 +568,6 @@
                 this.nombre="";
                 this.precio_venta=0;
                 this.stock=0;
-                this.imagen="";
                 this.errorProducto=0;
 
 

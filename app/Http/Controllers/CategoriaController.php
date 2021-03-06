@@ -30,7 +30,7 @@ class CategoriaController extends Controller
             $categorias= Categoria::where($criterio,'like','%'.$buscar.'%')->orderBy('id','desc')->paginate(3);
         }
 
-         
+
         return[
 
             'pagination' => [
@@ -40,13 +40,13 @@ class CategoriaController extends Controller
             'last_page'        => $categorias->lastPage(),
             'from'             => $categorias->firstItem(),
             'to'               => $categorias->lastItem(),
-           
+
             ],
 
             'categorias' =>$categorias
 
         ];
-       
+
     }
 
     public function listarPDF(){
@@ -68,12 +68,12 @@ class CategoriaController extends Controller
 
         if(!$request->ajax()) return redirect('/');
         $categorias = Categoria::where('condicion','=','1')
-        ->select('id','nombre')->orderBy('nombre','asc')->get(); 
-        
+        ->select('id','nombre')->orderBy('nombre','asc')->get();
+
         return ['categorias' => $categorias];
     }
 
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -89,30 +89,6 @@ class CategoriaController extends Controller
         $categoria->nombre= $request->nombre;
         $categoria->descripcion= $request->descripcion;
         $categoria->condicion= '1';
-
-        //inicio registrar imagen
-        $exploded = explode(',',$request->imagen);
-        $decoded = base64_decode($exploded[1]);
-
-        if(str_contains($exploded[0],'jpeg')){
-
-            $extension = 'jpg';
-
-        } else {
-            $extension = 'png';
-
-        }
-
-        $fileName = str_random().'.'.$extension;
-
-
-        $path = public_path().'/img/categoria/'.$fileName;
-
-        file_put_contents($path,$decoded);
-
-        $categoria->imagen = $fileName;
-
-        //fin registro imagen
         $categoria->save();
     }
 
@@ -132,46 +108,6 @@ class CategoriaController extends Controller
         $categoria->nombre= $request->nombre;
         $categoria->descripcion= $request->descripcion;
         $categoria->condicion= '1';
-
-         //Editar imagen
-
-         $currentPhoto = $categoria->imagen;
-
-         if($request->imagen != $currentPhoto){
-
-          $exploded = explode(',',$request->imagen);
-             $decoded = base64_decode($exploded[1]);
-
-             if(str_contains($exploded[0],'jpeg')){
-
-                $extension = 'jpg';
-
-             } else{
-
-                $extension = 'png';
-
-             }
-
-             $fileName = str_random().'.'.$extension;
-
-             $path = public_path().'/img/categoria/'.$fileName;
-
-             file_put_contents($path,$decoded);
-
-             /*Inicio eliminar del servidor*/
-             $categoriaImagen = public_path('/img/categoria/').$currentPhoto;
-             if(file_exists($categoriaImagen)){
-                 @unlink($categoriaImagen);
-
-             }
-
-             $categoria->imagen = $fileName;
-      
-             /*fin eliminal del servidor*/
-
-
-         }
-
         $categoria->save();
     }
 
@@ -193,5 +129,5 @@ class CategoriaController extends Controller
         $categoria->save();
     }
 
-    
+
 }

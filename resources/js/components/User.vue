@@ -42,7 +42,6 @@
                                     <th>Email</th>
                                     <th>Usuario</th>
                                     <th>Rol</th>
-                                    <th>Imagen</th>
                                     <th>Editar</th>
                                     <th>Estado</th>
                                 </tr>
@@ -59,12 +58,6 @@
                                     <td v-text="usuario.email"></td>
                                     <td v-text="usuario.usuario"></td>
                                     <td v-text="usuario.rol"></td>
-                                    <td>
-                                        <img :src="'img/usuario/' + usuario.imagen" class="img-responsive" width="100px" height="100px">
-                                    </td>
-
-
-
                                     <td>
                                         <button type="button" class="btn btn-info btn-md" @click="abrirModal('usuario','actualizar',usuario)">
 
@@ -204,29 +197,6 @@
                                         <input type="password" v-model="password" class="form-control" placeholder="Password de acceso">
                                     </div>
                                 </div>
-
-                                <div class="form-group row">
-                                  <label class="col-md-3 form-control-label" for="text-input">Imagen</label>
-
-                                  <div class="col-md-9">
-
-                                      <!--poniendo :src se llama a la variable imagen que esta declarada-->
-
-                                      <div v-if="tipoAccion==1">
-                                         <input type="file" @change="subirImagen" class="form-control" placeholder="">
-                                         <img :src="imagen" class="img-responsive" width="100px" height="100px">
-                                      </div>
-                                      <div v-if="tipoAccion==2">
-                                           <input type="file" @change="subirImagen" class="form-control" placeholder="">
-                                           <img :src="imagen" class="img-responsive" width="100px" height="100px">
-                                      </div>
-                                  </div>
-
-                                </div>
-
-
-
-
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -266,7 +236,6 @@
                 email : '',
                 usuario:'',
                 password:'',
-                imagen:'',
                 idrol:0,
                 arrayUsuario:[],
                 arrayRol:[],
@@ -406,8 +375,7 @@
                     'email' : this.email,
                     'usuario': this.usuario,
                     'password': this.password,
-                    'idrol' : this.idrol,
-                    'imagen' : this.imagen
+                    'idrol' : this.idrol
 
 
                }).then(function (response) {
@@ -445,7 +413,6 @@
                     'usuario': this.usuario,
                     'password': this.password,
                     'idrol' : this.idrol,
-                    'imagen' : this.imagen,
                     'id': this.usuario_id
 
 
@@ -461,28 +428,6 @@
                 });
 
             },
-
-            subirImagen(e){
-
-                let me=this;
-
-                let file = e.target.files[0];
-
-                //console.log(file);
-
-                let reader = new FileReader();
-
-                reader.onloadend = (file) => {
-
-                    me.imagen = reader.result;
-
-                }
-                reader.readAsDataURL(file);
-
-
-            },
-
-
             validarUsuario(){
 
                 this.errorUsuario=0;
@@ -492,7 +437,6 @@
                 if (!this.usuario) this.errorMostrarMsjUsuario.push("(*)El nombre del usuario no puede estar vacío.");
                 if (!this.password) this.errorMostrarMsjUsuario.push("(*)El password no puede estar vacío.");
                 if (this.idrol==0) this.errorMostrarMsjUsuario.push("(*)Debes seleccionar un rol para el usuario.");
-                if (!this.imagen) this.errorMostrarMsjUsuario.push("(*)Debe de subir una imagen");
 
                 if (this.errorMostrarMsjUsuario.length) this.errorUsuario = 1;
 
@@ -512,7 +456,6 @@
                 this.usuario='';
                 this.password='';
                 this.idrol=0;
-                this.imagen='';
                 this.errorUsuario=0;
 
            },

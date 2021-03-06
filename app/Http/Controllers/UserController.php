@@ -23,7 +23,7 @@ class UserController extends Controller
             ->select('users.id','users.nombre','users.tipo_documento',
             'users.num_documento','users.direccion','users.telefono',
             'users.email','users.usuario','users.password',
-            'users.condicion','users.idrol','users.imagen','roles.nombre as rol')
+            'users.condicion','users.idrol','roles.nombre as rol')
             ->orderBy('id', 'desc')->paginate(3);
 
         } else{
@@ -32,12 +32,12 @@ class UserController extends Controller
             ->select('users.id','users.nombre','users.tipo_documento',
             'users.num_documento','users.direccion','users.telefono',
             'users.email','users.usuario','users.password',
-            'users.condicion','users.idrol','users.imagen','roles.nombre as rol')
+            'users.condicion','users.idrol','roles.nombre as rol')
             ->where('users.'.$criterio, 'like', '%'. $buscar . '%')
             ->orderBy('id', 'desc')->paginate(3);
         }
 
-         
+
         return[
 
             'pagination' => [
@@ -47,13 +47,13 @@ class UserController extends Controller
             'last_page'        => $usuarios->lastPage(),
             'from'             => $usuarios->firstItem(),
             'to'               => $usuarios->lastItem(),
-           
+
             ],
 
             'usuarios' =>$usuarios
 
         ];
-       
+
     }
 
     public function store(Request $request)
@@ -71,33 +71,6 @@ class UserController extends Controller
         $user->password = bcrypt( $request->password);
         $user->condicion = '1';
         $user->idrol = $request->idrol;
-
-             //inicio registrar imagen
-             $exploded = explode(',',$request->imagen);
-           
-             $decoded = base64_decode($exploded[1]);
-             
-             if(str_contains($exploded[0],'jpeg')){
-
-                $extension = 'jpg';
-
-             } else {
-                
-                $extension = 'png';
-
-             }
-
-             $fileName = str_random().'.'.$extension;
-
-             $path = public_path().'/img/usuario/'.$fileName;
-        
-
-             file_put_contents($path,$decoded);
-
-             $user->imagen = $fileName;
-
-             //fin registrar imagen
-
         $user->save();
     }
 
@@ -116,47 +89,6 @@ class UserController extends Controller
         $user->password = bcrypt( $request->password);
         $user->condicion = '1';
         $user->idrol = $request->idrol;
-        
-        //Editar imagen
-
-        $currentPhoto = $user->imagen;
-
-        if($request->imagen != $currentPhoto){
-
-               $exploded = explode(',',$request->imagen);
-               $decoded = base64_decode($exploded[1]);
-
-               if(str_contains($exploded[0],'jpeg')){
-
-                  $extension = 'jpg';
-
-               } else{
-
-                  $extension = 'png';
-
-               }
-
-               $fileName = str_random().'.'.$extension;
-
-               $path = public_path().'/img/usuario/'.$fileName;
-
-               file_put_contents($path,$decoded);
-
-               /*Inicio eliminar del servidor*/
-               $usuarioImagen = public_path('/img/usuario/').$currentPhoto;
-               if(file_exists($usuarioImagen)){
-                   @unlink($usuarioImagen);
-
-               }
-
-
-        //Fin editar imagen
-
-               $user->imagen = $fileName;
-      
-
-        }
-
         $user->save();
     }
 

@@ -16,10 +16,6 @@
                         <button class="btn btn-primary btn-lg" type="button" @click="abrirModal('tarjeta','registrar')">
                             <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Tarjeta
                         </button>
-                        <button type="button" class="btn btn-success btn-lg" @click="cargarPDF();">
-                            <i class="fa fa-file fa-2x"></i>&nbsp;&nbsp;Reporte PDF
-                        </button>
-
                         <button class="btn btn-success btn-lg" @click="AsignaTarjeta();">
                             <i class="fa fa-file fa-2x"></i>&nbsp;&nbsp;Asigna Tarjeta
                         </button>

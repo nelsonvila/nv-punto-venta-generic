@@ -14,9 +14,6 @@
                         <button class="btn btn-primary btn-lg" type="button" @click="abrirModal('categoria','registrar')">
                             <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Categoría
                         </button>
-                        <button type="button" class="btn btn-success btn-lg" @click="cargarPDF();">
-                            <i class="fa fa-file fa-2x"></i>&nbsp;&nbsp;Reporte PDF
-                        </button>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">

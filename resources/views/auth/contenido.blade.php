@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Sistema Ventas Laravel Vue Js- webtraining-it.com">
     <meta name="keyword" content="Sistema ventas Laravel Vue Js, Sistema compras Laravel Vue Js">
-   
-    
-    <title>Proyecto</title>
+
+
+    <title>Sistema de Ventas</title>
 
   <!-- Icons -->
   <link href="css/plantilla.css" rel="stylesheet">

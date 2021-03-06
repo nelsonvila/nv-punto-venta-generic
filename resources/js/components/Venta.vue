@@ -2,7 +2,7 @@
    <main class="main">
             <!-- Breadcrumb -->
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="/">BACKEND - SISTEMA DE COMPRAS - VENTAS</a></li>
+                <li class="breadcrumb-item active"><a href="/">Inicio</a></li>
             </ol>
             <div class="container-fluid">
                 <!-- Ejemplo de tabla Listado -->
@@ -12,7 +12,7 @@
                     <div class="card-header">
 
                        <h2>Listado de Ventas</h2><br/>
-                      
+
                         <button class="btn btn-primary btn-lg" type="button" @click="mostrarDetalle()">
                             <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Venta
                         </button>
@@ -24,7 +24,7 @@
 
                     </div>
                     <!--listado-->
-                   
+
                     <div class="card-body">
                         <div class="form-group row">
                             <div class="col-md-6">
@@ -42,13 +42,13 @@
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr class="bg-primary">
-                                   
+
                                         <th>Ver Detalle</th>
                                         <th>Fecha Venta</th>
                                         <th>Número Venta</th>
                                         <th>Cliente</th>
                                         <th>Tipo de identificación</th>
-                                        <th>Vendedor</th>  
+                                        <th>Vendedor</th>
                                         <th>Total (USD$)</th>
                                         <th>Impuesto</th>
                                         <th>Estado</th>
@@ -57,9 +57,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
+
                                 <tr v-for="venta in arrayVenta" :key="venta.id">
-                                    
+
                                         <td>
                                              <!--compra.id-->
                                             <button type="button" @click="verVenta(venta.id)" class="btn btn-warning btn-sm">
@@ -70,8 +70,8 @@
                                         <td v-text="venta.fecha_venta"></td>
                                         <td v-text="venta.num_venta"></td>
                                         <td v-text="venta.nombre"></td>
-                                        <td v-text="venta.tipo_identificacion"></td> 
-                                        <td v-text="venta.usuario"></td> 
+                                        <td v-text="venta.tipo_identificacion"></td>
+                                        <td v-text="venta.usuario"></td>
                                         <td v-text="venta.total"></td>
                                         <td v-text="venta.impuesto"></td>
                                         <td>
@@ -79,7 +79,7 @@
                                              <button type="button" v-if="venta.estado=='Registrado'" class="btn btn-success btn-sm">
                                                 <i class="fa fa-check fa-2x"></i> Registrado
                                             </button>
-                                        
+
                                             <button type="button" v-else class="btn btn-danger btn-sm">
                                                  <i class="fa fa-times fa-2x"></i> Anulado
                                             </button>
@@ -101,7 +101,7 @@
                                         </td>
 
                                         <td>
-                                            
+
                                              <button type="button" @click="pdfVenta(venta.id,venta.estado)" class="btn btn-info btn-sm">
                                             <i class="fa fa-file fa-2x"></i> Descargar PDF
                                             </button> &nbsp;
@@ -109,7 +109,7 @@
 
 
                                 </tr>
-                               
+
                             </tbody>
                         </table>
                         <nav>
@@ -121,8 +121,8 @@
                                 <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
                                 </li>
-                               
-                               
+
+
                                 <li class="page-item" v-if="pagination.current_page < pagination.last_page">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Siguiente</a>
                                 </li>
@@ -135,11 +135,11 @@
                     <!-- Detalle-->
 
                     <template v-else-if="listado==0">
-                  
+
                     <span><strong>(*) Campo obligatorio</strong></span><br/>
 
                     <h3 class="text-center">LLenar el formulario</h3>
-                    
+
                     <div class="card-body">
 
                         <div class="form-group row border">
@@ -159,7 +159,7 @@
                                         label="nombre"
                                         :options="arrayCliente"
                                         placeholder="Buscar Clientes..."
-                                        :onChange="getDatosCliente"                                        
+                                        :onChange="getDatosCliente"
                                     >
 
                                     </v-select>
@@ -175,7 +175,7 @@
                                         <option value="TICKET">Ticket</option>
                                         <option value="N/V">Nota_vta</option>
                                         <option value="PROFORMA">Proforma</option>
-                                      
+
                                     </select>
                                 </div>
                             </div>
@@ -184,8 +184,8 @@
                                 <label class="text-uppercase"><strong>Impuesto(*)</strong></label>
                                 <input type="text" class="form-control" v-model="impuesto">
                             </div>
-                            
-                                 
+
+
                         </div>
 
 
@@ -211,12 +211,12 @@
                                     <div class="form-inline">
                                         <input type="text" class="form-control" v-model="codigo" @keyup.enter="buscarProducto()" placeholder="Ingrese código">
                                         <button @click="abrirModal()" class="btn btn-primary">
-                                           
+
                                            <i class="fa fa-plus"></i>&nbsp;Agregar Productos
 
                                         </button>
                                         <input type="text" readonly class="form-control" v-model="producto">
-                                    </div>                                    
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -239,7 +239,7 @@
                                 </div>
                             </div>
 
-                            
+
 
                             <div class="col-md-2">
                                 <div class="form-group">
@@ -254,17 +254,17 @@
                                         label="nombre"
                                         :options="arrayFormaPago"
                                         placeholder="Buscar Forma..."
-                                        :onChange="getDatosForma"                                        
+                                        :onChange="getDatosForma"
                                     >
 
                                     </v-select>
-                                    
-                                  
+
+
                             </div>
 
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <button @click="verificaforma()" class="btn btn-primary form-control btnagregar"><i class="fa fa-plus fa-2x"></i> Verifica Ctas</button>                   
+                                    <button @click="verificaforma()" class="btn btn-primary form-control btnagregar"><i class="fa fa-plus fa-2x"></i> Verifica Ctas</button>
                                 </div>
 
                             </div>
@@ -275,13 +275,13 @@
                                 </div>
 
                             </div>
-                        
+
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <button @click="abrirModal1()" class="btn btn-primary form-control btnagregar"><i class="fa fa-plus fa-2x"></i> Agregar cta ctle</button>
                                 </div>
                             </div>
-                             
+
                         </div>
 
                         <br/><br/>
@@ -345,7 +345,7 @@
                                                 No se han agregado productos
                                             </td>
                                         </tr>
-                                    </tbody>                                    
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -357,15 +357,15 @@
                         </div>
                     </div>
                     </template>
-                  
-                    <!-- Fin Detalle--> 
+
+                    <!-- Fin Detalle-->
 
                     <!-- Ver Compra -->
-                
+
                     <template v-else-if="listado==2">
 
                     <h2 class="text-center">Detalle de Ventas</h2><br/>
-             
+
                        <div class="card-body">
                             <div class="form-group row border">
                                 <div class="col-md-3">
@@ -381,7 +381,7 @@
                                         <p v-text="tipo_identificacion"></p>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="text-uppercase"><strong>Número Venta</strong></label>
@@ -444,21 +444,21 @@
                                             No se han agregado productos
                                         </td>
                                     </tr>
-                                </tbody>                                    
+                                </tbody>
                             </table>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
                             <button type="button" @click="ocultarDetalle()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
-                            
+
                         </div>
                     </div>
                  </div>
-                
+
 
                    </template>
-                    
+
                   <!-- fin ver compra-->
 
                   <!-- Ver pagos -->
@@ -467,16 +467,16 @@
                     <div class="card-header">
 
                        <h2>Listado de Pagos</h2><br/>
-                      
+
                     </div>
                     <!--listado-->
-                   
+
                     <div class="card-body">
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <select class="form-control col-md-3" v-model="criterioS">
-                                      <option value="tipo_identificacion">Tipo identificación</option>  
+                                      <option value="tipo_identificacion">Tipo identificación</option>
                                       <option value="factura">num_factura</option>
                                       <option value="idcliente">cliente</option>
                                     </select>
@@ -488,7 +488,7 @@
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr class="bg-primary">
-                                   
+
                                         <th>Factura</th>
                                         <th>Tipo_Pago</th>
                                         <th>IdCliente</th>
@@ -502,9 +502,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
+
                                 <tr v-for="pago in arrayPago" :key="pago.id">
-                                    
+
                                         <td v-text="pago.factura"></td>
                                         <td v-text="pago.tipo_pago"></td>
                                         <td v-text="pago.idcliente"></td>
@@ -516,16 +516,16 @@
                                         <td v-text="pago.valor"></td>
 
                                         <td>
-                                            
+
                                              <button type="button" @click="pdfPago(pago.id,pago.idcliente)" class="btn btn-info btn-sm">
                                             <i class="fa fa-file fa-2x"></i> Descargar PDF
                                             </button> &nbsp;
                                         </td>
 
-                          
+
                                 </tr>
 
-                               
+
                             </tbody>
                         </table>
                         <nav>
@@ -537,8 +537,8 @@
                                 <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina2(page,buscarS,criterioS)" v-text="page"></a>
                                 </li>
-                               
-                               
+
+
                                 <li class="page-item" v-if="pagination2.current_page < pagination2.last_page">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina2(pagination2.current_page + 1,buscarS,criterioS)">Siguiente</a>
                                 </li>
@@ -548,12 +548,12 @@
                          <div class="form-group row">
                         <div class="col-md-12">
                             <button type="button" @click="ocultarPagos()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
-                            
+
                         </div>
                     </div>
                     </div>
                     </template>
-                    
+
 
                   <!-- Fin Ver pagos-->
 
@@ -572,7 +572,7 @@
                               <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                       
+
                         <div class="modal-body">
 
                          <div class="form-group row">
@@ -587,13 +587,13 @@
                                 </div>
                             </div>
                         </div>
-                          
+
                          <div class="table-responsive">
 
                            <table class="table table-bordered table-striped table-sm">
                                 <thead>
                                     <tr class="bg-primary">
-                                    
+
                                         <th>Categoria</th>
                                         <th>Producto</th>
                                         <th>Codigo</th>
@@ -605,9 +605,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                
+
                                     <tr v-for="producto in arrayProducto" :key="producto.id">
-                                        
+
                                         <td v-text="producto.nombre_categoria"></td>
                                         <td v-text="producto.nombre"></td>
                                         <td v-text="producto.codigo"></td>
@@ -628,28 +628,28 @@
                                                 <button type="button" class="btn btn-danger btn-sm" v-else>
                                                     <i class="fa fa-lock"></i>&nbsp;Desactivado
                                                 </button>
-                                                
+
                                         </td>
-                                        
+
                                         <td>
                                                 <button type="button" @click="agregarDetalleModal(producto)" class="btn btn-primary btn-sm">
-                                                <i class="fa fa-plus fa-2x"></i> Agregar 
+                                                <i class="fa fa-plus fa-2x"></i> Agregar
                                                 </button>
                                         </td>
                                     </tr>
-                                
+
                                 </tbody>
                         </table>
 
 
                          </div>
 
-                            
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" @click="cerrarModal()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
-                            
-                           
+
+
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -668,7 +668,7 @@
                               <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                       
+
                         <div class="modal-body">
 
                          <div class="form-group row">
@@ -681,15 +681,15 @@
                                     <input type="text" @keyup.enter="listarClienteBco(buscarQ,criterioQ);" v-model="buscarQ" class="form-control" placeholder="Buscar Texto">
                                     <button type="submit"  @click="listarClienteBco(buscarQ,criterioQ);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
-                          
+
                          <div class="table-responsive">
 
                            <table class="table table-bordered table-striped table-sm">
                                 <thead>
                                     <tr class="bg-primary">
-                                    
+
                                         <th>Idbanco</th>
                                         <th>Banco</th>
                                         <th>Tipo_cta</th>
@@ -699,9 +699,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                
+
                                     <tr v-for="bancoc in arrayCtaBcoCliente" :key="bancoc.idcliente">
-                                        
+
                                         <td v-text="bancoc.idbanco"></td>
                                         <td v-text="bancoc.banco"></td>
                                         <td v-text="bancoc.tipo_cta"></td>
@@ -715,29 +715,29 @@
                                                 <button type="button" class="btn btn-danger btn-sm" v-else>
                                                     <i class="fa fa-lock"></i>&nbsp;Desactivado
                                                 </button>
-                                                
+
                                         </td>
-                                   
-                                   
+
+
                                         <td>
                                                 <button type="button" @click="asignardatosbcocliente(bancoc)" class="btn btn-primary btn-sm">
-                                                <i class="fa fa-plus fa-2x"></i> Agregar 
+                                                <i class="fa fa-plus fa-2x"></i> Agregar
                                                 </button>
                                         </td>
                                     </tr>
-                                
+
                                 </tbody>
                         </table>
 
 
                          </div>
 
-                            
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" @click="cerrarModal1()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
-                            
-                           
+
+
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -757,7 +757,7 @@
                               <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                       
+
                         <div class="modal-body">
 
                          <div class="form-group row">
@@ -772,13 +772,13 @@
                                 </div>
                             </div>
                         </div>
-                          
+
                          <div class="table-responsive">
 
                            <table class="table table-bordered table-striped table-sm">
                                 <thead>
                                     <tr class="bg-primary">
-                                    
+
                                         <th>Idtarjeta</th>
                                         <th>Tarjeta</th>
                                         <th>Idbanco</th>
@@ -788,35 +788,35 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                
+
                                     <tr v-for="clientetarbanco in arrayCtaTarCliente" :key="clientetarbanco.idcliente">
-                                        
+
                                         <td v-text="clientetarbanco.idtarjeta"></td>
                                         <td v-text="clientetarbanco.nombre_tarjeta"></td>
                                         <td v-text="clientetarbanco.idbanco"></td>
                                         <td v-text="clientetarbanco.ntarjeta"></td>
                                         <td v-text="clientetarbanco.estado"></td>
-                                   
-                                   
+
+
                                         <td>
                                                 <button type="button" @click="asignadatostarcliente(clientetarbanco)" class="btn btn-primary btn-sm">
-                                                <i class="fa fa-plus fa-2x"></i> Agregar 
+                                                <i class="fa fa-plus fa-2x"></i> Agregar
                                                 </button>
                                         </td>
                                     </tr>
-                                
+
                                 </tbody>
                         </table>
 
 
                          </div>
 
-                            
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" @click="cerrarModal2()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
-                            
-                           
+
+
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -827,8 +827,8 @@
 
             <!--Fin del modal-->
 
-           
-        
+
+
         </main>
 </template>
 
@@ -836,13 +836,13 @@
 <script>
 
    import vSelect from 'vue-select';
-   
+
     export default {
-    
+
         data(){
 
             return {
-               
+
                 venta_id: 0,
                 idcliente: 0,
                 idforma: 0,
@@ -875,18 +875,18 @@
                 errorVenta : 0,
                 errorMostrarMsjVenta : [],
                 pagination:{
-                   
+
                     'total': 0,
                     'current_page': 0,
                     'per_page': 0,
                     'last_page': 0,
                     'from': 0,
                     'to': 0,
-           
+
                 },
 
                 pagination2:{
-                     
+
                     'total': 0,
                     'current_page': 0,
                     'per_page': 0,
@@ -929,18 +929,18 @@
         computed:{
 
             isActived: function(){
-              
+
               return this.pagination.current_page;
               return this.pagination2.current_page;
-              
+
             },
 
-        
+
              //calcula los elementos de la paginacion
             pagesNumber: function(){
 
                 if(!this.pagination.to){
-                    
+
                     return[];
                 }
 
@@ -953,7 +953,7 @@
                 var desde = this.pagination2.current_page - this.offset2;
 
                 if(from < 1){
-                   
+
                    from = 1;
                 }
 
@@ -965,10 +965,10 @@
 
                 var to = from + (this.offset * 2);
                 var hasta = desde + (this.offset2 * 2);
-              
+
                 if(to >= this.pagination.last_page){
-                    
-                   to = this.pagination.last_page; 
+
+                   to = this.pagination.last_page;
                 }
 
                 if(hasta >= this.pagination2.last_page){
@@ -981,7 +981,7 @@
                 var pageArray1 = [];
 
                 while(from <= to){
-                   
+
                    pagesArray.push(from);
                    from++;
                 }
@@ -991,13 +991,13 @@
                     pageArray1.push(desde);
                     desde++;
                 }
-                
+
                 return pagesArray,pageArray1;
-         
-               
+
+
             },
 
-            
+
 
             calcularTotal: function(){
                 var resultado=0.0;
@@ -1086,7 +1086,7 @@
                     console.log(error);
                 });
 
-      
+
            },
 
 
@@ -1095,7 +1095,7 @@
                 loading(true)
 
                 const axios = require('axios');
-           
+
                 var url= '/cliente/selectCliente?filtro='+search;
                 axios.get(url).then(function (response) {
                     let respuesta = response.data;
@@ -1110,11 +1110,11 @@
                 if(me.arrayCliente.length>0){
 
                     me.cliente=me.arrayCliente[0]['nombre'];
-                    
+
                 }
 
             },
-            
+
             getDatosCliente(val1){
                 let me = this;
                 me.loading = true;
@@ -1127,7 +1127,7 @@
                 loading(true)
 
                 const axios = require('axios');
-           
+
                 var url= '/venta/selectFormaPago?filtro='+search;
                 axios.get(url).then(function (response) {
                     let respuesta = response.data;
@@ -1145,7 +1145,7 @@
                 let me = this;
                 me.loading = true;
                 me.idforma = val1.id;
-     
+
             },
 
 
@@ -1187,7 +1187,7 @@
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
                     me.arrayCliente = respuesta.clientes;
-          
+
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -1205,7 +1205,7 @@
 
 
            cambiarPagina(page,buscar,criterio){
-              
+
               let me = this;
 
               //Actualiza  la pagina actual
@@ -1225,7 +1225,7 @@
                me.pagination2.current_page=page;
 
                me.listarPagos(page,buscarS,criteriorS);
-           
+
            },
 
 
@@ -1248,11 +1248,11 @@
 
                 let me = this;
 
-                                
+
                 /*para las formas de pago en efectivo*/
 
                 if(me.idforma==0){
-                  
+
                   swal({
                         type: 'error',
                         title: 'Error....',
@@ -1260,7 +1260,7 @@
                   })
 
                 }
-               
+
 
                 if(me.idforma==1){
 
@@ -1272,7 +1272,7 @@
 
                     me.modal1=0;
                     me.modal2=0;
-             
+
                 }
 
                 if(me.idforma==2){
@@ -1317,7 +1317,7 @@
                             title: 'Error...',
                             text: 'No hay stock disponible',
                             })
-                       } 
+                       }
                        else{
                            me.arrayDetalle.push({
                                 idproducto: me.idproducto,
@@ -1336,15 +1336,15 @@
                             me.stock=0
                        }
                     }
-                    
+
                 }
 
-                
-                        
+
+
             },
 
             agregarDetalleModal(data=[]){
-                 
+
                 let me=this;
 
                 if(me.encuentra(data['id'])){
@@ -1362,14 +1362,14 @@
                             precio: data['precio_venta'],
                             descuento:0,
                             stock:data['stock']
-                        }); 
+                        });
                     }
 
             },
 
             /* para los datos del cliente de bancos*/
             asignardatosbcocliente(data=[]){
-                 
+
                 let me=this;
 
                 if(data['idcliente']==0){
@@ -1378,7 +1378,7 @@
                             title: 'Error...',
                             text: 'El Cliente no ha sido seleccionado',
                             })
-              
+
 
                 }
                 else {
@@ -1395,11 +1395,11 @@
                         type: 'info',
                         title: 'Informacion',
                         text: 'Se ha asignado datos de clientes con Cheque'
-                    }) 
+                    })
                 }
 
                 me.modal1=0;
-                      
+
             },
 
             asignadatostarcliente(data=[]){
@@ -1412,7 +1412,7 @@
                             title: 'Error...',
                             text: 'El Cliente no ha sido seleccionado',
                             })
-              
+
                 }
                 else {
                    /*Para pagos en Tarjeta*/
@@ -1432,7 +1432,7 @@
                 }
 
                 me.modal2=0;
-                    
+
             },
 
 
@@ -1505,7 +1505,7 @@
                    return;
                   }
 
-            
+
                 const axios = require('axios');
 
                     axios.post('/venta/registrar',{
@@ -1515,7 +1515,7 @@
                         'impuesto': this.impuesto,
                         'total': this.total,
                         'data': this.arrayDetalle
-            
+
                     }).then(function (response) {
                        /*no hace nada solo si es en efectivo*/
                                 me.listado=1;
@@ -1533,17 +1533,17 @@
                                 me.codigo='';
                                 me.descuento=0;
                                 me.arrayDetalle=[];
-      
+
                     }).catch(function (error) {
                         console.log(error);
                     });
 
               }
-               
+
            },
 
            registraPago(){
-              
+
                            let me = this;
 
                            if(me.idforma==2){
@@ -1551,7 +1551,7 @@
                                me.forma_pago = 'Cheque';
 
                                     me.idtarjeta1 = 99;
-                                    
+
                                         const axios = require('axios');
 
                                         axios.post('/pago/pagar',{
@@ -1564,11 +1564,11 @@
                                             'idtarjeta': this.idtarjeta1,
                                             'nombre_tarjeta': this.nombre_tarjeta,
                                             'valor': this.valor
-                                    
+
                                         }).then(function (response) {
                                                 me.tipo_identificacion='FACTURA';
                                                 me.impuesto=0.12;
-                                                
+
                                         }).catch(function (error) {
                                             console.log(error);
                                         });
@@ -1577,9 +1577,9 @@
                                         type: 'info',
                                         title: 'Informacion',
                                         text: 'Se registro el pago con Cheque'
-                                    })    
+                                    })
 
-                    
+
 
                             }
 
@@ -1587,7 +1587,7 @@
                             if(me.idforma==3){
 
                                 me.forma_pago = 'Tarjeta';
-                       
+
                                 const axios = require('axios');
 
                                     axios.post('/pago/pagar',{
@@ -1600,11 +1600,11 @@
                                         'idtarjeta': this.idtarjeta1,
                                         'nombre_tarjeta': this.nombre_tarjeta,
                                         'valor': this.valor
-                                
+
                                     }).then(function (response) {
                                             me.tipo_identificacion='FACTURA';
                                             me.impuesto=0.12;
-                                    
+
                                     }).catch(function (error) {
                                         console.log(error);
                                     });
@@ -1613,17 +1613,17 @@
                                         type: 'info',
                                         title: 'Informacion',
                                         text: 'Se registro el pago con Tarjeta'
-                                    })    
+                                    })
 
 
-                
+
 
                                     }
 
-                                
+
            },
 
-         
+
 
             validarVenta(){
 
@@ -1631,7 +1631,7 @@
                 me.errorVenta=0;
                 me.errorMostrarMsjVenta =[];
                 var prod;
-                
+
                 me.arrayDetalle.map(function(x){
                     if (x.cantidad>x.stock){
                         prod=x.producto + " con stock insuficiente";
@@ -1640,7 +1640,7 @@
                 });
 
                 if (me.arrayVenta1.length>0) me.errorMostrarMsjVenta.push("Ya existe un numero de venta");
-               
+
                 if (me.idcliente==0) me.errorMostrarMsjVenta.push("Seleccione un Cliente");
                 if (me.tipo_identificacion==0) me.errorMostrarMsjVenta.push("Seleccione la identificación");
                 if (!me.num_venta) me.errorMostrarMsjVenta.push("Ingrese el número de venta");
@@ -1656,7 +1656,7 @@
 
                 }
 
-               
+
                 /*Validar para el tipo de forma de pago*/
                 if(me.idforma==2){
 
@@ -1683,7 +1683,7 @@
             mostrarDetalle(){
 
                  let me= this;
-                
+
                     me.listado=0;
                     me.idproveedor=0;
                     me.tipo_identificacion='FACTURA';
@@ -1695,7 +1695,7 @@
                     me.cantidad=0;
                     me.precio=0;
                     me.arrayDetalle=[];
-  
+
             },
 
             mostrarPagos(){
@@ -1717,7 +1717,7 @@
 
             ocultarPagos(){
                 this.listado=1;
-         
+
             },
 
 
@@ -1732,7 +1732,7 @@
                 const axios = require('axios');
 
                 var url= '/venta/obtenerCabecera?id=' + id;
-                
+
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
                     arrayVentaT = respuesta.ventas;
@@ -1747,9 +1747,9 @@
                     console.log(error);
                 });
 
-                //Obtener los datos de los detalles 
+                //Obtener los datos de los detalles
                 var urld= '/venta/obtenerDetalle?id=' + id;
-                
+
                 axios.get(urld).then(function (response) {
                     console.log(response);
                     var respuesta= response.data;
@@ -1757,21 +1757,21 @@
                 })
                 .catch(function (error) {
                     console.log(error);
-                });     
+                });
             },
 
            cerrarModal(){
 
                 this.modal=0;
                 this.tituloModal='';
-               
+
            },
 
            cerrarModal1(){
 
                this.modal1=0;
                this.titulo_modal='';
-        
+
            },
 
            cerrarModal2(){
@@ -1780,13 +1780,13 @@
                this.titulo_modal='';
 
            },
-          
+
            abrirModal(){
-            
+
             this.arrayProducto=[];
             this.modal = 1;
             this.tituloModal = 'Seleccione uno o varios productos';
-                                               
+
            },
 
            abrirModal1(){
@@ -1799,7 +1799,7 @@
                    this.titulo_modal='';
                }
 
-          
+
                if(me.idforma==2){
                    this.arrayCtaBcoCliente=[];
                     this.modal1 = 1;
@@ -1814,11 +1814,11 @@
                      this.modal2 = 1;
                      this.titulo_modal = 'Seleccione uno o varias tarjetas';
                }
-              
+
 
            },
 
-        
+
               desactivarVenta(id){
                swal({
                 title: 'Esta seguro de anular la compra?',
@@ -1850,23 +1850,23 @@
                     }).catch(function (error) {
                         console.log(error);
                     });
-                    
-                    
+
+
                 } else if (
                     // Read more about handling dismissals
                     result.dismiss === swal.DismissReason.cancel
                 ) {
-                    
+
                 }
-                }) 
+                })
             },
 
             pdfVenta(id,estado){
 
-             
+
                 window.open('http://127.0.0.1:8080/venta/pdf'+ id + ',' + '_blank');
-               
-                
+
+
             },
 
             pdfPago(id,cliente){
@@ -1876,9 +1876,9 @@
             },
 
 
-        
+
         },
-        
+
         mounted() {
             //console.log('Component mounted.')
             this.listarVenta(1,this.buscar,this.criterio);
@@ -1887,7 +1887,7 @@
 </script>
 
 <style>
-           
+
      .modal-content{
 
       width:100% !important;
@@ -1909,7 +1909,7 @@
   }
 
   .text-error{
-      
+
       color:red !important;
       font-weight:bold;
       font-size:20px;

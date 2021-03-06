@@ -2,7 +2,7 @@
 <main class="main">
     <!-- Breadcrumb -->
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">BACKEND - SISTEMA COMPRAS - VENTAS</a></li>
+        <li class="breadcrumb-item"><a href="/">Inicio</a></li>
     </ol>
 
     <div class="container-fluid">
@@ -21,11 +21,11 @@
                                     </div>
                                     <div class="card-content">
                                         <div class="ct-chart">
-                                            <canvas id="compras">                                                
+                                            <canvas id="compras">
                                             </canvas>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -35,17 +35,17 @@
                                     </div>
                                     <div class="card-content">
                                         <div class="ct-chart">
-                                            <canvas id="ventas">                                                
+                                            <canvas id="ventas">
                                             </canvas>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
-               
+
                 </div>
-            
+
         </div>
     </div>
 
@@ -59,23 +59,23 @@
             return {
 
                 grafico: 0,
-               
+
                 varCompra:null,
                 charCompra:null,
                 compras:[],
                 varTotalCompra:[],
                 varMesCompra:[],
                 varProductoCompra:[],
-                
+
                 varVenta:null,
                 charVenta:null,
                 ventas:[],
                 varTotalVenta:[],
                 varMesVenta:[],
                 varProductoVenta:[]
-                
 
-      
+
+
             }
         },
         methods : {
@@ -91,19 +91,19 @@
                     me.compras = respuesta.compras;
                     //cargamos los datos del chart
                     me.loadCompras();
-                   
+
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
             },
 
-       
+
              getVentas(){
                 let me=this;
 
                 const axios = require('axios');
-                
+
                 var url = '/detalle';
                 axios.get(url).then(function (response){
                     var respuesta= response.data;
@@ -118,7 +118,7 @@
                 });
             },
 
-  
+
             loadCompras(){
                 let me=this;
                 me.compras.map(function(x){
@@ -166,7 +166,7 @@
                 });
             },
 
-      
+
             loadVentas(){
                  let me=this;
                 me.ventas.map(function(x){
@@ -215,13 +215,13 @@
 
             },
 
-           
+
         },
         mounted() {
 
             this.getCompras();
             this.getVentas();
-            
+
         }
     }
 </script>

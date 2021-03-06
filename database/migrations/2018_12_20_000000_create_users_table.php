@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
                 $table->string('password');
                 $table->boolean('condicion')->default(1);
                 $table->integer('idrol')->unsigned();
-                $table->string('imagen');
+                $table->string('imagen')->nullable();
                 $table->rememberToken();
                 $table->timestamps();
             });

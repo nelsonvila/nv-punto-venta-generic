@@ -2,7 +2,7 @@
    <main class="main">
             <!-- Breadcrumb -->
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="/">BACKEND - SISTEMA DE COMPRAS - VENTAS</a></li>
+                <li class="breadcrumb-item active"><a href="/">Inicio</a></li>
             </ol>
             <div class="container-fluid">
                 <!-- Ejemplo de tabla Listado -->
@@ -12,13 +12,13 @@
                     <div class="card-header">
 
                        <h2>Listado de Compras</h2><br/>
-                      
+
                         <button class="btn btn-primary btn-lg" type="button" @click="mostrarDetalle()">
                             <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Compra
                         </button>
                     </div>
                     <!--listado-->
-                   
+
                     <div class="card-body">
                         <div class="form-group row">
                             <div class="col-md-6">
@@ -36,13 +36,13 @@
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr class="bg-primary">
-                                   
+
                                         <th>Ver Detalle</th>
                                         <th>Fecha Compra</th>
                                         <th>Número Compra</th>
                                         <th>Proveedor</th>
                                         <th>Tipo de identificación</th>
-                                        <th>Comprador</th>  
+                                        <th>Comprador</th>
                                         <th>Total (USD$)</th>
                                         <th>Impuesto</th>
                                         <th>Estado</th>
@@ -51,9 +51,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
+
                                 <tr v-for="compra in arrayCompra" :key="compra.id">
-                                    
+
                                         <td>
                                              <!--compra.id-->
                                             <button type="button" @click="verCompra(compra.id)" class="btn btn-warning btn-sm">
@@ -64,8 +64,8 @@
                                         <td v-text="compra.fecha_compra"></td>
                                         <td v-text="compra.num_compra"></td>
                                         <td v-text="compra.nombre"></td>
-                                        <td v-text="compra.tipo_identificacion"></td> 
-                                        <td v-text="compra.usuario"></td> 
+                                        <td v-text="compra.tipo_identificacion"></td>
+                                        <td v-text="compra.usuario"></td>
                                         <td v-text="compra.total"></td>
                                         <td v-text="compra.impuesto"></td>
                                         <td>
@@ -73,7 +73,7 @@
                                              <button type="button" v-if="compra.estado=='Registrado'" class="btn btn-success btn-sm">
                                                 <i class="fa fa-check fa-2x"></i> Registrado
                                             </button>
-                                        
+
                                             <button type="button" v-else class="btn btn-danger btn-sm">
                                                  <i class="fa fa-times fa-2x"></i> Anulado
                                             </button>
@@ -95,15 +95,15 @@
                                         </td>
 
                                         <td>
-                                            
+
                                              <button type="button" @click="pdfCompra(compra.id,compra.estado)" class="btn btn-info btn-sm">
                                             <i class="fa fa-file fa-2x"></i> Descargar PDF
                                             </button> &nbsp;
                                         </td>
 
-                                    
+
                                 </tr>
-                               
+
                             </tbody>
                         </table>
                         <nav>
@@ -115,8 +115,8 @@
                                 <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
                                 </li>
-                               
-                               
+
+
                                 <li class="page-item" v-if="pagination.current_page < pagination.last_page">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Siguiente</a>
                                 </li>
@@ -129,11 +129,11 @@
                     <!-- Detalle-->
 
                     <template v-else-if="listado==0">
-                  
+
                     <span><strong>(*) Campo obligatorio</strong></span><br/>
 
                     <h3 class="text-center">LLenar el formulario</h3>
-                    
+
                     <div class="card-body">
 
                         <div class="form-group row border">
@@ -153,7 +153,7 @@
                                         label="nombre"
                                         :options="arrayProveedor"
                                         placeholder="Buscar Proveedores..."
-                                        :onChange="getDatosProveedor"                                        
+                                        :onChange="getDatosProveedor"
                                     >
 
                                     </v-select>
@@ -167,7 +167,7 @@
                                         <option value="0">Seleccione</option>
                                         <option value="FACTURA">Factura</option>
                                         <option value="TICKET">Ticket</option>
-                                      
+
                                     </select>
                                 </div>
                             </div>
@@ -176,8 +176,8 @@
                                 <label class="text-uppercase"><strong>Impuesto(*)</strong></label>
                                 <input type="text" class="form-control" v-model="impuesto">
                             </div>
-                            
-                                 
+
+
                         </div>
 
                         <div class="form-group row">
@@ -202,12 +202,12 @@
                                     <div class="form-inline">
                                         <input type="text" class="form-control" v-model="codigo" @keyup.enter="buscarProducto()" placeholder="Ingrese código">
                                         <button @click="abrirModal()" class="btn btn-primary">
-                                           
+
                                            <i class="fa fa-plus"></i>&nbsp;Agregar Productos
 
                                         </button>
                                         <input type="text" readonly class="form-control" v-model="producto">
-                                    </div>                                    
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -284,7 +284,7 @@
                                                 No se han agregado productos
                                             </td>
                                         </tr>
-                                    </tbody>                                    
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -296,44 +296,44 @@
                         </div>
                     </div>
                     </template>
-                  
+
                     <!-- Fin Detalle-->
 
                     <template v-else-if="listado==2">
 
                         <h2 class="text-center">Detalle de Compra</h2><br/>
-                        
+
                         <div class="card_body">
                             <div class="form-group row border">
                                 <div class="col-md-3">
                                     <div class="form-group">
                                          <label class="text-uppercase"><strong>Proveedor</strong></label>
                                          <p v-text="proveedor"></p>
-                                    </div>     
+                                    </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                          <label class="text-uppercase"><strong>Tipo_identificacion</strong></label>
                                          <p v-text="tipo_identificacion"></p>
-                                    </div>     
+                                    </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                          <label class="text-uppercase"><strong>Numero_comp</strong></label>
                                          <p v-text="num_compra"></p>
-                                    </div>     
+                                    </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                          <label class="text-uppercase"><strong>Impuesto</strong></label>
                                          <p v-text="impuesto"></p>
-                                    </div>     
+                                    </div>
                                 </div>
 
-                                
+
                             </div>
                         </div>
 
@@ -380,20 +380,20 @@
                                             No se han agregado productos
                                         </td>
                                     </tr>
-                                </tbody>                                    
+                                </tbody>
                             </table>
                         </div>
                     </div>
                        <div class="form-group row">
                          <div class="col-md-12">
                             <button type="button" @click="ocultarDetalle()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
-                            
+
                          </div>
                         </div>
                 </template>
 
                  <!-- fin ver compra-->
- 
+
 
                 </div>
                 <!-- Fin ejemplo de tabla Listado -->
@@ -416,7 +416,7 @@
                                         <select class="form-control col-md-3" v-model="criterioP">
                                            <option value="nombre">Producto</option>
                                            <option value="codigo">Codigo</option>
-                                     
+
                                         </select>
                                         <input type="text"  @keyup.enter="listarProducto(buscarP,criterioP);" v-model="buscarP" class="form-control" placeholder="Buscar texto">
                                         <button type="submit"  @click="listarProducto(buscarP,criterioP);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
@@ -426,7 +426,7 @@
                                 <table class="table table-bordered table-striped table-sm">
                                   <thead>
                                     <tr class="bg-primary">
-                                   
+
                                     <th>Categoria</th>
                                     <th>Producto</th>
                                     <th>Codigo</th>
@@ -438,9 +438,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
+
                                 <tr v-for="producto in arrayProducto" :key="producto.id">
-                                    
+
                                     <td v-text="producto.nombre_categoria"></td>
                                     <td v-text="producto.nombre"></td>
                                     <td v-text="producto.codigo"></td>
@@ -455,15 +455,15 @@
 
                                     <td>
                                         <button type="button" class="btn btn-success btn-md" v-if="producto.condicion">
-                                    
+
                                           <i class="fa fa-check fa-2x"></i> Activo
                                         </button>
 
                                         <button type="button" class="btn btn-danger btn-md" v-else>
-                                    
+
                                           <i class="fa fa-check fa-2x"></i> Desactivado
                                         </button>
-                                       
+
                                     </td>
                                     <td>
                                          <button type="button" @click="agregarDetalleModal(producto)" class="btn btn-success btn-md">
@@ -474,15 +474,15 @@
 
 
                                 </tr>
-                               
+
                             </tbody>
                         </table>
-                        
+
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" @click="cerrarModal()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
-                            
+
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -490,8 +490,8 @@
                 <!-- /.modal-dialog -->
             </div>
             <!--Fin del modal-->
-           
-        
+
+
         </main>
 </template>
 
@@ -504,7 +504,7 @@
         data(){
 
             return {
-               
+
                 compra_id: 0,
                 idproveedor:0,
                 proveedor:'',
@@ -526,14 +526,14 @@
                 errorCompra : 0,
                 errorMostrarMsjCompra : [],
                 pagination:{
-                   
+
                     'total': 0,
                     'current_page': 0,
                     'per_page': 0,
                     'last_page': 0,
                     'from': 0,
                     'to': 0,
-           
+
                 },
                 offset:3,
                 criterio:'num_compra',
@@ -557,7 +557,7 @@
         computed:{
 
             isActived: function(){
-              
+
               return this.pagination.current_page;
 
             },
@@ -566,25 +566,25 @@
             pagesNumber: function(){
 
                 if(!this.pagination.to){
-                    
+
                     return[];
                 }
 
                 var from = this.pagination.current_page - this.offset;
                 if(from < 1){
-                   
+
                    from = 1;
                 }
 
                 var to = from + (this.offset * 2);
                 if(to >= this.pagination.last_page){
-                    
-                   to = this.pagination.last_page; 
+
+                   to = this.pagination.last_page;
                 }
 
                 var pagesArray = [];
                 while(from <= to){
-                   
+
                    pagesArray.push(from);
                    from++;
                 }
@@ -593,7 +593,7 @@
 
             },
 
-          
+
             calcularTotal: function(){
                 var resultado=0.0;
                 for(var i=0;i<this.arrayDetalle.length;i++){
@@ -663,13 +663,13 @@
 
            pdfCompra(id,estado){
 
-                   
+
                 window.open('http://127.0.0.1:8080/compra/pdf'+ id + ',' + '_blank');
 
-                
+
            },
 
-               
+
 
            verCompra(id){
 
@@ -686,13 +686,13 @@
                axios.get(url).then(function (response){
                     var respuesta = response.data;
                     me.arrayCompraT = respuesta.compra;
-                    
+
                     me.proveedor = me.arrayCompraT[0]['nombre'];
                     me.tipo_identificacion = me.arrayCompraT[0]['tipo_identificacion'];
                     me.num_compra = me.arrayCompraT[0]['num_compra'];
                     me.impuesto = me.arrayCompraT[0]['impuesto'];
                     me.total = me.arrayCompraT[0]['total'];
-            
+
                })
                 .catch(function (error) {
                     console.log(error);
@@ -720,11 +720,11 @@
            selectProveedor(search,loading){
                 let me=this;
 
-                
+
                 loading(true)
 
                 const axios = require('axios');
-                
+
                 var url= '/proveedor/selectProveedor?filtro='+search;
 
                 axios.get(url).then(function (response) {
@@ -737,7 +737,7 @@
                     console.log(error);
                 });
             },
-            
+
             getDatosProveedor(val1){
                 let me = this;
                 me.loading = true;
@@ -754,7 +754,7 @@
                  axios.get(url).then(function (response) {
                     let respuesta = response.data;
                     me.arrayProducto=respuesta.productos;
-                    
+
                     if (me.arrayProducto.length>0){
                         me.producto=me.arrayProducto[0]['nombre'];
                         me.idproducto=me.arrayProducto[0]['id'];
@@ -765,14 +765,14 @@
                        me.idproducto=0;
 
                     }
-                    
+
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
 
 
- 
+
 
             },
 
@@ -786,7 +786,7 @@
                    }
                }
                return sw;
-         
+
            },
 
            agregarDetalle(){
@@ -795,7 +795,7 @@
 
                    if(me.producto==0 || me.cantidad==0 || me.precio==0){
 
-                   }   
+                   }
                    else{
                        if(me.encuentra(me.idproducto)){
                            swal({
@@ -816,11 +816,11 @@
                         me.producto="";
                         me.cantidad=0;
                         me.precio=0;
-             
+
                        }
                    }
-                   
-     
+
+
            },
 
            agregarDetalleModal(data=[]){
@@ -871,12 +871,12 @@
            eliminarDetalle(index){
                let me = this;
                me.arrayDetalle.splice(index, 1);
-          
+
            },
 
 
            cambiarPagina(page,buscar,criterio){
-              
+
               let me = this;
 
               //Actualiza  la pagina actual
@@ -912,14 +912,14 @@
                const axios = require('axios');
 
                axios.post('/compra/registrar',{
-                 
+
                     'idproveedor': me.idproveedor,
                     'tipo_identificacion': me.tipo_identificacion,
                     'num_compra' : me.num_compra,
                     'impuesto' : me.impuesto,
                     'total' : me.total,
                     'data' : me.arrayDetalle
-            
+
                }).then(function (response) {
                     // handle success
                     //console.log(response);
@@ -950,21 +950,21 @@
                this.errorMostrarMsjCompra =[];
 
                 if (this.arrayCompra1.length>0) me.errorMostrarMsjCompra.push("Ya existe un numero de compra");
-               
+
                 if (this.idproveedor==0) this.errorMostrarMsjCompra.push("(*)Debe de seleccionar un proveedor");
                 if (this.tipo_identificacion==0) this.errorMostrarMsjCompra.push("(*)Debe de seleccionar tipo de identificacion");
                 if (!this.num_compra) this.errorMostrarMsjCompra.push("(*)Debe ingresar numero de compra");
                 if (!this.impuesto) this.errorMostrarMsjCompra.push("(*)Impuesto no debe estar en blanco");
                 if (this.arrayDetalle.length<=0) this.errorMostrarMsjCompra.push("(*)Debe haber datos de detalle de productos");
-                
+
                 if (this.errorMostrarMsjCompra.length) this.errorCompra = 1;
-               
+
                 return this.errorCompra;
-        
+
            },
 
 
-            
+
             mostrarDetalle(){
               let me = this;
 
@@ -980,7 +980,7 @@
               me.cantidad=0;
               me.precio=0;
               me.arrayDetalle=[];
-  
+
             },
             ocultarDetalle(){
                 this.listado=1;
@@ -990,16 +990,16 @@
 
                this.modal=0;
                this.tituloModal='';
-                
+
            },
 
            abrirModal(){
- 
+
                 this.arrayProducto=[];
                 this.modal=1;
                 this.tituloModal='Seleccione uno o varios articulos';
 
-                        
+
            },
 
               desactivarCompra(id){
@@ -1033,19 +1033,19 @@
                     }).catch(function (error) {
                         console.log(error);
                     });
-                    
-                    
+
+
                 } else if (
                     // Read more about handling dismissals
                     result.dismiss === swal.DismissReason.cancel
                 ) {
-                    
+
                 }
-                }) 
+                })
             },
-            
+
         },
-        
+
         mounted() {
             //console.log('Component mounted.')
             this.listarCompra(1,this.buscar,this.criterio);
@@ -1054,7 +1054,7 @@
 </script>
 
 <style>
-           
+
      .modal-content{
 
       width:100% !important;
@@ -1076,7 +1076,7 @@
   }
 
   .text-error{
-      
+
       color:red !important;
       font-weight:bold;
       font-size:20px;

@@ -2,7 +2,7 @@
    <main class="main">
             <!-- Breadcrumb -->
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="/">BACKEND - SISTEMA DE COMPRAS - VENTAS</a></li>
+                <li class="breadcrumb-item active"><a href="/">Inicio</a></li>
             </ol>
             <div class="container-fluid">
                 <!-- Ejemplo de tabla Listado -->
@@ -10,7 +10,7 @@
                     <div class="card-header">
 
                        <h2>Listado de Usuarios</h2><br/>
-                      
+
                         <button class="btn btn-primary btn-lg" type="button" @click="abrirModal('usuario','registrar')">
                             <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Usuario
                         </button>
@@ -33,7 +33,7 @@
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr class="bg-primary">
-                                   
+
                                     <th>Nombre</th>
                                     <th>Tipo Documento</th>
                                     <th>Número</th>
@@ -48,9 +48,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
+
                                 <tr v-for="usuario in arrayUsuario" :key="usuario.id">
-                                    
+
                                     <td v-text="usuario.nombre"></td>
                                     <td v-text="usuario.tipo_documento"></td>
                                     <td v-text="usuario.num_documento"></td>
@@ -64,7 +64,7 @@
                                     </td>
 
 
-                                
+
                                     <td>
                                         <button type="button" class="btn btn-info btn-md" @click="abrirModal('usuario','actualizar',usuario)">
 
@@ -85,12 +85,12 @@
                                                 <i class="fa fa-lock fa-2x"></i> Desactivado
                                             </button>
                                         </template>
-                                       
+
                                     </td>
 
-                                    
+
                                 </tr>
-                               
+
                             </tbody>
                         </table>
                         <nav>
@@ -102,8 +102,8 @@
                                 <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
                                 </li>
-                               
-                               
+
+
                                 <li class="page-item" v-if="pagination.current_page < pagination.last_page">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Siguiente</a>
                                 </li>
@@ -123,25 +123,25 @@
                               <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                       
+
                         <div class="modal-body">
-                            
+
                             <div v-show="errorUsuario" class="form-group row div-error">
-                                
+
                                 <div class="text-center text-error">
-                                    
+
                                     <div v-for="error in errorMostrarMsjUsuario" :key="error" v-text="error"></div>
 
                                 </div>
-                            
+
                             </div>
-                             
+
 
                             <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                                  <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Usuario (*)</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="nombre" class="form-control" placeholder="Nombre del usuario">                                        
+                                        <input type="text" v-model="nombre" class="form-control" placeholder="Nombre del usuario">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -151,13 +151,13 @@
                                             <option value="DNI">DNI</option>
                                             <option value="CEDULA">CEDULA</option>
                                             <option value="PASS">PASS</option>
-                                        </select>                                    
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Número</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="num_documento" class="form-control" placeholder="Número de documento">                                        
+                                        <input type="text" v-model="num_documento" class="form-control" placeholder="Número de documento">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -190,7 +190,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="email-input">Usuario (*)</label>
                                     <div class="col-md-9">
@@ -220,12 +220,12 @@
                                            <input type="file" @change="subirImagen" class="form-control" placeholder="">
                                            <img :src="imagen" class="img-responsive" width="100px" height="100px">
                                       </div>
-                                  </div>  
+                                  </div>
 
                                 </div>
 
-                                
-                               
+
+
 
                             </form>
                         </div>
@@ -233,7 +233,7 @@
                             <button type="button" @click="cerrarModal()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
                             <button type="button" @click="registrarUsuario()" v-if="tipoAccion==1" class="btn btn-success"><i class="fa fa-save fa-2x"></i> Guardar</button>
                             <button type="button" @click="actualizarUsuario()" v-if="tipoAccion==2" class="btn btn-success"><i class="fa fa-save fa-2x"></i> Actualizar</button>
-                           
+
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -241,29 +241,29 @@
                 <!-- /.modal-dialog -->
             </div>
             <!--Fin del modal-->
-           
-        
+
+
         </main>
 </template>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-   
-   
+
+
     export default {
 
-  
+
         data(){
 
             return {
-               
+
                 usuario_id:0,
                 nombre : '',
                 tipo_documento : 'CEDULA',
                 num_documento : '',
                 direccion : '',
                 telefono : '',
-                email : '', 
+                email : '',
                 usuario:'',
                 password:'',
                 imagen:'',
@@ -276,14 +276,14 @@
                 errorUsuario:0,
                 errorMostrarMsjUsuario:[],
                 pagination:{
-                   
+
                     'total': 0,
                     'current_page': 0,
                     'per_page': 0,
                     'last_page': 0,
                     'from': 0,
                     'to': 0,
-           
+
                 },
                 offset:3,
                 criterio:'nombre',
@@ -295,7 +295,7 @@
         computed:{
 
             isActived: function(){
-              
+
               return this.pagination.current_page;
 
             },
@@ -304,25 +304,25 @@
             pagesNumber: function(){
 
                 if(!this.pagination.to){
-                    
+
                     return[];
                 }
 
                 var from = this.pagination.current_page - this.offset;
                 if(from < 1){
-                   
+
                    from = 1;
                 }
 
                 var to = from + (this.offset * 2);
                 if(to >= this.pagination.last_page){
-                    
-                   to = this.pagination.last_page; 
+
+                   to = this.pagination.last_page;
                 }
 
                 var pagesArray = [];
                 while(from <= to){
-                   
+
                    pagesArray.push(from);
                    from++;
                 }
@@ -357,7 +357,7 @@
            },
 
            selectRol(){
-               
+
                let me=this;
 
                const axios = require('axios');
@@ -374,7 +374,7 @@
            },
 
            cambiarPagina(page,buscar,criterio){
-              
+
               let me = this;
 
               //Actualiza  la pagina actual
@@ -397,7 +397,7 @@
                const axios = require('axios');
 
                axios.post('/user/registrar',{
-                 
+
                     'nombre': this.nombre,
                     'tipo_documento': this.tipo_documento,
                     'num_documento' : this.num_documento,
@@ -408,7 +408,7 @@
                     'password': this.password,
                     'idrol' : this.idrol,
                     'imagen' : this.imagen
-          
+
 
                }).then(function (response) {
                     // handle success
@@ -435,7 +435,7 @@
                const axios = require('axios');
 
                axios.put('/user/actualizar',{
-                 
+
                     'nombre': this.nombre,
                     'tipo_documento': this.tipo_documento,
                     'num_documento' : this.num_documento,
@@ -493,7 +493,7 @@
                 if (!this.password) this.errorMostrarMsjUsuario.push("(*)El password no puede estar vacío.");
                 if (this.idrol==0) this.errorMostrarMsjUsuario.push("(*)Debes seleccionar un rol para el usuario.");
                 if (!this.imagen) this.errorMostrarMsjUsuario.push("(*)Debe de subir una imagen");
-           
+
                 if (this.errorMostrarMsjUsuario.length) this.errorUsuario = 1;
 
                 return this.errorUsuario;
@@ -520,11 +520,11 @@
            abrirModal(modelo,accion,data=[]){
 
                this.selectRol();
-                 
+
                  switch(modelo){
 
                     case "usuario":
-                    
+
                     {
 
                         switch(accion){
@@ -532,7 +532,7 @@
                             case "registrar":
 
                                 {
-                                   
+
                                     this.modal = 1;
                                     this.tituloModal = 'Agregar Usuario';
                                     this.nombre= '';
@@ -546,7 +546,7 @@
                                     this.idrol=0;
                                     this.tipoAccion = 1;
                                     break;
-                                
+
                                 }
 
                                 case "actualizar":
@@ -568,7 +568,7 @@
                                     this.idrol = data['idrol'];
                                     break;
                                 }
-                        
+
                         }
 
 
@@ -576,7 +576,7 @@
 
                 }
 
-                        
+
            },
 
               desactivarUsuario(id){
@@ -610,15 +610,15 @@
                     }).catch(function (error) {
                         console.log(error);
                     });
-                    
-                    
+
+
                 } else if (
                     // Read more about handling dismissals
                     result.dismiss === swal.DismissReason.cancel
                 ) {
-                    
+
                 }
-                }) 
+                })
             },
             activarUsuario(id){
                swal({
@@ -651,19 +651,19 @@
                     }).catch(function (error) {
                         console.log(error);
                     });
-                    
-                    
+
+
                 } else if (
                     // Read more about handling dismissals
                     result.dismiss === swal.DismissReason.cancel
                 ) {
-                    
+
                 }
-                }) 
+                })
             }
-        
+
         },
-        
+
         mounted() {
             //console.log('Component mounted.')
             this.listarUsuario(1,this.buscar,this.criterio);
@@ -672,7 +672,7 @@
 </script>
 
 <style>
-           
+
      .modal-content{
 
       width:100% !important;
@@ -694,7 +694,7 @@
   }
 
   .text-error{
-      
+
       color:red !important;
       font-weight:bold;
       font-size:20px;

@@ -14,8 +14,11 @@ class UserSeeder extends Seeder
         factory(\App\User::class)->create([
             'nombre' => 'Nelson Vila',
             'email' => 'nelsonvila.22@gmail.com',
+            'usuario' => 'nelsonvila',
+            'condicion' => 1,
             'telefono' => 3865585910,
-            'password' => \Illuminate\Support\Facades\Hash::make('secret') //secret
+            'password' => \Illuminate\Support\Facades\Hash::make('secret'), //secret
+            'idrol' => 1
         ]);
     }
 }

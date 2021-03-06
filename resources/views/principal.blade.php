@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Sistema Compras-Ventas con Laravel y Vue Js- webtraining-it.com">
     <meta name="keyword" content="Sistema Compras-Ventas con Laravel y Vue Js">
-    <title>Proyecto</title>
+    <title>Sistema de Ventas</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js">
 
@@ -39,7 +39,6 @@
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img src="img/usuario/{{Auth::user()->imagen}}" class="img-avatar" alt="admin@bootstrapmaster.com">
                     <span class="d-md-down-none">{{Auth::user()->usuario}} </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">

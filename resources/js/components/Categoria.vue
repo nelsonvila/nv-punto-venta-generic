@@ -2,7 +2,7 @@
    <main class="main">
             <!-- Breadcrumb -->
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="/">BACKEND - SISTEMA DE COMPRAS - VENTAS</a></li>
+                <li class="breadcrumb-item active"><a href="/">Inicio</a></li>
             </ol>
             <div class="container-fluid">
                 <!-- Ejemplo de tabla Listado -->
@@ -10,7 +10,7 @@
                     <div class="card-header">
 
                        <h2>Listado de Categorías</h2><br/>
-                      
+
                         <button class="btn btn-primary btn-lg" type="button" @click="abrirModal('categoria','registrar')">
                             <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Categoría
                         </button>
@@ -34,7 +34,7 @@
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr class="bg-primary">
-                                   
+
                                     <th>Categoría</th>
                                     <th>Descripción</th>
                                     <th>Imagen</th>
@@ -44,9 +44,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
+
                                 <tr v-for="categoria in arrayCategoria" :key="categoria.id">
-                                    
+
                                     <td v-text="categoria.nombre"></td>
                                     <td v-text="categoria.descripcion"></td>
 
@@ -56,15 +56,15 @@
 
                                     <td>
                                         <button type="button" class="btn btn-success btn-md" v-if="categoria.condicion">
-                                    
+
                                           <i class="fa fa-check fa-2x"></i> Activo
                                         </button>
 
                                         <button type="button" class="btn btn-danger btn-md" v-else>
-                                    
+
                                           <i class="fa fa-check fa-2x"></i> Desactivado
                                         </button>
-                                       
+
                                     </td>
 
                                     <td>
@@ -87,10 +87,10 @@
                                                 <i class="fa fa-lock fa-2x"></i> Activar
                                             </button>
                                         </template>
-                                       
+
                                     </td>
                                 </tr>
-                               
+
                             </tbody>
                         </table>
                         <nav>
@@ -102,8 +102,8 @@
                                 <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
                                 </li>
-                               
-                               
+
+
                                 <li class="page-item" v-if="pagination.current_page < pagination.last_page">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Siguiente</a>
                                 </li>
@@ -123,26 +123,26 @@
                               <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                       
+
                         <div class="modal-body">
-                            
+
                             <div v-show="errorCategoria" class="form-group row div-error">
-                                
+
                                 <div class="text-center text-error">
-                                    
+
                                     <div v-for="error in errorMostrarMsjCategoria" :key="error" v-text="error"></div>
 
                                 </div>
-                            
+
                             </div>
-                             
+
 
                             <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Categoría</label>
                                     <div class="col-md-9">
                                         <input type="text" v-model="nombre" class="form-control" placeholder="Nombre de categoría">
-                                       
+
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -181,7 +181,7 @@
                             <button type="button" @click="cerrarModal()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
                             <button type="button" @click="registrarCategoria()" v-if="tipoAccion==1" class="btn btn-success"><i class="fa fa-save fa-2x"></i> Guardar</button>
                             <button type="button" @click="actualizarCategoria()" v-if="tipoAccion==2" class="btn btn-success"><i class="fa fa-save fa-2x"></i> Actualizar</button>
-                           
+
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -189,8 +189,8 @@
                 <!-- /.modal-dialog -->
             </div>
             <!--Fin del modal-->
-           
-        
+
+
         </main>
 </template>
 
@@ -201,7 +201,7 @@
         data(){
 
             return {
-               
+
                 categoria_id:0,
                 nombre:'',
                 descripcion:'',
@@ -213,14 +213,14 @@
                 errorCategoria:0,
                 errorMostrarMsjCategoria:[],
                 pagination:{
-                   
+
                     'total': 0,
                     'current_page': 0,
                     'per_page': 0,
                     'last_page': 0,
                     'from': 0,
                     'to': 0,
-           
+
                 },
                 offset:3,
                 criterio:'nombre',
@@ -232,7 +232,7 @@
         computed:{
 
             isActived: function(){
-              
+
               return this.pagination.current_page;
 
             },
@@ -241,25 +241,25 @@
             pagesNumber: function(){
 
                 if(!this.pagination.to){
-                    
+
                     return[];
                 }
 
                 var from = this.pagination.current_page - this.offset;
                 if(from < 1){
-                   
+
                    from = 1;
                 }
 
                 var to = from + (this.offset * 2);
                 if(to >= this.pagination.last_page){
-                    
-                   to = this.pagination.last_page; 
+
+                   to = this.pagination.last_page;
                 }
 
                 var pagesArray = [];
                 while(from <= to){
-                   
+
                    pagesArray.push(from);
                    from++;
                 }
@@ -296,11 +296,11 @@
            cargarPDF(){
 
                window.open('http://127.0.0.1:8080/categoria/listarPDF', '_blank');
-      
+
            },
 
            cambiarPagina(page,buscar,criterio){
-              
+
               let me = this;
 
               //Actualiza  la pagina actual
@@ -323,7 +323,7 @@
                const axios = require('axios');
 
                axios.post('/categoria/registrar',{
-                 
+
                  'nombre':me.nombre,
                  'descripcion':me.descripcion,
                  'imagen':me.imagen
@@ -354,7 +354,7 @@
                const axios = require('axios');
 
                axios.put('/categoria/actualizar',{
-                 
+
                  'nombre':this.nombre,
                  'descripcion':this.descripcion,
                  'imagen':this.imagen,
@@ -396,7 +396,7 @@
 
 
             desactivarCategoria(id){
-                            
+
                 const swalWithBootstrapButtons = Swal.mixin({
                 confirmButtonClass: 'btn btn-success',
                 cancelButtonClass: 'btn btn-danger',
@@ -418,7 +418,7 @@
                   const axios = require('axios');
 
                axios.put('/categoria/desactivar',{
-                 
+
                  'id':id
 
 
@@ -439,19 +439,19 @@
                 });
 
 
-               
+
                 } else if (
                 // Read more about handling dismissals
                 result.dismiss === Swal.DismissReason.cancel
                 ) {
-               
+
                 }
               })
 
             },
 
              activarCategoria(id){
-                            
+
                 const swalWithBootstrapButtons = Swal.mixin({
                 confirmButtonClass: 'btn btn-success',
                 cancelButtonClass: 'btn btn-danger',
@@ -473,7 +473,7 @@
                   const axios = require('axios');
 
                axios.put('/categoria/activar',{
-                 
+
                  'id':id
 
 
@@ -494,12 +494,12 @@
                 });
 
 
-               
+
                 } else if (
                 // Read more about handling dismissals
                 result.dismiss === Swal.DismissReason.cancel
                 ) {
-               
+
                 }
               })
 
@@ -512,9 +512,9 @@
 
                  if(!this.nombre)  this.errorMostrarMsjCategoria.push("(*)El nombre de la categoria no puede estar vacio");
                  if(!this.imagen) this.errorMostrarMsjCategoria.push("(*)Debe subir una imagen");
-               
+
                  if(this.errorMostrarMsjCategoria.length) this.errorCategoria=1;
-             
+
                  return this.errorCategoria;
             },
 
@@ -525,15 +525,15 @@
                this.nombre="";
                this.descripcion="";
                this.imagen="";
-        
+
            },
 
            abrirModal(modelo,accion,data=[]){
-                 
+
                  switch(modelo){
 
                     case "categoria":
-                    
+
                     {
 
                         switch(accion){
@@ -541,14 +541,14 @@
                             case "registrar":
 
                                 {
-                                   
+
                                    this.modal=1;
                                    this.tituloModal="Registrar Categoria";
                                    this.nombre="";
                                    this.descripcion="";
                                    this.tipoAccion=1;
                                    break;
-                                
+
                                 }
 
                                 case "actualizar":
@@ -563,7 +563,7 @@
                                     this.descripcion=data["descripcion"];
                                     break;
                                 }
-                        
+
                         }
 
 
@@ -571,11 +571,11 @@
 
                 }
 
-                        
+
            }
-        
+
         },
-        
+
         mounted() {
             //console.log('Component mounted.')
             this.listarCategoria(1,this.buscar,this.criterio);
@@ -584,7 +584,7 @@
 </script>
 
 <style>
-           
+
      .modal-content{
 
       width:100% !important;
@@ -607,7 +607,7 @@
   }
 
   .text-error{
-      
+
       color:red !important;
       font-weight:bold;
       font-size:20px;

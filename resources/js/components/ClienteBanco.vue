@@ -2,7 +2,7 @@
    <main class="main">
             <!-- Breadcrumb -->
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="/">BACKEND - SISTEMA DE COMPRAS - VENTAS</a></li>
+                <li class="breadcrumb-item active"><a href="/">Inicio</a></li>
             </ol>
             <div class="container-fluid">
                 <!-- Ejemplo de tabla Listado -->
@@ -10,7 +10,7 @@
                     <div class="card-header">
 
                        <h2>Listado de Clientes por banco</h2><br/>
-                      
+
                         <button class="btn btn-primary btn-lg" type="button" @click="abrirModal('banco','registrar')">
                             <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Banco
                         </button>
@@ -31,7 +31,7 @@
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr class="bg-primary">
-                                   
+
                                     <th>Cliente</th>
                                     <th>Nombre_cli</th>
                                     <th>Banco</th>
@@ -42,26 +42,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
+
                                 <tr v-for="banco in arrayClienteBanco" :key="banco.id">
-                                    
+
                                     <td v-text="banco.idcliente"></td>
                                     <td v-text="banco.idbanco"></td>
                                     <td v-text="banco.nombre_banco"></td>
                                     <td v-text="banco.tipo_cta"></td>
                                     <td v-text="banco.numero_cta"></td>
-           
+
                                     <td>
                                         <button type="button" class="btn btn-success btn-md" v-if="banco.estado">
-                                    
+
                                           <i class="fa fa-check fa-2x"></i> Activo
                                         </button>
 
                                         <button type="button" class="btn btn-danger btn-md" v-else>
-                                    
+
                                           <i class="fa fa-check fa-2x"></i> Desactivado
                                         </button>
-                                       
+
                                     </td>
 
                                     <td>
@@ -71,9 +71,9 @@
                                         </button> &nbsp;
                                     </td>
 
-                                    
+
                                 </tr>
-                               
+
                             </tbody>
                         </table>
                         <nav>
@@ -85,8 +85,8 @@
                                 <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
                                 </li>
-                               
-                               
+
+
                                 <li class="page-item" v-if="pagination.current_page < pagination.last_page">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Siguiente</a>
                                 </li>
@@ -106,19 +106,19 @@
                               <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                       
+
                         <div class="modal-body">
-                            
+
                             <div v-show="errorClienteBanco" class="form-group row div-error">
-                                
+
                                 <div class="text-center text-error">
-                                    
+
                                     <div v-for="error in errorClienteBanco" :key="error" v-text="error"></div>
 
                                 </div>
-                            
+
                             </div>
-                             
+
 
                             <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                                 <div class="col-md-8">
@@ -129,7 +129,7 @@
                                                 label="nombre"
                                                 :options="arrayCliente"
                                                 placeholder="Buscar Clientes..."
-                                                :onChange="getDatosCliente"                                        
+                                                :onChange="getDatosCliente"
                                             >
 
                                             </v-select>
@@ -144,15 +144,15 @@
                                                 label="nombre"
                                                 :options="arrayBanco"
                                                 placeholder="Buscar Banco..."
-                                                :onChange="getDatosBanco"                                        
+                                                :onChange="getDatosBanco"
                                             >
 
                                             </v-select>
                                         </div>
                                 </div>
 
-                                 
-                            
+
+
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="email-input">Banco</label>
                                     <div class="col-md-9">
@@ -167,7 +167,7 @@
                                             <option value="0">Seleccione</option>
                                             <option value="CORRIENTE">Corriente</option>
                                             <option value="AHORO">Ahorro</option>
-                                        
+
                                         </select>
                                     </div>
                                 </div>
@@ -175,18 +175,18 @@
                                  <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Numero_cta</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="numero_cta" class="form-control" placeholder="Número de Cta">                                        
+                                        <input type="text" v-model="numero_cta" class="form-control" placeholder="Número de Cta">
                                     </div>
                                 </div>
-                                
-   
+
+
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" @click="cerrarModal()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
                             <button type="button" @click="registrarBanco()" v-if="tipoAccion==1" class="btn btn-success"><i class="fa fa-save fa-2x"></i> Guardar</button>
                             <button type="button" @click="actualizarBanco()" v-if="tipoAccion==2" class="btn btn-success"><i class="fa fa-save fa-2x"></i> Actualizar</button>
-                           
+
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -194,8 +194,8 @@
                 <!-- /.modal-dialog -->
             </div>
             <!--Fin del modal-->
-           
-        
+
+
         </main>
 </template>
 
@@ -206,7 +206,7 @@
         data(){
 
             return {
-               
+
                 banco_id:0,
                 cliente_id:0,
                 nombre_banco:'',
@@ -224,14 +224,14 @@
                 errorClienteBanco:0,
                 errorMostrarMsjClienteBanco:[],
                 pagination:{
-                   
+
                     'total': 0,
                     'current_page': 0,
                     'per_page': 0,
                     'last_page': 0,
                     'from': 0,
                     'to': 0,
-           
+
                 },
                 offset:3,
                 criterio:'idcliente',
@@ -243,7 +243,7 @@
         computed:{
 
             isActived: function(){
-              
+
               return this.pagination.current_page;
 
             },
@@ -252,25 +252,25 @@
             pagesNumber: function(){
 
                 if(!this.pagination.to){
-                    
+
                     return[];
                 }
 
                 var from = this.pagination.current_page - this.offset;
                 if(from < 1){
-                   
+
                    from = 1;
                 }
 
                 var to = from + (this.offset * 2);
                 if(to >= this.pagination.last_page){
-                    
-                   to = this.pagination.last_page; 
+
+                   to = this.pagination.last_page;
                 }
 
                 var pagesArray = [];
                 while(from <= to){
-                   
+
                    pagesArray.push(from);
                    from++;
                 }
@@ -304,9 +304,9 @@
                 });
            },
 
-           
+
            cambiarPagina(page,buscar,criterio){
-              
+
               let me = this;
 
               //Actualiza  la pagina actual
@@ -329,7 +329,7 @@
                const axios = require('axios');
 
                axios.post('/bancos/registrarclibanco',{
-                 
+
                  'idcliente':this.cliente_id,
                  'idbanco':this.banco_id,
                  'nombre_banco':this.nombre_banco,
@@ -361,14 +361,14 @@
                const axios = require('axios');
 
                axios.put('/bancos/actualizarcliebancos',{
-                 
+
                  'idcliente':this.cliente_id,
                  'idbanco':this.banco_id,
                  'nombre_banco':this.nombre_banco,
                  'tipo_cta':this.tipo_cta,
                  'numero_cta':this.numero_cta,
                  'id':this.id
-         
+
 
                }).then(function (response) {
                     // handle success
@@ -386,11 +386,11 @@
             selectCliente(search,loading){
                 let me=this;
 
-                
+
                 loading(true)
 
                 const axios = require('axios');
-                
+
                 var url= '/cliente/selectCliente?filtro='+search;
 
                 axios.get(url).then(function (response) {
@@ -403,7 +403,7 @@
                     console.log(error);
                 });
             },
-            
+
             getDatosCliente(val1){
                 let me = this;
                 me.loading = true;
@@ -414,11 +414,11 @@
             selectBanco(search,loading){
                 let me=this;
 
-                
+
                 loading(true)
 
                 const axios = require('axios');
-                
+
                 var url= '/bancos/selectBancos?filtro='+search;
 
                 axios.get(url).then(function (response) {
@@ -432,7 +432,7 @@
                     console.log(error);
                 });
             },
-            
+
             getDatosBancos(val1){
                 let me = this;
                 me.loading = true;
@@ -455,9 +455,9 @@
 
                  if(!this.numero_cta) this.errorMostrarMsjClienteBanco.push("(*) El numero de cuenta no debe de estar vacia");
 
-                 
+
                  if(this.errorMostrarMsjClienteBanco.length) this.errorClienteBanco=1;
-             
+
                  return this.errorClienteBanco;
             },
 
@@ -468,15 +468,15 @@
                this.nombre="";
                this.descripcion="";
                this.imagen="";
-        
+
            },
 
            abrirModal(modelo,accion,data=[]){
-                 
+
                  switch(modelo){
 
                     case "banco":
-                    
+
                     {
 
                         switch(accion){
@@ -484,7 +484,7 @@
                             case "registrar":
 
                                 {
-                                   
+
                                    this.modal=1;
                                    this.tituloModal="Registrar Cliente Banco";
                                    this.nombre_banco="";
@@ -492,7 +492,7 @@
                                    this.numero_cta="";
                                    this.tipoAccion=1;
                                    break;
-                                
+
                                 }
 
                                 case "actualizar":
@@ -509,7 +509,7 @@
                                     this.numero_cta=data["numero_cta"];
                                     break;
                                 }
-                        
+
                         }
 
 
@@ -517,11 +517,11 @@
 
                 }
 
-                        
+
            }
-        
+
         },
-        
+
         mounted() {
             //console.log('Component mounted.')
             this.listarBanco(1,this.buscar,this.criterio);
@@ -530,7 +530,7 @@
 </script>
 
 <style>
-           
+
      .modal-content{
 
       width:100% !important;
@@ -553,7 +553,7 @@
   }
 
   .text-error{
-      
+
       color:red !important;
       font-weight:bold;
       font-size:20px;

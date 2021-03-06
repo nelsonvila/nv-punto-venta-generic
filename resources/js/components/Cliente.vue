@@ -2,7 +2,7 @@
    <main class="main">
             <!-- Breadcrumb -->
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="/">BACKEND - SISTEMA DE COMPRAS - VENTAS</a></li>
+                <li class="breadcrumb-item active"><a href="/">Inicio</a></li>
             </ol>
             <div class="container-fluid">
                 <!-- Ejemplo de tabla Listado -->
@@ -10,7 +10,7 @@
                     <div class="card-header">
 
                        <h2>Listado de Clientes</h2><br/>
-                      
+
                         <button class="btn btn-primary btn-lg" type="button" @click="abrirModal('cliente','registrar')">
                             <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Cliente
                         </button>
@@ -36,7 +36,7 @@
                         <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr class="bg-primary">
-                                   
+
                                     <th>Cliente</th>
                                     <th>Tipo de Documento</th>
                                     <th>Número Documento</th>
@@ -47,9 +47,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
+
                                 <tr v-for="cliente in arrayCliente" :key="cliente.id">
-                                    
+
                                     <td v-text="cliente.nombre"></td>
                                     <td v-text="cliente.tipo_documento"></td>
                                     <td v-text="cliente.num_documento"></td>
@@ -57,7 +57,7 @@
                                     <td v-text="cliente.email"></td>
                                     <td v-text="cliente.direccion"></td>
 
-                                
+
                                     <td>
                                         <button type="button" class="btn btn-info btn-md" @click="abrirModal('cliente','actualizar',cliente)">
 
@@ -65,9 +65,9 @@
                                         </button> &nbsp;
                                     </td>
 
-                                    
+
                                 </tr>
-                               
+
                             </tbody>
                         </table>
                         <nav>
@@ -79,8 +79,8 @@
                                 <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
                                 </li>
-                               
-                               
+
+
                                 <li class="page-item" v-if="pagination.current_page < pagination.last_page">
                                     <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Siguiente</a>
                                 </li>
@@ -100,25 +100,25 @@
                               <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                       
+
                         <div class="modal-body">
-                            
+
                             <div v-show="errorCliente" class="form-group row div-error">
-                                
+
                                 <div class="text-center text-error">
-                                    
+
                                     <div v-for="error in errorMostrarMsjCliente" :key="error" v-text="error"></div>
 
                                 </div>
-                            
+
                             </div>
-                             
+
 
                             <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                                  <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Cliente (*)</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="nombre" class="form-control" placeholder="Nombre del cliente">                                        
+                                        <input type="text" v-model="nombre" class="form-control" placeholder="Nombre del cliente">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -128,13 +128,13 @@
                                             <option value="DNI">DNI</option>
                                             <option value="CEDULA">CEDULA</option>
                                             <option value="PASS">PASS</option>
-                                        </select>                                    
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-3 form-control-label" for="text-input">Número</label>
                                     <div class="col-md-9">
-                                        <input type="text" v-model="num_documento" class="form-control" placeholder="Número de documento">                                        
+                                        <input type="text" v-model="num_documento" class="form-control" placeholder="Número de documento">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -155,7 +155,7 @@
                                         <input type="email" v-model="email" class="form-control" placeholder="Email">
                                     </div>
                                 </div>
-                               
+
 
                             </form>
                         </div>
@@ -163,7 +163,7 @@
                             <button type="button" @click="cerrarModal()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
                             <button type="button" @click="registrarCliente()" v-if="tipoAccion==1" class="btn btn-success"><i class="fa fa-save fa-2x"></i> Guardar</button>
                             <button type="button" @click="actualizarCliente()" v-if="tipoAccion==2" class="btn btn-success"><i class="fa fa-save fa-2x"></i> Actualizar</button>
-                           
+
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -171,27 +171,27 @@
                 <!-- /.modal-dialog -->
             </div>
             <!--Fin del modal-->
-           
-        
+
+
         </main>
 </template>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
 
-    
+
     export default {
         data(){
 
             return {
-               
+
                 cliente_id:0,
                 nombre : '',
                 tipo_documento : 'CEDULA',
                 num_documento : '',
                 direccion : '',
                 telefono : '',
-                email : '', 
+                email : '',
                 arrayCliente:[],
                 modal:0,
                 tituloModal:'',
@@ -199,14 +199,14 @@
                 errorCliente:0,
                 errorMostrarMsjCliente:[],
                 pagination:{
-                   
+
                     'total': 0,
                     'current_page': 0,
                     'per_page': 0,
                     'last_page': 0,
                     'from': 0,
                     'to': 0,
-           
+
                 },
                 offset:3,
                 criterio:'nombre',
@@ -218,7 +218,7 @@
         computed:{
 
             isActived: function(){
-              
+
               return this.pagination.current_page;
 
             },
@@ -227,25 +227,25 @@
             pagesNumber: function(){
 
                 if(!this.pagination.to){
-                    
+
                     return[];
                 }
 
                 var from = this.pagination.current_page - this.offset;
                 if(from < 1){
-                   
+
                    from = 1;
                 }
 
                 var to = from + (this.offset * 2);
                 if(to >= this.pagination.last_page){
-                    
-                   to = this.pagination.last_page; 
+
+                   to = this.pagination.last_page;
                 }
 
                 var pagesArray = [];
                 while(from <= to){
-                   
+
                    pagesArray.push(from);
                    from++;
                 }
@@ -282,11 +282,11 @@
            cargarPDF(){
 
                window.open('http://127.0.0.1:8080/cliente/listarPDF', '_blank');
-      
+
            },
 
            cambiarPagina(page,buscar,criterio){
-              
+
               let me = this;
 
               //Actualiza  la pagina actual
@@ -309,7 +309,7 @@
                const axios = require('axios');
 
                axios.post('/cliente/registrar',{
-                 
+
                     'nombre': me.nombre,
                     'tipo_documento': me.tipo_documento,
                     'num_documento' : me.num_documento,
@@ -343,7 +343,7 @@
                const axios = require('axios');
 
                axios.put('/cliente/actualizar',{
-                 
+
                     'nombre': me.nombre,
                     'tipo_documento': me.tipo_documento,
                     'num_documento' : me.num_documento,
@@ -393,11 +393,11 @@
            },
 
            abrirModal(modelo,accion,data=[]){
-                 
+
                  switch(modelo){
 
                     case "cliente":
-                    
+
                     {
 
                         switch(accion){
@@ -405,7 +405,7 @@
                             case "registrar":
 
                                 {
-                                   
+
                                     this.modal = 1;
                                     this.tituloModal = 'Agregar Cliente';
                                     this.nombre= '';
@@ -416,7 +416,7 @@
                                     this.email='';
                                     this.tipoAccion = 1;
                                     break;
-                                
+
                                 }
 
                                 case "actualizar":
@@ -435,7 +435,7 @@
                                     this.direccion = data['direccion'];
                                     break;
                                 }
-                        
+
                         }
 
 
@@ -443,11 +443,11 @@
 
                 }
 
-                        
+
            }
-        
+
         },
-        
+
         mounted() {
             //console.log('Component mounted.')
             this.listarCliente(1,this.buscar,this.criterio);
@@ -456,7 +456,7 @@
 </script>
 
 <style>
-           
+
      .modal-content{
 
       width:100% !important;
@@ -478,7 +478,7 @@
   }
 
   .text-error{
-      
+
       color:red !important;
       font-weight:bold;
       font-size:20px;

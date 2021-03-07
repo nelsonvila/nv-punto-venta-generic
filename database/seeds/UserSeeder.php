@@ -12,9 +12,9 @@ class UserSeeder extends Seeder
     public function run()
     {
         factory(\App\User::class)->create([
-            'nombre' => 'Nelson Vila',
-            'email' => 'nelsonvila.22@gmail.com',
-            'usuario' => 'nelsonvila',
+            'nombre' => 'Jose Manuel Bustos',
+            'email' => 'josebustos@gmail.com',
+            'usuario' => 'admin',
             'condicion' => 1,
             'telefono' => 3865585910,
             'password' => \Illuminate\Support\Facades\Hash::make('secret'), //secret

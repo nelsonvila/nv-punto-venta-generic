@@ -17,10 +17,10 @@ class VentaController extends Controller
     public function index(Request $request){
 
         if (!$request->ajax()) return redirect('/');
- 
+
         $buscar = $request->buscar;
         $criterio = $request->criterio;
-         
+
         if ($buscar==''){
             $ventas = Venta::join('clientes','ventas.idcliente','=','clientes.id')
             ->join('users','ventas.idusuario','=','users.id')
@@ -37,7 +37,7 @@ class VentaController extends Controller
             'ventas.estado','clientes.nombre','users.usuario')
             ->where('ventas.'.$criterio, 'like', '%'. $buscar . '%')->orderBy('ventas.id', 'desc')->paginate(3);
         }
-         
+
         return [
             'pagination' => [
                 'total'        => $ventas->total(),
@@ -49,7 +49,7 @@ class VentaController extends Controller
             ],
             'ventas' => $ventas
         ];
-     
+
 
     }
 
@@ -90,18 +90,18 @@ class VentaController extends Controller
         ->orderBy('detalle_ventas.id', 'desc')->get();
 
         return ['detalles' => $detalles];
-        
+
     }
 
     public function selectFormaPago(Request $request){
 
         if (!$request->ajax()) return redirect('/');
- 
+
         $filtro = $request->filtro;
         $formas = FormaPago::orderBy('id', 'asc')->get();
- 
+
         return ['formas' => $formas];
-        
+
        // if (!$request->ajax()) return redirect('/');
 
        // $filtro = $request->$filtro;
@@ -111,7 +111,7 @@ class VentaController extends Controller
        // ->orderBy('nombre', 'asc')->get();
 
        // return ['clientes' => $clientes];
-        
+
     }
 
 
@@ -143,12 +143,12 @@ class VentaController extends Controller
     public function store(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         try{
             DB::beginTransaction();
- 
+
             $mytime= Carbon::now('America/Guayaquil');
- 
+
             $ventas = new Venta();
             $ventas->idcliente = $request->idcliente;
             $ventas->idusuario = \Auth::user()->id;
@@ -159,13 +159,13 @@ class VentaController extends Controller
             $ventas->total = $request->total;
             $ventas->estado = 'Registrado';
             $ventas->save();
-            
+
             //Array de detalles
             $detalles = $request->data;
-            
-            
+
+
             //Recorro todos los elementos
- 
+
             foreach($detalles as $a=>$det)
             {
                 $detalle = new DetalleVentas();
@@ -178,7 +178,7 @@ class VentaController extends Controller
                 $detalle->descuento = $det['descuento'];
                 $detalle->save();
             }
-               
+
 
             DB::commit();
         } catch (Exception $e){
@@ -192,6 +192,10 @@ class VentaController extends Controller
         $ventas = Venta::findOrFail($request->id);
         $ventas->estado = 'Anulado';
         $ventas->save();
+    }
+    public function obtenerUltimoNumeroVenta(Request $request){
+        $ultimoNumeroVenta = Venta::orderBy('num_venta', 'desc')->first() != null ? Venta::orderBy('num_venta', 'desc')->first()->num_venta + 1 : 1;
+        return ['numeroVenta'=> $ultimoNumeroVenta];
     }
 
 }

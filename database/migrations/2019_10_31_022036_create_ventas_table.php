@@ -21,10 +21,8 @@ class CreateVentasTable extends Migration
 
             Schema::create('ventas', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('idcliente')->unsigned();
-                $table->foreign('idcliente')->references('id')->on('clientes');
+                $table->integer('idcliente')->unsigned()->nullable();
                 $table->integer('idusuario')->unsigned();
-                $table->foreign('idusuario')->references('id')->on('users');
                 $table->string('tipo_identificacion', 20);
                 $table->string('num_venta', 10);
                 $table->dateTime('fecha_venta');
@@ -35,7 +33,7 @@ class CreateVentasTable extends Migration
             });
 
         }
-        
+
     }
 
     /**

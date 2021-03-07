@@ -28,7 +28,7 @@ Vue.component('cliente', require('./components/Cliente.vue'));
 Vue.component('rol', require('./components/Rol.vue'));
 Vue.component('user', require('./components/User.vue'));
 Vue.component('compra', require('./components/Compra.vue'));
-Vue.component('venta', require('./components/Venta.vue'));
+Vue.component('venta', require('./components/VentaFinal.vue'));
 Vue.component('dashboard', require('./components/Dashboard.vue'));
 Vue.component('dashboarddetalle', require('./components/DashboardDetalle.vue'));
 Vue.component('banco', require('./components/Banco.vue'));
@@ -44,8 +44,8 @@ const app = new Vue({
     el: '#app',
 
     data:{
-        
+
         menu:0
-    
+
     },
 });

@@ -123,7 +123,7 @@
                                     <div class="col-md-9">
                                         <select v-model="tipo_documento" class="form-control">
                                             <option value="DNI">DNI</option>
-                                            <option value="CEDULA">CEDULA</option>
+                                            <option value="CUIT">CUIT</option>
                                             <option value="PASS">PASS</option>
                                         </select>
                                     </div>
@@ -184,7 +184,7 @@
 
                 cliente_id:0,
                 nombre : '',
-                tipo_documento : 'CEDULA',
+                tipo_documento : 'CUIT',
                 num_documento : '',
                 direccion : '',
                 telefono : '',
@@ -380,7 +380,7 @@
                 this.modal=0;
                 this.tituloModal='';
                 this.nombre='';
-                this.tipo_documento='CEDULA';
+                this.tipo_documento='CUIT';
                 this.num_documento='';
                 this.direccion='';
                 this.telefono='';
@@ -406,7 +406,7 @@
                                     this.modal = 1;
                                     this.tituloModal = 'Agregar Cliente';
                                     this.nombre= '';
-                                    this.tipo_documento='CEDULA';
+                                    this.tipo_documento='CUIT';
                                     this.num_documento='';
                                     this.direccion='';
                                     this.telefono='';

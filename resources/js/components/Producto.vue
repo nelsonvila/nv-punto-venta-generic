@@ -35,7 +35,7 @@
                                     <th>Categoria</th>
                                     <th>Producto</th>
                                     <th>Codigo</th>
-                                    <th>Precio Venta (USD$)</th>
+                                    <th>Precio Venta ($)</th>
                                     <th>Stock</th>
                                     <th>Estado</th>
                                     <th>Editar</th>

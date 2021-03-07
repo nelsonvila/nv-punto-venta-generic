@@ -8,14 +8,13 @@ class Compra extends Model
 {
     //
     protected $table = 'compras';
-    
+
     protected $fillable = [
-        'idproveedor', 
+        'idproveedor',
         'idusuario',
         'tipo_identificacion',
         'num_compra',
         'fecha_compra',
-        'impuesto',
         'total',
         'estado'
      ];
@@ -31,5 +30,5 @@ class Compra extends Model
      {
          return $this->belongsTo('App\Proveedor');
      }
-  
+
 }

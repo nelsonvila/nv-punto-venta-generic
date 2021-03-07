@@ -43,11 +43,9 @@
                                         <th>Proveedor</th>
                                         <th>Tipo de identificación</th>
                                         <th>Comprador</th>
-                                        <th>Total (USD$)</th>
-                                        <th>Impuesto</th>
+                                        <th>Total ($)</th>
                                         <th>Estado</th>
                                         <th>Cambiar estado</th>
-                                        <th>Descargar Reporte</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,7 +65,6 @@
                                         <td v-text="compra.tipo_identificacion"></td>
                                         <td v-text="compra.usuario"></td>
                                         <td v-text="compra.total"></td>
-                                        <td v-text="compra.impuesto"></td>
                                         <td>
 
                                              <button type="button" v-if="compra.estado=='Registrado'" class="btn btn-success btn-sm">
@@ -93,15 +90,6 @@
                                                 </button>
                                             </template>
                                         </td>
-
-                                        <td>
-
-                                             <button type="button" @click="pdfCompra(compra.id,compra.estado)" class="btn btn-info btn-sm">
-                                            <i class="fa fa-file fa-2x"></i> Descargar PDF
-                                            </button> &nbsp;
-                                        </td>
-
-
                                 </tr>
 
                             </tbody>
@@ -172,12 +160,6 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-8">
-                                <label class="text-uppercase"><strong>Impuesto(*)</strong></label>
-                                <input type="text" class="form-control" v-model="impuesto">
-                            </div>
-
-
                         </div>
 
                         <div class="form-group row">
@@ -241,9 +223,9 @@
                                         <tr class="bg-success">
                                             <th>Eliminar</th>
                                             <th>Producto</th>
-                                            <th>Precio (USD$)</th>
+                                            <th>Precio ($)</th>
                                             <th>Cantidad</th>
-                                            <th>Total (USD$)</th>
+                                            <th>Total ($)</th>
                                         </tr>
                                     </thead>
                                     <tbody v-if="arrayDetalle.length">
@@ -267,15 +249,11 @@
                                         </tr>
                                         <tr style="background-color: grey;">
                                             <td colspan="4" align="right"><strong>Sub-Total:</strong></td>
-                                            <td><strong> USD$ {{subTotal=(total-subTotalImpuesto).toFixed(2)}}</strong></td>
-                                        </tr>
-                                        <tr style="background-color: grey;">
-                                            <td colspan="4" align="right"><strong>Impuesto:</strong></td>
-                                            <td><strong>USD$ {{subTotalImpuesto=((total*impuesto)/(1+impuesto)).toFixed(2)}}</strong></td>
+                                            <td><strong> $ {{subTotal=(total).toFixed(2)}}</strong></td>
                                         </tr>
                                         <tr style="background-color: grey;">
                                             <td colspan="4" align="right"><strong>Total:</strong></td>
-                                            <td><strong>USD$ {{total=calcularTotal}}</strong></td>
+                                            <td><strong>$ {{total=calcularTotal}}</strong></td>
                                         </tr>
                                     </tbody>
                                     <tbody v-else>
@@ -325,15 +303,6 @@
                                          <p v-text="num_compra"></p>
                                     </div>
                                 </div>
-
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                         <label class="text-uppercase"><strong>Impuesto</strong></label>
-                                         <p v-text="impuesto"></p>
-                                    </div>
-                                </div>
-
-
                             </div>
                         </div>
 
@@ -343,13 +312,13 @@
                                 <thead>
                                     <tr class="bg-success">
                                         <th>Producto</th>
-                                        <th>Precio (USD$)</th>
+                                        <th>Precio ($)</th>
                                         <th>Cantidad</th>
-                                        <th>Total (USD$)</th>
+                                        <th>Total ($)</th>
                                     </tr>
                                 </thead>
-                                <tbody v-if="arrayDetalle.length">
-                                    <tr v-for="detalle in arrayDetalle" :key="detalle.id">
+                                <tbody v-if="arrayDetalleCompra.length">
+                                    <tr v-for="detalle in arrayDetalleCompra" :key="detalle.id">
                                         <td v-text="detalle.producto">
                                         </td>
                                         <td v-text="detalle.precio">
@@ -357,20 +326,16 @@
                                         <td v-text="detalle.cantidad">
                                         </td>
                                         <td>
-                                            {{detalle.precio*detalle.cantidad}}
+                                            {{detalle.precio * detalle.cantidad}}
                                         </td>
                                     </tr>
                                     <tr style="background-color: grey;">
                                         <td colspan="4" align="right"><strong>Sub-Total:</strong></td>
-                                        <td><strong>USD$ {{subTotal=(total-subTotalImpuesto).toFixed(2)}}</strong></td>
-                                    </tr>
-                                    <tr style="background-color: grey;">
-                                        <td colspan="4" align="right"><strong>Impuesto:</strong></td>
-                                        <td><strong>USD$ {{subTotalImpuesto=((total*impuesto)).toFixed(2)}}</strong></td>
+                                        <td><strong>$ {{subTotal=(total).toFixed(2) }}</strong></td>
                                     </tr>
                                     <tr style="background-color: grey;">
                                         <td colspan="4" align="right"><strong>Total:</strong></td>
-                                        <td><strong>USD$ {{total}}</strong></td>
+                                        <td><strong>$ {{total = calcularTotal}}</strong></td>
                                     </tr>
 
                                 </tbody>
@@ -430,7 +395,7 @@
                                     <th>Categoria</th>
                                     <th>Producto</th>
                                     <th>Codigo</th>
-                                    <th>Precio Venta (USD$)</th>
+                                    <th>Precio Venta ($)</th>
                                     <th>Stock</th>
                                     <th>Estado</th>
                                     <th>Accion</th>
@@ -503,14 +468,13 @@
                 nombre : '',
                 tipo_identificacion : 'FACTURA',
                 num_compra : '',
-                impuesto: 0.12,
                 total:0.0,
-                subTotalImpuesto: 0.0,
                 subTotal: 0.0,
                 arrayCompra : [],
                 arrayCompra1 : [],
                 arrayProveedor: [],
                 arrayDetalle : [],
+                arrayDetalleCompra :[],
                 listado:1,
                 modal : 0,
                 tituloModal : '',
@@ -667,7 +631,6 @@
 
                let me = this;
                me.listado=2;
-
                //Obtener los datos de la compra
                var arrayCompraT=[];
 
@@ -677,13 +640,12 @@
 
                axios.get(url).then(function (response){
                     var respuesta = response.data;
-                    me.arrayCompraT = respuesta.compra;
-
-                    me.proveedor = me.arrayCompraT[0]['nombre'];
-                    me.tipo_identificacion = me.arrayCompraT[0]['tipo_identificacion'];
-                    me.num_compra = me.arrayCompraT[0]['num_compra'];
-                    me.impuesto = me.arrayCompraT[0]['impuesto'];
-                    me.total = me.arrayCompraT[0]['total'];
+                    // me.arrayCompraT = respuesta.compra;
+                   arrayCompraT = respuesta.compra;
+                    me.proveedor = arrayCompraT[0]['nombre'];
+                    me.tipo_identificacion = arrayCompraT[0]['tipo_identificacion'];
+                    me.num_compra = arrayCompraT[0]['num_compra'];
+                    me.total = arrayCompraT[0]['total'];
 
                })
                 .catch(function (error) {
@@ -694,10 +656,9 @@
                 var urld = '/compra/obtenerDetalles?id=' + id;
 
                 axios.get(urld).then(function (response){
-                     console.log(response);
+                     console.log(response.data);
                      var respuesta = response.data;
-                     me.arrayDetalle = respuesta.detalles;
-
+                     me.arrayDetalleCompra = respuesta.detalles;
 
                 })
                  .catch(function (error) {
@@ -908,7 +869,6 @@
                     'idproveedor': me.idproveedor,
                     'tipo_identificacion': me.tipo_identificacion,
                     'num_compra' : me.num_compra,
-                    'impuesto' : me.impuesto,
                     'total' : me.total,
                     'data' : me.arrayDetalle
 
@@ -920,7 +880,6 @@
                     me.idproveedor=0;
                     me.tipo_identificacion='FACTURA';
                     me.num_compra='';
-                    me.impuesto=0.12;
                     me.total=0.0;
                     me.idproducto=0;
                     me.producto='';
@@ -946,7 +905,6 @@
                 if (this.idproveedor==0) this.errorMostrarMsjCompra.push("(*)Debe de seleccionar un proveedor");
                 if (this.tipo_identificacion==0) this.errorMostrarMsjCompra.push("(*)Debe de seleccionar tipo de identificacion");
                 if (!this.num_compra) this.errorMostrarMsjCompra.push("(*)Debe ingresar numero de compra");
-                if (!this.impuesto) this.errorMostrarMsjCompra.push("(*)Impuesto no debe estar en blanco");
                 if (this.arrayDetalle.length<=0) this.errorMostrarMsjCompra.push("(*)Debe haber datos de detalle de productos");
 
                 if (this.errorMostrarMsjCompra.length) this.errorCompra = 1;
@@ -965,7 +923,6 @@
               me.idproveedor=0;
               me.tipo_identificacion='FACTURA';
               me.num_compra='';
-              me.impuesto=0.12;
               me.total=0.0;
               me.idproducto=0;
               me.producto='';

@@ -12,12 +12,12 @@
         /*margin: 0 auto; */
         /*color: #555555;*/
         /*background: #FFFFFF; */
-        font-family: Arial, sans-serif; 
+        font-family: Arial, sans-serif;
         font-size: 14px;
         /*font-family: SourceSansPro;*/
         }
- 
- 
+
+
         #datos{
         float: left;
         margin-top: 0%;
@@ -25,14 +25,14 @@
         margin-right: 2%;
         /*text-align: justify;*/
         }
- 
+
         #encabezado{
         text-align: center;
         margin-left: 35%;
         margin-right: 35%;
         font-size: 15px;
         }
- 
+
         #fact{
         /*position: relative;*/
         float: right;
@@ -42,63 +42,63 @@
         font-size: 20px;
         background:#D2691E;
         }
- 
+
         section{
         clear: left;
         }
- 
+
         #cliente{
         text-align: left;
         }
- 
+
         #facliente{
         width: 40%;
         border-collapse: collapse;
         border-spacing: 0;
         margin-bottom: 15px;
         }
- 
+
         #fac, #fv, #fa{
         color: #FFFFFF;
         font-size: 15px;
         }
- 
+
         #facliente thead{
         padding: 20px;
         background:#D2691E;
         text-align: left;
-        border-bottom: 1px solid #FFFFFF;  
+        border-bottom: 1px solid #FFFFFF;
         }
- 
+
         #facvendedor{
         width: 100%;
         border-collapse: collapse;
         border-spacing: 0;
         margin-bottom: 15px;
         }
- 
+
         #facvendedor thead{
         padding: 20px;
         background: #D2691E;
         text-align: center;
-        border-bottom: 1px solid #FFFFFF;  
+        border-bottom: 1px solid #FFFFFF;
         }
- 
+
         #facproducto{
         width: 100%;
         border-collapse: collapse;
         border-spacing: 0;
         margin-bottom: 15px;
         }
- 
+
         #facproducto thead{
         padding: 20px;
         background: #D2691E;
         text-align: center;
-        border-bottom: 1px solid #FFFFFF;  
+        border-bottom: 1px solid #FFFFFF;
         }
- 
-       
+
+
     </style>
     <body>
         @foreach ($ventas as $v)
@@ -108,9 +108,9 @@
             </div>
 
             <div>
-                
+
                 <table id="datos">
-                    <thead>                        
+                    <thead>
                         <tr>
                             <th id="">DATOS DEL VENDEDOR</th>
                         </tr>
@@ -126,17 +126,17 @@
                     </tbody>
                 </table>
             </div>
-            
+
             <div id="fact">
                 <p>FACT/COMP {{$v->num_venta}}<br>
                  # DOCUM {{$v->num_documento}}</p>
             </div>
         </header>
         <br>
-       
+
         @endforeach
         <br>
-       
+
         <section>
             <div>
                 <table id="facproducto">
@@ -145,9 +145,9 @@
                             <th>PRODUC_ID</th>
                             <th>PRODUCTO</th>
                             <th>CANTIDAD</th>
-                            <th>PRECIO VENTA (USD$)</th>
+                            <th>PRECIO VENTA ($)</th>
                             <th>DESCUENTO</th>
-                            <th>PRECIO TOTAL (USD$)</th>
+                            <th>PRECIO TOTAL ($)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -169,21 +169,21 @@
                             <th></th>
                             <th></th>
                             <th>SUBTOTAL</th>
-                            <td>USD$ {{round($v->total-($v->total*$v->impuesto),2)}}</td>
+                            <td>$ {{round($v->total-($v->total*$v->impuesto),2)}}</td>
                         </tr>
                         <tr>
                             <th></th>
                             <th></th>
                             <th></th>
                             <th>Impuesto</th>
-                            <td>USD$ {{round($v->total*$v->impuesto,2)}}</td>
+                            <td>$ {{round($v->total*$v->impuesto,2)}}</td>
                         </tr>
                         <tr>
                             <th></th>
                             <th></th>
                             <th></th>
                             <th>TOTAL</th>
-                            <td>USD$ {{$v->total}}</td>
+                            <td>$ {{$v->total}}</td>
                         </tr>
                         @endforeach
                     </tfoot>

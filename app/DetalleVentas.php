@@ -9,11 +9,10 @@ class DetalleVentas extends Model
     //
     protected $table = 'detalle_ventas';
     protected $fillable = [
-        'idventa', 
+        'idventa',
         'idproducto',
         'cantidad',
-        'precio',
-        'descuento'
+        'precio'
     ];
 
     public $timestamps = false;

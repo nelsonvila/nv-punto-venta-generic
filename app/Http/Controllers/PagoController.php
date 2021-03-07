@@ -33,7 +33,7 @@ class PagoController extends Controller
             $pago= Pagos::where($criterio,'like','%'.$buscar.'%')->orderBy('id','desc')->paginate(3);
         }
 
-         
+
         return[
 
             'pagination' => [
@@ -43,13 +43,13 @@ class PagoController extends Controller
             'last_page'        => $pago->lastPage(),
             'from'             => $pago->firstItem(),
             'to'               => $pago->lastItem(),
-           
+
             ],
 
             'pago' =>$pago
 
         ];
-       
+
     }
 
     public function pdf(Request $request, $id){
@@ -57,7 +57,7 @@ class PagoController extends Controller
         $pagos= Pagos::where('id',$id)->orderBy('id','desc')->get();
 
         $cont=Pagos::where('id',$id)->count();
-       
+
         $hoy = Carbon::now()->format('d/m/Y');
 
         $cliente= Pagos::select('idcliente','nombre')->where('id',$id)->get();
@@ -65,21 +65,21 @@ class PagoController extends Controller
         $pdf= \PDF::loadView('pdf.pagos',['pagos'=>$pagos,'cont'=>$cont]);
         return $pdf->download('pagos-cliente=>'.$cliente.'Fecha=>'.$hoy.'.pdf');
 
-      
+
     }
 
 
 
-    
+
     public function store(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         try{
             DB::beginTransaction();
- 
-            $mytime= Carbon::now('America/Guayaquil');
- 
+
+            $mytime= Carbon::now('America/Argentina/Buenos_Aires');
+
             $pagos = new Pagos();
             $pagos->factura = $request->factura;
             $pagos->tipo_pago = $request->tipo_pago;
@@ -92,7 +92,7 @@ class PagoController extends Controller
             $pagos->valor = $request->valor;
 
             $pagos->save();
-            
+
             DB::commit();
         } catch (Exception $e){
             DB::rollBack();

@@ -14,15 +14,15 @@ class CompraController extends Controller
     public function index(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         $buscar = $request->buscar;
         $criterio = $request->criterio;
-         
+
         if ($buscar==''){
             $compras = Compra::join('proveedores','compras.idproveedor','=','proveedores.id')
             ->join('users','compras.idusuario','=','users.id')
             ->select('compras.id','compras.tipo_identificacion',
-            'compras.num_compra','compras.fecha_compra','compras.impuesto','compras.total',
+            'compras.num_compra','compras.fecha_compra','compras.total',
             'compras.estado','proveedores.nombre','users.usuario')
             ->orderBy('compras.id', 'desc')->paginate(3);
         }
@@ -30,11 +30,11 @@ class CompraController extends Controller
             $compras = Compra::join('proveedores','compras.idproveedor','=','proveedores.id')
             ->join('users','compras.idusuario','=','users.id')
             ->select('compras.id','compras.tipo_identificacion',
-            'compras.num_compra','compras.fecha_compra','compras.impuesto','compras.total',
+            'compras.num_compra','compras.fecha_compra','compras.total',
             'compras.estado','proveedores.nombre','users.usuario')
             ->where('compras.'.$criterio, 'like', '%'. $buscar . '%')->orderBy('compras.id', 'desc')->paginate(3);
         }
-         
+
         return [
             'pagination' => [
                 'total'        => $compras->total(),
@@ -67,7 +67,7 @@ class CompraController extends Controller
         $compra = Compra::join('proveedores','compras.idproveedor','=','proveedores.id')
         ->join('users','compras.idusuario','=','users.id')
         ->select('compras.id','compras.tipo_identificacion',
-        'compras.num_compra','compras.fecha_compra','compras.impuesto','compras.total',
+        'compras.num_compra','compras.fecha_compra','compras.total',
         'compras.estado','proveedores.nombre','users.usuario')
         ->where('compras.id','=',$id)
         ->orderBy('compras.id', 'desc')->take(1)->get();
@@ -95,7 +95,7 @@ class CompraController extends Controller
         $compras = Compra::join('proveedores','compras.idproveedor','=','proveedores.id')
         ->join('users','compras.idusuario','=','users.id')
         ->select('compras.id','compras.tipo_identificacion','compras.num_compra',
-        'compras.created_at','compras.impuesto','compras.total',
+        'compras.created_at','compras.total',
         'compras.estado','proveedores.nombre','proveedores.tipo_documento',
         'proveedores.num_documento','proveedores.direccion','proveedores.email',
         'proveedores.telefono','users.usuario','users.nombre as nom_usuario')
@@ -117,34 +117,33 @@ class CompraController extends Controller
 
     }
 
-    
-   
+
+
     public function store(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         try{
             DB::beginTransaction();
- 
-            $mytime= Carbon::now('America/Guayaquil');
- 
+
+            $mytime= Carbon::now('America/Argentina/Buenos_Aires');
+
             $compra = new Compra();
             $compra->idproveedor = $request->idproveedor;
             $compra->idusuario = \Auth::user()->id;
             $compra->tipo_identificacion = $request->tipo_identificacion;
             $compra->num_compra = $request->num_compra;
             $compra->fecha_compra = $mytime->toDateString();
-            $compra->impuesto = $request->impuesto;
             $compra->total = $request->total;
             $compra->estado = 'Registrado';
             $compra->save();
-            
+
             //Array de detalles
             $detalles = $request->data;
-            
-            
+
+
             //Recorro todos los elementos
- 
+
             foreach($detalles as $a=>$det)
             {
                 $detalle = new DetalleCompra();
@@ -153,17 +152,17 @@ class CompraController extends Controller
                 $detalle->idcompra = $compra->id;
                 $detalle->idproducto = $det['idproducto'];
                 $detalle->cantidad = $det['cantidad'];
-                $detalle->precio = $det['precio'];          
+                $detalle->precio = $det['precio'];
                 $detalle->save();
             }
-               
+
 
             DB::commit();
         } catch (Exception $e){
             DB::rollBack();
         }
     }
- 
+
     public function desactivar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');

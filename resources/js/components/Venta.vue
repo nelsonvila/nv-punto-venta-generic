@@ -49,7 +49,7 @@
                                         <th>Cliente</th>
                                         <th>Tipo de identificación</th>
                                         <th>Vendedor</th>
-                                        <th>Total (USD$)</th>
+                                        <th>Total ($)</th>
                                         <th>Impuesto</th>
                                         <th>Estado</th>
                                         <th>Cambiar estado</th>
@@ -296,10 +296,10 @@
                                         <tr class="bg-success">
                                             <th>Eliminar</th>
                                             <th>Producto</th>
-                                            <th>Precio (USD$)</th>
+                                            <th>Precio ($)</th>
                                             <th>Cantidad</th>
                                             <th>Descuento</th>
-                                            <th>Total (USD$)</th>
+                                            <th>Total ($)</th>
                                         </tr>
                                     </thead>
                                     <tbody v-if="arrayDetalle.length">
@@ -328,15 +328,15 @@
                                         </tr>
                                         <tr style="background-color: grey;">
                                             <td colspan="5" align="right"><strong>Sub-Total:</strong></td>
-                                            <td><strong> USD$ {{subTotal=(total-subTotalImpuesto).toFixed(2)}}</strong></td>
+                                            <td><strong> $ {{subTotal=(total-subTotalImpuesto).toFixed(2)}}</strong></td>
                                         </tr>
                                         <tr style="background-color: grey;">
                                             <td colspan="5" align="right"><strong>Impuesto:</strong></td>
-                                            <td><strong>USD$ {{subTotalImpuesto=((total*impuesto)/(1+impuesto)).toFixed(2)}}</strong></td>
+                                            <td><strong>$ {{subTotalImpuesto=((total*impuesto)/(1+impuesto)).toFixed(2)}}</strong></td>
                                         </tr>
                                         <tr style="background-color: grey;">
                                             <td colspan="5" align="right"><strong>Total:</strong></td>
-                                            <td><strong>USD$ {{total=calcularTotal}}</strong></td>
+                                            <td><strong>$ {{total=calcularTotal}}</strong></td>
                                         </tr>
                                     </tbody>
                                     <tbody v-else>
@@ -405,10 +405,10 @@
                                 <thead>
                                     <tr class="bg-success">
                                         <th>Producto</th>
-                                        <th>Precio (USD$)</th>
+                                        <th>Precio ($)</th>
                                         <th>Cantidad</th>
                                         <th>Descuento</th>
-                                        <th>Total (USD$)</th>
+                                        <th>Total ($)</th>
                                     </tr>
                                 </thead>
                                 <tbody v-if="arrayDetalle.length">
@@ -427,15 +427,15 @@
                                     </tr>
                                     <tr style="background-color: grey;">
                                         <td colspan="3" align="right"><strong>Sub-Total:</strong></td>
-                                        <td><strong>USD$ {{subTotal=(total-subTotalImpuesto).toFixed(2)}}</strong></td>
+                                        <td><strong>$ {{subTotal=(total-subTotalImpuesto).toFixed(2)}}</strong></td>
                                     </tr>
                                     <tr style="background-color: grey;">
                                         <td colspan="3" align="right"><strong>Impuesto:</strong></td>
-                                        <td><strong>USD$ {{subTotalImpuesto=((total*impuesto)).toFixed(2)}}</strong></td>
+                                        <td><strong>$ {{subTotalImpuesto=((total*impuesto)).toFixed(2)}}</strong></td>
                                     </tr>
                                     <tr style="background-color: grey;">
                                         <td colspan="3" align="right"><strong>Total:</strong></td>
-                                        <td><strong>USD$ {{total}}</strong></td>
+                                        <td><strong>$ {{total}}</strong></td>
                                     </tr>
                                 </tbody>
                                 <tbody v-else>
@@ -597,7 +597,7 @@
                                         <th>Categoria</th>
                                         <th>Producto</th>
                                         <th>Codigo</th>
-                                        <th>Precio Venta (USD$)</th>
+                                        <th>Precio Venta ($)</th>
                                         <th>Stock</th>
                                         <th>Estado</th>
                                         <th>Acción</th>

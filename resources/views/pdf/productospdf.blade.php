@@ -12,7 +12,7 @@
             font-size: 0.875rem;
             font-weight: normal;
             line-height: 1.5;
-            color: #151b1e;           
+            color: #151b1e;
         }
         .table {
             display: table;
@@ -82,7 +82,7 @@
     </style>
 </head>
 <body>
-    <div id="logo">  
+    <div id="logo">
         <img src="img/logo-empresa.png" alt="" id="imagen">
     </div>
     <div>
@@ -95,11 +95,11 @@
               <col span="s" style="background-color:yellow;">
            </colgroup>
             <thead>
-                <tr style="background-color: black; color:white"> 
+                <tr style="background-color: black; color:white">
                     <th>Categoría</th>
                     <th>Producto</th>
                     <th>Código</th>
-                    <th>Precio Venta (USD$)</th>
+                    <th>Precio Venta ($)</th>
                     <th>Stock</th>
                     <th>Estado</th>
                 </tr>
@@ -114,12 +114,12 @@
                     <td>{{$a->stock}}</td>
                     <td>{{$a->condicion?'Activo':'Desactivado'}}</td>
                 </tr>
-                @endforeach                               
+                @endforeach
             </tbody>
         </table>
     </div>
     <div class="izquierda">
         <p><strong>Total de registros: </strong>{{$cont}}</p>
-    </div>    
+    </div>
 </body>
 </html>

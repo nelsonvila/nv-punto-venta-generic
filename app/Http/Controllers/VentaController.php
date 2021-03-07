@@ -16,25 +16,21 @@ class VentaController extends Controller
     //
     public function index(Request $request){
 
-        if (!$request->ajax()) return redirect('/');
+
 
         $buscar = $request->buscar;
         $criterio = $request->criterio;
 
         if ($buscar==''){
-            $ventas = Venta::join('clientes','ventas.idcliente','=','clientes.id')
-            ->join('users','ventas.idusuario','=','users.id')
-            ->select('ventas.id','ventas.tipo_identificacion',
-            'ventas.num_venta','ventas.fecha_venta','ventas.impuesto','ventas.total',
-            'ventas.estado','clientes.nombre','users.usuario')
+            $ventas = Venta::join('users','ventas.idusuario','=','users.id')
+            ->select('ventas.id','ventas.num_venta','ventas.fecha_venta','ventas.total',
+            'ventas.estado','users.usuario')
             ->orderBy('ventas.id', 'desc')->paginate(3);
         }
         else{
-            $ventas = Venta::join('clientes','ventas.idcliente','=','clientes.id')
-            ->join('users','ventas.idusuario','=','users.id')
-            ->select('ventas.id','ventas.tipo_identificacion',
-            'ventas.num_venta','venta.fecha_venta','ventas.impuesto','ventas.total',
-            'ventas.estado','clientes.nombre','users.usuario')
+            $ventas = Venta::join('users','ventas.idusuario','=','users.id')
+            ->select('ventas.id','ventas.num_venta','venta.fecha_venta','ventas.total',
+            'ventas.estado','users.usuario')
             ->where('ventas.'.$criterio, 'like', '%'. $buscar . '%')->orderBy('ventas.id', 'desc')->paginate(3);
         }
 
@@ -59,7 +55,7 @@ class VentaController extends Controller
 
         $filtro = $request->filtro;
         $ventas = Venta::where('num_venta','=', $filtro)
-        ->select('id','idcliente','num_venta','fecha_venta','impuesto')->orderBy('num_venta', 'asc')->take(1)->get();
+        ->select('id','idcliente','num_venta','fecha_venta')->orderBy('num_venta', 'asc')->take(1)->get();
 
         return ['ventas' => $ventas];
     }
@@ -70,8 +66,8 @@ class VentaController extends Controller
         $id = $request->id;
         $ventas = Venta::join('clientes','ventas.idcliente','=','clientes.id')
         ->join('users','ventas.idusuario','=','users.id')
-        ->select('ventas.id','ventas.tipo_identificacion',
-        'ventas.num_venta','ventas.fecha_venta','ventas.impuesto','ventas.total',
+        ->select('ventas.id',
+        'ventas.num_venta','ventas.fecha_venta','ventas.total',
         'ventas.estado','clientes.nombre','users.usuario')
         ->where('ventas.id','=',$id)
         ->orderBy('ventas.id', 'desc')->take(1)->get();
@@ -84,7 +80,7 @@ class VentaController extends Controller
 
         $id = $request->id;
         $detalles = DetalleVentas::join('productos','detalle_ventas.idproducto','=','productos.id')
-        ->select('detalle_ventas.cantidad','detalle_ventas.precio','detalle_ventas.descuento',
+        ->select('detalle_ventas.cantidad','detalle_ventas.precio',
         'productos.nombre as producto')
         ->where('detalle_ventas.idventa','=',$id)
         ->orderBy('detalle_ventas.id', 'desc')->get();
@@ -119,8 +115,8 @@ class VentaController extends Controller
 
         $ventas = Venta::join('clientes','ventas.idcliente','=','clientes.id')
         ->join('users','ventas.idusuario','=','users.id')
-        ->select('ventas.id','ventas.tipo_identificacion','ventas.num_venta',
-        'ventas.created_at','ventas.impuesto','ventas.total',
+        ->select('ventas.id','ventas.num_venta',
+        'ventas.created_at','ventas.total',
         'ventas.estado','clientes.nombre','clientes.tipo_documento','clientes.num_documento',
         'clientes.direccion','clientes.email','clientes.telefono','users.usuario')
         ->where('ventas.id','=',$id)
@@ -147,15 +143,12 @@ class VentaController extends Controller
         try{
             DB::beginTransaction();
 
-            $mytime= Carbon::now('America/Guayaquil');
+            $mytime= Carbon::now('America/Argentina/Buenos_Aires');
 
             $ventas = new Venta();
-            $ventas->idcliente = $request->idcliente;
             $ventas->idusuario = \Auth::user()->id;
-            $ventas->tipo_identificacion = $request->tipo_identificacion;
             $ventas->num_venta = $request->num_venta;
             $ventas->fecha_venta = $mytime->toDateString();
-            $ventas->impuesto = $request->impuesto;
             $ventas->total = $request->total;
             $ventas->estado = 'Registrado';
             $ventas->save();
@@ -175,7 +168,6 @@ class VentaController extends Controller
                 $detalle->idproducto = $det['idproducto'];
                 $detalle->cantidad = $det['cantidad'];
                 $detalle->precio = $det['precio'];
-                $detalle->descuento = $det['descuento'];
                 $detalle->save();
             }
 

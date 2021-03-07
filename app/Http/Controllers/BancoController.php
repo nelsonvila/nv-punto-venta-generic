@@ -29,7 +29,7 @@ class BancoController extends Controller
             $bancos= Banco::where($criterio,'like','%'.$buscar.'%')->orderBy('id','desc')->paginate(3);
         }
 
-         
+
         return[
 
             'pagination' => [
@@ -39,13 +39,13 @@ class BancoController extends Controller
             'last_page'        => $bancos->lastPage(),
             'from'             => $bancos->firstItem(),
             'to'               => $bancos->lastItem(),
-           
+
             ],
 
             'bancos' =>$bancos
 
         ];
-       
+
     }
 
     Public function listarBancosTotal(Request $request){
@@ -79,13 +79,13 @@ class BancoController extends Controller
 
         $cont=ClienteBanco::count();
 
-        
+
         $hoy = Carbon::now()->format('d/m/Y');
         $pdf= \PDF::loadView('pdf.bancospdf',['clienteban'=>$clienteban,'cont'=>$cont]);
         return $pdf->download('bancos-'.$hoy.'.pdf');
 
         //return $pdf->download('bancos.pdf');
-        
+
 
     }
 
@@ -93,8 +93,8 @@ class BancoController extends Controller
 
         if(!$request->ajax()) return redirect('/');
         $bancos = Banco::where('condicion','=','1')
-        ->select('id','nombre')->orderBy('nombre','asc')->get(); 
-        
+        ->select('id','nombre')->orderBy('nombre','asc')->get();
+
         return ['bancos' => $bancos];
     }
 
@@ -112,10 +112,10 @@ class BancoController extends Controller
         'clientes.nombre as nombre_cliente','clientes,tipo_documento','clientes.num_documento')
         ->where('clientes_banco.idcliente','=',$filtro)
         ->orderBy('clientes_banco.idcliente', 'desc')->get();
-    
+
     }
 
-    
+
     public function listarBcoCliente(Request $request){
 
         if(!$request->ajax()) return redirect('/');
@@ -125,7 +125,7 @@ class BancoController extends Controller
 
         if($buscar==''){
 
-      
+
             $bancoc = ClienteBanco::join('clientes','clientes_banco.idcliente','=','clientes.id')
             ->join('bancos','clientes_banco.idbanco','=','bancos.id')
             ->select('clientes_banco.id','clientes_banco.idcliente','clientes_banco.idbanco','clientes_banco.banco','clientes_banco.tipo_cta',
@@ -135,7 +135,7 @@ class BancoController extends Controller
 
         } else{
 
-         
+
             $bancoc = ClienteBanco::join('clientes','clientes_banco.idcliente','=','clientes.id')
             ->join('bancos','clientes_banco.idbanco','=','bancos.id')
             ->select('clientes_banco.id','clientes_banco.idcliente','clientes_banco.idbanco',
@@ -145,7 +145,7 @@ class BancoController extends Controller
             ->orderBy('clientes_banco.id', 'desc')->paginate(3);
         }
 
-      
+
         return['bancoc' =>$bancoc];
 
 
@@ -180,7 +180,7 @@ class BancoController extends Controller
 
 
 
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -188,23 +188,23 @@ class BancoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    
+
     public function store(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
- 
+
         try{
             DB::beginTransaction();
- 
-            $mytime= Carbon::now('America/Guayaquil');
- 
+
+            $mytime= Carbon::now('America/Argentina/Buenos_Aires');
+
             $bancos= new Banco();
             $bancos->nombre= $request->nombre;
             $bancos->descripcion= $request->descripcion;
             $bancos->condicion= '1';
 
             $bancos->save();
-            
+
             DB::commit();
         } catch (Exception $e){
             DB::rollBack();
@@ -220,7 +220,7 @@ class BancoController extends Controller
 
             DB::beginTransaction();
 
-            $mytime= Carbon::now('America/Guayaquil');
+            $mytime= Carbon::now('America/Argentina/Buenos_Aires');
 
             $bancoscli= new ClienteBanco();
             $bancoscli->idcliente= $request->idcliente;
@@ -233,7 +233,7 @@ class BancoController extends Controller
             $bancoscli->save();
 
             DB::commit();
-      
+
 
         } catch (Exception $e){
             DB::rollback();
@@ -249,8 +249,8 @@ class BancoController extends Controller
         ->select('id','nombre')->orderBy('nombre', 'asc')->take(1)->get();
 
         return ['bancos' => $bancos];
-    
-        
+
+
 
     }
 

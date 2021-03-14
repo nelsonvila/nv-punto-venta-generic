@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -64,11 +65,10 @@ class VentaController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $id = $request->id;
-        $ventas = Venta::join('clientes','ventas.idcliente','=','clientes.id')
-        ->join('users','ventas.idusuario','=','users.id')
+        $ventas = Venta::join('users','ventas.idusuario','=','users.id')
         ->select('ventas.id',
         'ventas.num_venta','ventas.fecha_venta','ventas.total',
-        'ventas.estado','clientes.nombre','users.usuario')
+        'ventas.estado','users.usuario')
         ->where('ventas.id','=',$id)
         ->orderBy('ventas.id', 'desc')->take(1)->get();
 
@@ -143,12 +143,11 @@ class VentaController extends Controller
         try{
             DB::beginTransaction();
 
-            $mytime= Carbon::now('America/Argentina/Buenos_Aires');
-
+            $mytime= new \DateTime();
             $ventas = new Venta();
             $ventas->idusuario = \Auth::user()->id;
             $ventas->num_venta = $request->num_venta;
-            $ventas->fecha_venta = $mytime->toDateString();
+            $ventas->fecha_venta = $mytime->format('Y-m-d H:i:s');
             $ventas->total = $request->total;
             $ventas->estado = 'Registrado';
             $ventas->save();
@@ -170,7 +169,7 @@ class VentaController extends Controller
                 $detalle->precio = $det['precio'];
                 $detalle->save();
             }
-
+            $this->restarStock($detalles);
 
             DB::commit();
         } catch (Exception $e){
@@ -188,6 +187,15 @@ class VentaController extends Controller
     public function obtenerUltimoNumeroVenta(Request $request){
         $ultimoNumeroVenta = Venta::orderBy('num_venta', 'desc')->first() != null ? Venta::orderBy('num_venta', 'desc')->first()->num_venta + 1 : 1;
         return ['numeroVenta'=> $ultimoNumeroVenta];
+    }
+    public function restarStock($detalles){
+
+        foreach($detalles as $a=>$det)
+        {
+            $detalle = Producto::where('id',$det['idproducto'])->first();
+            $detalle->stock = $detalle->stock - $det['cantidad'];
+            $detalle->save();
+        }
     }
 
 }

@@ -24,7 +24,9 @@
                     <li @click="menu=9" class="nav-item">
                         <a class="nav-link active" href="#"><i class="icon-speedometer"></i> Dasboard Detalles</a>
                     </li>
-
+                    <li @click="menu=10" class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-shopping-cart"></i> Caja</a>
+                    </li>
 
 
                 </ul>

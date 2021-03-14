@@ -162,41 +162,31 @@
 
 
                         <div class="form-group row border">
-                            <div class="col-md-6">
+                            <div class="col-md-10">
                                 <div class="form-group">
                                     <label>Producto <h6><span class="badge badge-danger" v-show="idproducto==0">(*Ingrese código del producto1)</span>
                                     </h6></label>
                                     <div class="form-inline">
-                                        <input type="text" class="form-control" v-model="codigo"
+                                        <input type="text" ref="inputCodigo" class="form-control" v-model="codigo" v-on:keyup="buscarProducto()"
                                                @keyup.enter="buscarProducto()" autofocus placeholder="Ingrese código">
                                         <button @click="abrirModal()" class="btn btn-primary">
 
-                                            <i class="fa fa-plus"></i>&nbsp;Agregar Productos
+                                            <i class="fa fa-search"></i>&nbsp;Buscar Productos
 
                                         </button>
-                                        <input type="text" readonly class="form-control" v-model="producto">
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Precio <h6><span class="badge badge-danger" v-show="precio==0">(*Ingrese un valor)</span>
-                                    </h6></label>
-                                    <input type="number" value="0" step="any" class="form-control" v-model="precio">
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Cantidad <h6><span class="badge badge-danger" v-show="cantidad==0">(*Ingrese un valor)</span>
-                                    </h6></label>
-                                    <input type="number" value="0" class="form-control" v-model="cantidad">
+                                    <div>
+                                        <input type="text" style="font-weight: bold;font-size: 16px" readonly class="form-control" v-model="producto">
+                                    </div>
+
+
                                 </div>
                             </div>
 
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <button @click="agregarDetalle()" class="btn btn-primary form-control btnagregar"><i
-                                        class="fa fa-plus fa-2x"></i> Agregar detalle
+                                        class="fa fa-plus fa-2x"></i> Añadir [F9]
                                     </button>
                                 </div>
                             </div>
@@ -242,12 +232,7 @@
                                         </td>
                                     </tr>
                                     <tr style="background-color: grey;">
-                                        <td colspan="5" align="right"><strong>Sub-Total:</strong></td>
-                                        <td><strong> $
-                                            {{ subTotal = (total).toFixed(2) }}</strong></td>
-                                    </tr>
-                                    <tr style="background-color: grey;">
-                                        <td colspan="5" align="right"><strong>Total:</strong></td>
+                                        <td colspan="4" align="right"><strong>Total:</strong></td>
                                         <td><strong>$ {{ total = calcularTotal }}</strong></td>
                                     </tr>
                                     </tbody>
@@ -267,7 +252,7 @@
                                     class="fa fa-times fa-2x"></i> Cerrar
                                 </button>
                                 <button type="button" class="btn btn-success" @click="registrarVenta()"><i
-                                    class="fa fa-save fa-2x"></i> Registrar Venta
+                                    class="fa fa-save fa-2x"></i> Registrar Venta [F8]
                                 </button>
                             </div>
                         </div>
@@ -288,6 +273,18 @@
                                 <div class="form-group">
                                     <label class="text-uppercase"><strong>Número Venta</strong></label>
                                     <p v-text="num_venta"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="text-uppercase"><strong>Fecha</strong></label>
+                                    <p v-text="fecha_venta"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="text-uppercase"><strong>Usuario</strong></label>
+                                    <p v-text="usuario"></p>
                                 </div>
                             </div>
                         </div>
@@ -317,13 +314,8 @@
                                         </td>
                                     </tr>
                                     <tr style="background-color: grey;">
-                                        <td colspan="3" align="right"><strong>Sub-Total:</strong></td>
-                                        <td><strong>$ {{ subTotal = (total).toFixed(2) }}</strong>
-                                        </td>
-                                    </tr>
-                                    <tr style="background-color: grey;">
                                         <td colspan="3" align="right"><strong>Total:</strong></td>
-                                        <td><strong>$ {{ total = calcularTotal}}</strong></td>
+                                        <td><strong>$ {{ total = calcularTotal }}</strong></td>
                                     </tr>
                                     </tbody>
                                     <tbody v-else>
@@ -658,6 +650,17 @@
 import vSelect from 'vue-select';
 
 export default {
+    created() {
+        window.addEventListener('keydown', (e) => {
+            console.log(e.key);
+            if (e.key == 'F8') {
+                this.registrarVenta();
+            }
+            if (e.key == 'F9') {
+                this.agregarDetalle();
+            }
+        });
+    },
     data() {
 
         return {
@@ -669,7 +672,8 @@ export default {
             idbanco1: 0,
             idtarjeta: 0,
             idtarjeta1: 0,
-            cliente: '',
+            usuario: '',
+            fecha_venta:'',
             tipo_identificacion: 'FACTURA',
             num_venta: '',
             total: 0.0,
@@ -732,7 +736,7 @@ export default {
             anulado: 1,
             producto: '',
             precio: 0,
-            cantidad: 0,
+            cantidad: 1,
             stock: 0
         }
 
@@ -823,7 +827,13 @@ export default {
         }
 
     },
+    watch: {
+        producto: function(newValue) {
+            if(newValue != null){
 
+            }
+        },
+    },
     methods: {
 
         listarVenta(page, buscar, criterio) {
@@ -923,26 +933,29 @@ export default {
             let me = this;
 
             const axios = require('axios');
+if(me.codigo.length > 3){
+    var url = '/producto/buscarProductoVenta?filtro=' + me.codigo;
 
-            var url = '/producto/buscarProductoVenta?filtro=' + me.codigo;
+    axios.get(url).then(function (response) {
+        var respuesta = response.data;
+        me.arrayProducto = respuesta.productos;
 
-            axios.get(url).then(function (response) {
-                var respuesta = response.data;
-                me.arrayProducto = respuesta.productos;
+        if (me.arrayProducto.length > 0) {
+            me.producto = me.arrayProducto[0]['nombre'] +' - '+'Stock: '+me.arrayProducto[0]['stock'] +' - '+'Precio: $'+me.arrayProducto[0]['precio_venta'];
+            me.idproducto = me.arrayProducto[0]['id'];
+            me.precio = me.arrayProducto[0]['precio_venta'];
+            me.stock = me.arrayProducto[0]['stock'];
+        } else {
+            me.producto = 'No existe el producto';
+            me.idproducto = 0;
+        }
+    })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
 
-                if (me.arrayProducto.length > 0) {
-                    me.producto = me.arrayProducto[0]['nombre'];
-                    me.idproducto = me.arrayProducto[0]['id'];
-                    me.precio = me.arrayProducto[0]['precio_venta'];
-                    me.stock = me.arrayProducto[0]['stock'];
-                } else {
-                    me.producto = 'No existe el producto';
-                    me.idproducto = 0;
-                }
-            })
-                .catch(function (error) {
-                    console.log(error);
-                });
+
         },
 
         cambiarPagina(page, buscar, criterio) {
@@ -985,19 +998,26 @@ export default {
             me.arrayDetalle.splice(index, 1);
         },
 
-        agregarDetalle() {
+        agregarDetalle(producto) {
             let me = this;
-            if (me.idproducto == 0 || me.cantidad == 0 || me.precio == 0) {
+            if (me.idproducto == 0) {
             } else {
                 if (me.encuentra(me.idproducto)) {
                     swal({
                         type: 'error',
                         title: 'Error...',
                         text: 'Ese producto ya fue agregado',
-                    })
+                    });
+                    me.codigo = "";
+                    me.idproducto = 0;
+                    me.producto = "";
+                    me.cantidad = 0;
+                    me.precio = 0;
+                    me.stock = 0;
+                    this.$refs.inputCodigo.focus();
                 } else {
 
-                    if (me.cantidad > me.stock) {
+                    if (1 > me.stock) {
                         swal({
                             type: 'error',
                             title: 'Error...',
@@ -1007,7 +1027,7 @@ export default {
                         me.arrayDetalle.push({
                             idproducto: me.idproducto,
                             producto: me.producto,
-                            cantidad: me.cantidad,
+                            cantidad: 1,
                             precio: me.precio,
                             stock: me.stock
                         });
@@ -1016,7 +1036,8 @@ export default {
                         me.producto = "";
                         me.cantidad = 0;
                         me.precio = 0;
-                        me.stock = 0
+                        me.stock = 0;
+                        this.$refs.inputCodigo.focus();
                     }
                 }
 
@@ -1278,10 +1299,9 @@ export default {
                 var respuesta = response.data;
                 arrayVentaT = respuesta.ventas;
 
-                me.cliente = arrayVentaT[0]['nombre'];
-                me.tipo_identificacion = arrayVentaT[0]['tipo_identificacion'];
+                me.usuario = arrayVentaT[0]['usuario'];
+                me.fecha_venta = arrayVentaT[0]['fecha_venta'];
                 me.num_venta = arrayVentaT[0]['num_venta'];
-                me.impuesto = arrayVentaT[0]['impuesto'];
                 me.total = arrayVentaT[0]['total'];
             })
                 .catch(function (error) {
@@ -1292,8 +1312,8 @@ export default {
             var urld = '/venta/obtenerDetalle?id=' + id;
 
             axios.get(urld).then(function (response) {
-                console.log(response);
                 var respuesta = response.data;
+                console.log(respuesta.detalles);
                 me.arrayDetalle = respuesta.detalles;
             })
                 .catch(function (error) {
@@ -1384,9 +1404,7 @@ export default {
 
             window.open('http://127.0.0.1:8080/pago/pdf' + id + ',' + '_blank');
 
-        },
-
-
+        }
     },
 
     mounted() {

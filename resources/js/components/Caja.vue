@@ -11,7 +11,7 @@
                     <template v-if="listado==1">
                     <div class="card-header">
 
-                       <h2>Listado de Compras</h2><br/>
+                       <h2>Listado de Cierres de Caja</h2><br/>
 
                         <button class="btn btn-primary btn-lg" type="button" @click="mostrarDetalle()">
                             <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Compra
@@ -24,12 +24,12 @@
                             <div class="col-md-6">
                                 <div class="input-group">
                                     <select class="form-control col-md-3" v-model="criterio">
-                                      <option value="tipo_identificacion">Tipo identificación</option>
-                                      <option value="num_compra">Número Compra</option>
-                                      <option value="fecha_compra">Fecha Compra</option>
+                                      <option value="monto_final">Tipo identificación</option>
+                                      <option value="monto_inicial">Número Compra</option>
+                                      <option value="fecha">Fecha Compra</option>
                                     </select>
-                                    <input type="text"  @keyup.enter="listarCompra(1,buscar,criterio);" v-model="buscar" class="form-control" placeholder="Buscar texto">
-                                    <button type="submit"  @click="listarCompra(1,buscar,criterio);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                    <input type="text"  @keyup.enter="listarCaja(1,buscar,criterio);" v-model="buscar" class="form-control" placeholder="Buscar texto">
+                                    <button type="submit"  @click="listarCaja(1,buscar,criterio);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
                                 </div>
                             </div>
                         </div>
@@ -37,34 +37,23 @@
                             <thead>
                                 <tr class="bg-primary">
 
-                                        <th>Ver Detalle</th>
-                                        <th>Fecha Compra</th>
-                                        <th>Número Compra</th>
-                                        <th>Proveedor</th>
-                                        <th>Tipo de identificación</th>
-                                        <th>Comprador</th>
-                                        <th>Total ($)</th>
+
+                                        <th>Fecha</th>
+                                        <th>Monto Inicial</th>
+                                        <th>Monto Final</th>
+                                        <th>Usuario</th>
                                         <th>Estado</th>
                                         <th>Cambiar estado</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                                <tr v-for="compra in arrayCompra" :key="compra.id">
+                                <tr v-for="compra in arrayCaja" :key="compra.id">
 
-                                        <td>
-                                             <!--compra.id-->
-                                            <button type="button" @click="verCompra(compra.id)" class="btn btn-warning btn-sm">
-                                            <i class="fa fa-eye fa-2x"></i> Ver detalle
-                                            </button> &nbsp;
-
-                                         </td>
-                                        <td v-text="compra.fecha_compra"></td>
-                                        <td v-text="compra.num_compra"></td>
-                                        <td v-text="compra.nombre"></td>
-                                        <td v-text="compra.tipo_identificacion"></td>
+                                        <td v-text="compra.fecha"></td>
+                                        <td v-text="compra.monto_inicial"></td>
+                                        <td v-text="compra.monto_final"></td>
                                         <td v-text="compra.usuario"></td>
-                                        <td v-text="compra.total"></td>
                                         <td>
 
                                              <button type="button" v-if="compra.estado=='Registrado'" class="btn btn-success btn-sm">
@@ -129,7 +118,7 @@
                              <div class="col-md-8">
                                 <div class="form-group">
                                     <label class="text-uppercase"><strong>Número Compra(*)</strong></label>
-                                    <input type="text" class="form-control" @keyup.enter="buscarNumCompra();" v-model="num_compra" placeholder="">
+                                    <input type="text" class="form-control" @keyup.enter="buscarNumCompra();" v-model="monto_inicial" placeholder="">
                                 </div>
                             </div>
 
@@ -151,7 +140,7 @@
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label class="text-uppercase"><strong>Tipo Identificación(*)</strong></label>
-                                    <select class="form-control" v-model="tipo_identificacion">
+                                    <select class="form-control" v-model="monto_final">
                                         <option value="0">Seleccione</option>
                                         <option value="FACTURA">Factura</option>
                                         <option value="TICKET">Ticket</option>
@@ -288,21 +277,21 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                         <label class="text-uppercase"><strong>Tipo_identificacion</strong></label>
-                                         <p v-text="tipo_identificacion"></p>
+                                         <label class="text-uppercase"><strong>monto_final</strong></label>
+                                         <p v-text="monto_final"></p>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                          <label class="text-uppercase"><strong>Num Compra</strong></label>
-                                         <p v-text="num_compra"></p>
+                                         <p v-text="monto_inicial"></p>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="text-uppercase"><strong>Fecha</strong></label>
-                                        <p v-text="num_compra"></p>
+                                        <p v-text="monto_inicial"></p>
                                     </div>
                                 </div>
                             </div>
@@ -362,90 +351,90 @@
                 </div>
                 <!-- Fin ejemplo de tabla Listado -->
             </div>
-            <!--Inicio del modal agregar/actualizar-->
-            <div class="modal fade" :class="{'mostrar':modal}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" v-text="tituloModal"></h4>
-                            <button type="button" @click="cerrarModal()" class="close" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="table-responsive">
-                                <div class="form-group row">
-                                  <div class="col-md-6">
-                                     <div class="input-group">
-                                        <select class="form-control col-md-3" v-model="criterioP">
-                                           <option value="nombre">Producto</option>
-                                           <option value="codigo">Codigo</option>
+<!--            &lt;!&ndash;Inicio del modal agregar/actualizar&ndash;&gt;-->
+<!--            <div class="modal fade" :class="{'mostrar':modal}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">-->
+<!--                <div class="modal-dialog modal-primary modal-lg" role="document">-->
+<!--                    <div class="modal-content">-->
+<!--                        <div class="modal-header">-->
+<!--                            <h4 class="modal-title" v-text="tituloModal"></h4>-->
+<!--                            <button type="button" @click="cerrarModal()" class="close" aria-label="Close">-->
+<!--                              <span aria-hidden="true">×</span>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                        <div class="modal-body">-->
+<!--                            <div class="table-responsive">-->
+<!--                                <div class="form-group row">-->
+<!--                                  <div class="col-md-6">-->
+<!--                                     <div class="input-group">-->
+<!--                                        <select class="form-control col-md-3" v-model="criterioP">-->
+<!--                                           <option value="nombre">Producto</option>-->
+<!--                                           <option value="codigo">Codigo</option>-->
 
-                                        </select>
-                                        <input type="text"  @keyup.enter="listarProducto(buscarP,criterioP);" v-model="buscarP" class="form-control" placeholder="Buscar texto">
-                                        <button type="submit"  @click="listarProducto(buscarP,criterioP);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
-                                      </div>
-                                     </div>
-                                    </div>
-                                <table class="table table-bordered table-striped table-sm">
-                                  <thead>
-                                    <tr class="bg-primary">
+<!--                                        </select>-->
+<!--                                        <input type="text"  @keyup.enter="listarProducto(buscarP,criterioP);" v-model="buscarP" class="form-control" placeholder="Buscar texto">-->
+<!--                                        <button type="submit"  @click="listarProducto(buscarP,criterioP);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>-->
+<!--                                      </div>-->
+<!--                                     </div>-->
+<!--                                    </div>-->
+<!--                                <table class="table table-bordered table-striped table-sm">-->
+<!--                                  <thead>-->
+<!--                                    <tr class="bg-primary">-->
 
-                                    <th>Categoria</th>
-                                    <th>Producto</th>
-                                    <th>Codigo</th>
-                                    <th>Precio Venta ($)</th>
-                                    <th>Stock</th>
-                                    <th>Estado</th>
-                                    <th>Accion</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+<!--                                    <th>Categoria</th>-->
+<!--                                    <th>Producto</th>-->
+<!--                                    <th>Codigo</th>-->
+<!--                                    <th>Precio Venta ($)</th>-->
+<!--                                    <th>Stock</th>-->
+<!--                                    <th>Estado</th>-->
+<!--                                    <th>Accion</th>-->
+<!--                                </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
 
-                                <tr v-for="producto in arrayProducto" :key="producto.id">
+<!--                                <tr v-for="producto in arrayProducto" :key="producto.id">-->
 
-                                    <td v-text="producto.nombre_categoria"></td>
-                                    <td v-text="producto.nombre"></td>
-                                    <td v-text="producto.codigo"></td>
-                                    <td v-text="producto.precio_venta"></td>
-                                    <td v-text="producto.stock"></td>
-                                    <td>
-                                        <button type="button" class="btn btn-success btn-md" v-if="producto.condicion">
+<!--                                    <td v-text="producto.nombre_categoria"></td>-->
+<!--                                    <td v-text="producto.nombre"></td>-->
+<!--                                    <td v-text="producto.codigo"></td>-->
+<!--                                    <td v-text="producto.precio_venta"></td>-->
+<!--                                    <td v-text="producto.stock"></td>-->
+<!--                                    <td>-->
+<!--                                        <button type="button" class="btn btn-success btn-md" v-if="producto.condicion">-->
 
-                                          <i class="fa fa-check fa-2x"></i> Activo
-                                        </button>
+<!--                                          <i class="fa fa-check fa-2x"></i> Activo-->
+<!--                                        </button>-->
 
-                                        <button type="button" class="btn btn-danger btn-md" v-else>
+<!--                                        <button type="button" class="btn btn-danger btn-md" v-else>-->
 
-                                          <i class="fa fa-check fa-2x"></i> Desactivado
-                                        </button>
+<!--                                          <i class="fa fa-check fa-2x"></i> Desactivado-->
+<!--                                        </button>-->
 
-                                    </td>
-                                    <td>
-                                         <button type="button" @click="agregarDetalleModal(producto)" class="btn btn-success btn-md">
+<!--                                    </td>-->
+<!--                                    <td>-->
+<!--                                         <button type="button" @click="agregarDetalleModal(producto)" class="btn btn-success btn-md">-->
 
-                                             <i class="fa fa-check fa-2x"></i> Agregar Producto
-                                         </button>
-                                    </td>
+<!--                                             <i class="fa fa-check fa-2x"></i> Agregar Producto-->
+<!--                                         </button>-->
+<!--                                    </td>-->
 
 
-                                </tr>
+<!--                                </tr>-->
 
-                            </tbody>
-                        </table>
+<!--                            </tbody>-->
+<!--                        </table>-->
 
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" @click="cerrarModal()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="modal-footer">-->
+<!--                            <button type="button" @click="cerrarModal()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>-->
 
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!--Fin del modal-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; /.modal-content &ndash;&gt;-->
+<!--                </div>-->
+<!--                &lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+<!--            </div>-->
+<!--            &lt;!&ndash;Fin del modal&ndash;&gt;-->
 
 
         </main>
@@ -465,12 +454,12 @@
                 idproveedor:0,
                 proveedor:'',
                 nombre : '',
-                tipo_identificacion : 'FACTURA',
-                num_compra : '',
+                monto_final : 'FACTURA',
+                monto_inicial : '',
                 total:0.0,
                 subTotal: 0.0,
-                arrayCompra : [],
-                arrayCompra1 : [],
+                arrayCaja : [],
+                arrayCaja1 : [],
                 arrayProveedor: [],
                 arrayDetalle : [],
                 listado:1,
@@ -490,7 +479,7 @@
 
                 },
                 offset:3,
-                criterio:'num_compra',
+                criterio:'monto_inicial',
                 buscar:'',
                 buscarP:'',
                 criterioP:'nombre',
@@ -562,19 +551,19 @@
 
         methods:{
 
-           listarCompra(page,buscar,criterio){
+           listarCaja(page,buscar,criterio){
 
                let me=this;
 
                const axios = require('axios');
 
-               var url= '/compra?page=' + page + '&buscar='+ buscar + '&criterio='+criterio;
+               var url= '/caja?page=' + page + '&buscar='+ buscar + '&criterio='+criterio;
 
                axios.get(url).then(function (response) {
                     // handle success
                     //console.log(response);
                     var respuesta = response.data;
-                    me.arrayCompra=respuesta.compras.data;
+                    me.arrayCaja=respuesta.compras.data;
                     me.pagination= respuesta.pagination;
                 })
                 .catch(function (error) {
@@ -583,45 +572,10 @@
                 });
            },
 
-           buscarNumCompra(){
-
-               let me=this;
-
-                const axios = require('axios');
-
-                var url= '/compra/buscarc?filtro=' + me.num_compra;
-
-                axios.get(url).then(function (response) {
-                    var respuesta= response.data;
-                    me.arrayCompra1 = respuesta.compras;
-
-                    if (me.arrayCompra1.length>0){
-                        swal({
-                            type: 'error',
-                            title: 'Ya existe',
-                            text: 'Ya existe numero de Compra'
-                        })
-                        /*inicializa el error para seguir ingresando*/
-                        me.errorMostrarMsjCompra = [];
-                        me.errorCompra = 0;
-
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
 
 
-           },
 
 
-           pdfCompra(id,estado){
-
-
-                window.open('http://127.0.0.1:8080/compra/pdf'+ id + ',' + '_blank');
-
-
-           },
 
 
 
@@ -630,7 +584,7 @@
                let me = this;
                me.listado=2;
                //Obtener los datos de la compra
-               var arrayCompraT=[];
+               var arrayCajaT=[];
 
                const axios = require('axios');
 
@@ -638,12 +592,12 @@
 
                axios.get(url).then(function (response){
                     var respuesta = response.data;
-                    // me.arrayCompraT = respuesta.compra;
-                   arrayCompraT = respuesta.compra;
-                    me.proveedor = arrayCompraT[0]['nombre'];
-                    me.tipo_identificacion = arrayCompraT[0]['tipo_identificacion'];
-                    me.num_compra = arrayCompraT[0]['num_compra'];
-                    me.total = arrayCompraT[0]['total'];
+                    // me.arrayCajaT = respuesta.compra;
+                   arrayCajaT = respuesta.compra;
+                    me.proveedor = arrayCajaT[0]['nombre'];
+                    me.monto_final = arrayCajaT[0]['monto_final'];
+                    me.monto_inicial = arrayCajaT[0]['monto_inicial'];
+                    me.total = arrayCajaT[0]['total'];
 
                })
                 .catch(function (error) {
@@ -666,165 +620,6 @@
 
 
            },
-
-
-           selectProveedor(search,loading){
-                let me=this;
-
-
-                loading(true)
-
-                const axios = require('axios');
-
-                var url= '/proveedor/selectProveedor?filtro='+search;
-
-                axios.get(url).then(function (response) {
-                    let respuesta = response.data;
-                    q: search
-                    me.arrayProveedor=respuesta.proveedores;
-                    loading(false)
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-
-            getDatosProveedor(val1){
-                let me = this;
-                me.loading = true;
-                me.idproveedor = val1.id;
-            },
-
-            buscarProducto(){
-                let me = this;
-
-                const axios = require('axios');
-
-                var url= '/producto/buscarProducto?filtro='+me.codigo;
-
-                 axios.get(url).then(function (response) {
-                    let respuesta = response.data;
-                    me.arrayProducto=respuesta.productos;
-
-                    if (me.arrayProducto.length>0){
-                        me.producto=me.arrayProducto[0]['nombre'];
-                        me.idproducto=me.arrayProducto[0]['id'];
-
-                    }
-                    else{
-                       me.producto='No existe producto';
-                       me.idproducto=0;
-
-                    }
-
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-
-
-
-
-            },
-
-           encuentra(id){
-
-               var sw=0;
-               for(var i=0;i<this.arrayDetalle.length;i++){
-                   if(this.arrayDetalle[i].idproducto==id){
-                       sw=true;
-
-                   }
-               }
-               return sw;
-
-           },
-
-           agregarDetalle(){
-
-               let me = this;
-
-                   if(me.producto==0 || me.cantidad==0 || me.precio==0){
-
-                   }
-                   else{
-                       if(me.encuentra(me.idproducto)){
-                           swal({
-                               type:  'error',
-                               title: 'Error...',
-                               text:  'Este producto ya fue agregado..',
-                               })
-                       }
-                       else{
-                           me.arrayDetalle.push({
-                              idproducto: me.idproducto,
-                              producto: me.producto,
-                              cantidad: me.cantidad,
-                              precio: me.precio
-                            });
-                        me.codigo="";
-                        me.idproducto=0;
-                        me.producto="";
-                        me.cantidad=0;
-                        me.precio=0;
-
-                       }
-                   }
-
-
-           },
-
-           agregarDetalleModal(data=[]){
-
-               let me = this;
-
-               if(me.encuentra(data['id'])){
-                    swal({
-                        type:  'error',
-                        title: 'Error...',
-                        text:  'Ese producto ya fue agregado...',
-                    })
-
-               }
-               else{
-                   me.arrayDetalle.push({
-                       idproducto: data['id'],
-                       producto: data['nombre'],
-                       cantidad: 1,
-                       precio: data['precio_venta']
-
-                   });
-               }
-
-           },
-
-            listarProducto(buscar,criterio){
-
-               let me=this;
-
-               const axios = require('axios');
-
-               var url= '/producto/listarProductos?buscar=' + buscar + '&criterio='+criterio;
-
-               axios.get(url).then(function (response) {
-                    // handle succyecess
-                    //console.log(response);
-                    var respuesta = response.data;
-                    me.arrayProducto=respuesta.productos.data;
-                   // me.paginationP = respuesta.paginationP;
-                })
-                .catch(function (error) {
-                    // handle error
-                    console.log(error);
-                });
-           },
-
-           eliminarDetalle(index){
-               let me = this;
-               me.arrayDetalle.splice(index, 1);
-
-           },
-
 
            cambiarPagina(page,buscar,criterio){
 
@@ -865,8 +660,8 @@
                axios.post('/compra/registrar',{
 
                     'idproveedor': me.idproveedor,
-                    'tipo_identificacion': me.tipo_identificacion,
-                    'num_compra' : me.num_compra,
+                    'monto_final': me.monto_final,
+                    'monto_inicial' : me.monto_inicial,
                     'total' : me.total,
                     'data' : me.arrayDetalle
 
@@ -874,10 +669,10 @@
                     // handle success
                     console.log(response);
                     me.listado=1;
-                    me.listarCompra(1,'','num_compra');
+                    me.listarCompra(1,'','monto_inicial');
                     me.idproveedor=0;
-                    me.tipo_identificacion='FACTURA';
-                    me.num_compra='';
+                    me.monto_final='FACTURA';
+                    me.monto_inicial='';
                     me.total=0.0;
                     me.idproducto=0;
                     me.producto='';
@@ -898,11 +693,11 @@
                this.errorCompra=0;
                this.errorMostrarMsjCompra =[];
 
-                if (this.arrayCompra1.length>0) me.errorMostrarMsjCompra.push("Ya existe un numero de compra");
+                if (this.arrayCaja1.length>0) me.errorMostrarMsjCompra.push("Ya existe un numero de compra");
 
                 if (this.idproveedor===0) this.errorMostrarMsjCompra.push("(*)Debe de seleccionar un proveedor");
-                if (this.tipo_identificacion===0) this.errorMostrarMsjCompra.push("(*)Debe de seleccionar tipo de identificacion");
-                if (!this.num_compra) this.errorMostrarMsjCompra.push("(*)Debe ingresar numero de compra");
+                if (this.monto_final===0) this.errorMostrarMsjCompra.push("(*)Debe de seleccionar tipo de identificacion");
+                if (!this.monto_inicial) this.errorMostrarMsjCompra.push("(*)Debe ingresar numero de compra");
                 if (this.arrayDetalle.length<=0) this.errorMostrarMsjCompra.push("(*)Debe haber datos de detalle de productos");
 
                 if (this.errorMostrarMsjCompra.length) this.errorCompra = 1;
@@ -917,10 +712,10 @@
               let me = this;
 
               me.listado=0;
-              me.listarCompra(1,'','num_compra');
+              me.listarCompra(1,'','monto_inicial');
               me.idproveedor=0;
-              me.tipo_identificacion='FACTURA';
-              me.num_compra='';
+              me.monto_final='FACTURA';
+              me.monto_inicial='';
               me.total=0.0;
               me.idproducto=0;
               me.producto='';
@@ -971,7 +766,7 @@
                     axios.put('/compra/desactivar',{
                         'id': id
                     }).then(function (response) {
-                        me.listarCompra(1,'','num_compra');
+                        me.listarCompra(1,'','monto_inicial');
                         swal(
                         'Anulado!',
                         'La compra ha sido anulada con éxito.',
@@ -995,7 +790,7 @@
 
         mounted() {
             //console.log('Component mounted.')
-            this.listarCompra(1,this.buscar,this.criterio);
+            this.listarCaja(1,this.buscar,this.criterio);
         }
     }
 </script>

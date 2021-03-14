@@ -6,197 +6,116 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active"><a href="/">Inicio</a></li>
             </ol>
-            <div class="container-fluid">
-                <!-- Ejemplo de tabla Listado -->
-                <div class="card">
-                    <div class="card-header">
+                <div class="container-fluid">
+                    <!-- Ejemplo de tabla Listado -->
+                    <div class="card">
 
-                       <h2>Listado de Bancos</h2><br/>
+                        <template v-if="listado==1">
+                            <div class="card-header">
 
-                        <button class="btn btn-primary btn-lg" type="button" @click="abrirModal('banco','registrar')">
-                            <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Agregar Banco
-                        </button>
-                        <button class="btn btn-success btn-lg" @click="AsignaBanco();">
-                            <i class="fa fa-file fa-2x"></i>&nbsp;&nbsp;Asigna Banco
-                        </button>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <select class="form-control col-md-3" v-model="criterio">
-                                      <option value="nombre">Nombre</option>
-                                      <option value="descripcion">Descripción</option>
-                                    </select>
-                                    <input type="text"  @keyup.enter="listarBanco(1,buscar,criterio);" v-model="buscar" class="form-control" placeholder="Buscar texto">
-                                    <button type="submit"  @click="listarBanco(1,buscar,criterio);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
-                                </div>
+                                <h2>Listado de Cierres de Caja</h2><br/>
+
+                                <button class="btn btn-primary btn-lg" type="button" @click="mostrarDetalle()">
+                                    <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Compra
+                                </button>
                             </div>
-                        </div>
-                        <table class="table table-bordered table-striped table-sm">
-                            <thead>
-                                <tr class="bg-primary">
+                            <!--listado-->
 
-                                    <th>Nombre</th>
-                                    <th>Descripción</th>
-                                    <th>Estado</th>
-                                    <th>Editar</th>
-                                    <th>Cambiar Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <tr v-for="banco in arrayBanco" :key="banco.id">
-
-                                    <td v-text="banco.nombre"></td>
-                                    <td v-text="banco.descripcion"></td>
-
-                                    <td>
-                                        <button type="button" class="btn btn-success btn-md" v-if="banco.condicion">
-
-                                          <i class="fa fa-check fa-2x"></i> Activo
-                                        </button>
-
-                                        <button type="button" class="btn btn-danger btn-md" v-else>
-
-                                          <i class="fa fa-check fa-2x"></i> Desactivado
-                                        </button>
-
-                                    </td>
-
-                                    <td>
-                                        <button type="button" class="btn btn-info btn-md" @click="abrirModal('banco','actualizar',banco)">
-
-                                          <i class="fa fa-edit fa-2x"></i> Editar
-                                        </button> &nbsp;
-                                    </td>
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <select class="form-control col-md-3" v-model="criterioS">
+                                                <option value="fecha" selected>Fecha</option>
+                                            </select>
+<!--                                            <input type="text"  @keyup.enter="listarCaja(1,buscar,criterio);" v-model="buscar" class="form-control" placeholder="Buscar texto"><input type="text"  @keyup.enter="listarCaja(1,buscar,criterio);" v-model="buscar" class="form-control" placeholder="Buscar texto">-->
+                                            <datepicker v-model="buscarS" format="yyyy-MM-dd" ></datepicker>
+                                            <button type="submit"  @click="listarCaja(1,buscarS,criterioS);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                        </div>
+                                    </div>
+                                    <button type="submit"  @click="limpiar();" class="btn btn-warning"><i class="fa fa-remove"></i> limpiar</button>
+                                </div>
+                                <table class="table table-bordered table-striped table-sm">
+                                    <thead>
+                                    <tr class="bg-primary">
 
 
-                                    <td>
+                                        <th>Fecha</th>
+                                        <th>Monto Inicial</th>
+                                        <th>Monto Final</th>
+                                        <th>Ganancia</th>
+                                        <th>Usuario</th>
+                                        <th>Estado</th>
+                                        <th>Cambiar estado</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody v-if="arrayCaja.length">
 
-                                        <template v-if="banco.condicion">
-                                            <button type="button" class="btn btn-danger btn-sm" @click="desactivarBanco(banco.id)">
-                                                <i class="fa fa-lock fa-2x"></i> Desactivar
+                                    <tr v-for="compra in arrayCaja" :key="compra.id">
+
+                                        <td v-text="compra.fecha"></td>
+                                        <td v-text="'$ '+ compra.monto_inicio"></td>
+                                        <td v-text="'$ '+ compra.monto_final"></td>
+                                        <td v-text="'$ '+ (compra.monto_final - compra.monto_inicio).toFixed(2)"></td>
+                                        <td v-text="compra.usuario"></td>
+                                        <td>
+
+                                            <button type="button" v-if="compra.estado=='Registrado'" class="btn btn-success btn-sm">
+                                                <i class="fa fa-check fa-2x"></i> Registrado
                                             </button>
-                                        </template>
 
-                                        <template v-else>
-                                            <button type="button" class="btn btn-success btn-sm" @click="activarBanco(banco.id)">
-                                                <i class="fa fa-lock fa-2x"></i> Activar
+                                            <button type="button" v-else class="btn btn-danger btn-sm">
+                                                <i class="fa fa-times fa-2x"></i> Anulado
                                             </button>
-                                        </template>
 
-                                    </td>
+                                        </td>
+
+                                        <td>
+                                            <template v-if="compra.estado=='Registrado'">
+                                                <button type="button" class="btn btn-danger btn-sm" @click="desactivarCompra(compra.id)">
+                                                    <i class="fa fa-times fa-2x"></i> Anular Compra
+                                                </button>
+                                            </template>
+
+                                            <template v-else>
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <i class="fa fa-check fa-2x"></i> Cambiado
+                                                </button>
+                                            </template>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                    <tbody v-else>
+                                    <tr>
+                                        <td colspan="6">
+                                            No se han agregado cierres de caja
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <nav>
+                                    <ul class="pagination">
+                                        <li class="page-item" v-f="pagination.current_page > 1">
+                                            <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Anterior</a>
+                                        </li>
+
+                                        <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
+                                            <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
+                                        </li>
 
 
-                                </tr>
-
-                            </tbody>
-                        </table>
-                        <nav>
-                            <ul class="pagination">
-                                <li class="page-item" v-f="pagination.current_page > 1">
-                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Anterior</a>
-                                </li>
-
-                                <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
-                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
-                                </li>
-
-
-                                <li class="page-item" v-if="pagination.current_page < pagination.last_page">
-                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Siguiente</a>
-                                </li>
-                            </ul>
-                        </nav>
+                                        <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+                                            <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Siguiente</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </template>
                     </div>
                 </div>
-                <!-- Fin ejemplo de tabla Listado -->
-            </div>
             </template>
 
-            <template v-if="ingreso==2">
-                    <div class="card-header">
-
-                       <h2>Asociar Clientes a Bancos</h2><br/>
-
-                    </div>
-
-                    <div class="modal-body">
-
-                            <div v-show="errorClienteBanco" class="form-group row div-error">
-
-                                <div class="text-center text-error">
-
-                                    <div v-for="error in errorMostrarMsjCtleBanco" :key="error" v-text="error"></div>
-
-                                </div>
-
-                            </div>
-
-
-                    <div class="form-group row border">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Cliente <span class="text-error" v-show="cliente_id==0">(*Ingrese código del cliente)</span></label>
-                                    <div class="form-inline">
-                                        <input type="text" class="form-control" v-model="cliente_id" @keyup.enter="buscarCliente()" placeholder="Ingrese código">
-                                        <button @click="abrirModal1()" class="btn btn-primary">
-
-                                           <i class="fa fa-plus"></i>&nbsp;Agregar Clientes
-
-                                        </button>
-                                        <input type="text" readonly class="form-control" v-model="nombre_cliente">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Banco <span class="text-error" v-show="banco_id==0">(*Ingrese código del banco)</span></label>
-                                    <div class="form-inline">
-                                        <input type="text" class="form-control" v-model="banco_id" @keyup.enter="buscarBanco()" placeholder="Ingrese código">
-                                        <button @click="abrirModal2()" class="btn btn-primary">
-
-                                           <i class="fa fa-plus"></i>&nbsp;Agregar Bancos
-
-                                        </button>
-                                        <input type="text" readonly class="form-control" v-model="nombre_banco">
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Tipo_cta <span class="text-error" v-show="tipo_cta">(*Ingrese tipo de cuenta)</span></label>
-                                     <select class="form-control" v-model="tipo_cta">
-                                        <option value="0">Seleccione</option>
-                                        <option value="CORRIENTE">Corriente</option>
-                                        <option value="AHORRO">Ahorro</option>
-
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Numero_cta <span class="text-error" v-show="cuenta">(*Ingrese un valor)</span></label>
-                                    <input type="text" class="form-control" v-model="cuenta">
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                         <button type="button" @click="cancelaIng()" v-if="ingreso==2" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cancelar</button>
-                         <button type="button" @click="registrarClienteBanco()" v-if="ingreso==2" class="btn btn-success"><i class="fa fa-save fa-2x"></i> Guardar</button>
-                    </div>
-
-
-            </template>
             <!--Inicio del modal agregar/actualizar-->
             <div class="modal fade" :class="{'mostrar':modal}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog modal-primary modal-lg" role="document">
@@ -251,182 +170,32 @@
                 <!-- /.modal-dialog -->
             </div>
             <!--Fin del modal-->
-
-            <!--Inicio del modal del cliente/consulta-->
-            <div class="modal fade" :class="{'mostrar':modal1}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" v-text="tituloModal"></h4>
-                            <button type="button" @click="cerrarModal1()" class="close" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-
-                        <div class="modal-body">
-
-                         <div class="form-group row">
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <select class="form-control col-md-3" v-model="criterioP">
-                                      <option value="nombre">nombre</option>
-                                      <option value="num_documento">num_documento</option>
-                                    </select>
-                                    <input type="text" @keyup.enter="listarCliente(buscarP,criterioP);" v-model="buscarP" class="form-control" placeholder="Buscar Texto">
-                                    <button type="submit"  @click="listarCliente(buscarP,criterioP);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
-
-                                </div>
-                            </div>
-                        </div>
-
-                         <div class="table-responsive">
-
-                           <table class="table table-bordered table-striped table-sm">
-                                <thead>
-                                    <tr class="bg-primary">
-
-                                        <th>Nombre</th>
-                                        <th>tipo_documento</th>
-                                        <th>num_documento</th>
-                                        <th>Accion</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                   <tr v-for="clientec in arrayCliente" :key="clientec.id">
-
-                                        <td v-text="clientec.nombre"></td>
-                                        <td v-text="clientec.tipo_documento"></td>
-                                        <td v-text="clientec.num_documento"></td>
-
-                                        <td>
-                                                <button type="button" @click="asignardatoscliente(clientec)" class="btn btn-primary btn-sm">
-                                                <i class="fa fa-plus fa-2x"></i> Agregar
-                                                </button>
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                        </table>
-
-
-                         </div>
-
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" @click="cerrarModal1()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
-
-
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-
-            <!--Fin del modal-->
-
-            <!--Inicio del modal del banco/consulta-->
-             <div class="modal fade" :class="{'mostrar':modal2}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" v-text="tituloModal"></h4>
-                            <button type="button" @click="cerrarModal2()" class="close" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-
-                        <div class="modal-body">
-
-                         <div class="form-group row">
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <select class="form-control col-md-3" v-model="criterioQ">
-                                      <option value="nombre">nombre</option>
-                                      <option value="descripcion">descripcion</option>
-                                    </select>
-                                    <input type="text" @keyup.enter="listarBanco2(buscarQ,criterioQ);" v-model="buscarQ" class="form-control" placeholder="Buscar Texto">
-                                    <button type="submit"  @click="listarBanco2(buscarQ,criterioQ);" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
-                                </div>
-                            </div>
-                        </div>
-
-                         <div class="table-responsive">
-
-                           <table class="table table-bordered table-striped table-sm">
-                                <thead>
-                                    <tr class="bg-primary">
-
-                                        <th>Nombre</th>
-                                        <th>Descripcion</th>
-                                        <th>Accion</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-
-
-                                    <tr v-for="bancoc in arrayBanco1" :key="bancoc.id">
-
-                                        <td v-text="bancoc.nombre"></td>
-                                        <td v-text="bancoc.descripcion"></td>
-
-                                        <td>
-                                                <button type="button" @click="asignardatosbanco(bancoc)" class="btn btn-primary btn-sm">
-                                                <i class="fa fa-plus fa-2x"></i> Agregar
-                                                </button>
-                                        </td>
-                                    </tr>
-
-
-                                </tbody>
-                        </table>
-
-
-                         </div>
-
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" @click="cerrarModal2()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
-
-
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-
-
-            <!--Fin del modal-->
-
-
-
-
         </main>
 </template>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-
+import Datepicker from 'vuejs-datepicker';
     export default {
-
+        components: {
+            Datepicker
+        },
         data(){
 
             return {
-
-                banco_id:0,
-                cliente_id:0,
+                buscarS: '',
+                criterioS: 'fecha',
+                fecha:'',
                 nombre:'',
-                nombre_cliente:'',
-                nombre_banco:'',
+                monto_inicio:'',
+                monto_final:'',
+                usuario:'',
+                estado:'',
                 ingreso:1,
+                listado: 1,
                 descripcion:'',
-                arrayBanco:[],
-                arrayBanco1:[],
+                arrayCaja:[],
+                arrayCaja1:[],
                 arrayCliente:[],
                 arrayCliBanco:[],
                 modal:0,
@@ -506,19 +275,26 @@
 
         methods:{
 
-           listarBanco(page,buscar,criterio){
+            listarCaja(page,buscar,criterio){
 
                let me=this;
-
+               if (buscar){
+                   let options = {
+                       year: "numeric",
+                       month: "2-digit",
+                       day: "2-digit"
+                   };
+                   buscar = buscar.toLocaleDateString("fr-CA", options).replace(/\//g, "-");
+               }
                const axios = require('axios');
 
-               var url= '/bancos?page=' + page + '&buscar='+ buscar + '&criterio='+criterio;
+               var url= '/caja?page=' + page + '&buscar='+ buscar + '&criterio='+criterio;
 
                axios.get(url).then(function (response) {
                     // haoyundle success
                     //console.log(response);
                     var respuesta = response.data;
-                    me.arrayBanco=respuesta.bancos.data;
+                    me.arrayCaja=respuesta.cajas.data;
                     me.pagination= respuesta.pagination;
                 })
                 .catch(function (error) {
@@ -526,7 +302,12 @@
                     console.log(error);
                 });
            },
-
+            limpiar(){
+                this.arrayCaja=[];
+                this.buscarS = '';
+                this.pagination= 0;
+                this.listarCaja(1,'','');
+            },
            listarCliente (buscarP,criterioP){
                 let me=this;
 
@@ -549,7 +330,7 @@
                 var url= '/bancos/listarBancos?buscar='+ buscarQ + '&criterio='+ criterioQ;
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
-                    me.arrayBanco1 = respuesta.bancos.data;
+                    me.arrayCaja1 = respuesta.cajas.data;
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -798,10 +579,10 @@
 
                  axios.get(url).then(function (response) {
                     let respuesta = response.data;
-                    me.arrayBanco=respuesta.bancos;
+                    me.arrayCaja=respuesta.bancos;
 
-                    if (me.arrayBanco.length>0){
-                       me.nombre_banco=me.arrayBanco[0]['nombre'];
+                    if (me.arrayCaja.length>0){
+                       me.nombre_banco=me.arrayCaja[0]['nombre'];
 
                     }
                     else{
@@ -833,7 +614,7 @@
 
             abrirModal2(){
 
-                 this.arrayBanco=[];
+                 this.arrayCaja=[];
                  this.modal2=1;
                  this.tituloModal='Seleccione uno o varios bancos';
             },
@@ -1058,7 +839,7 @@
 
         mounted() {
             //console.log('Component mounted.')
-            this.listarBanco(1,this.buscar,this.criterio);
+            this.listarCaja(1,this.buscar,this.criterio);
         }
     }
 </script>

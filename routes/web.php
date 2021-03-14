@@ -232,6 +232,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pago/pdf{id}', 'PagoController@pdf')->name('pago_pdf');
         Route::post('/pago/pagar', 'PagoController@store');
 
+        Route::get('/caja', 'CajaController@index');
+
     });
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Caja;
 use App\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,7 +10,7 @@ use Carbon\Carbon;
 use App\Compra;
 use App\DetalleCompra;
 
-class CompraController extends Controller
+class CajaController extends Controller
 {
     //
     public function index(Request $request)
@@ -20,32 +21,28 @@ class CompraController extends Controller
         $criterio = $request->criterio;
 
         if ($buscar==''){
-            $compras = Compra::join('proveedores','compras.idproveedor','=','proveedores.id')
-            ->join('users','compras.idusuario','=','users.id')
-            ->select('compras.id','compras.tipo_identificacion',
-            'compras.num_compra','compras.fecha_compra','compras.total',
-            'compras.estado','proveedores.nombre','users.usuario')
-            ->orderBy('compras.id', 'desc')->paginate(3);
+            $cajas = Caja::join('users','cajas.idusuario','=','users.id')
+            ->select('cajas.id','cajas.fecha',
+            'cajas.monto_inicio','cajas.monto_final','cajas.estado','users.usuario')
+            ->orderBy('cajas.id', 'desc')->paginate(3);
         }
         else{
-            $compras = Compra::join('proveedores','compras.idproveedor','=','proveedores.id')
-            ->join('users','compras.idusuario','=','users.id')
-            ->select('compras.id','compras.tipo_identificacion',
-            'compras.num_compra','compras.fecha_compra','compras.total',
-            'compras.estado','proveedores.nombre','users.usuario')
-            ->where('compras.'.$criterio, 'like', '%'. $buscar . '%')->orderBy('compras.id', 'desc')->paginate(3);
+            $cajas = Caja::join('users','cajas.idusuario','=','users.id')
+            ->select('cajas.id','cajas.fecha',
+                'cajas.monto_inicio','cajas.monto_final','cajas.estado','users.usuario')
+            ->where('cajas.'.$criterio, 'like', '%'. $buscar . '%')->orderBy('cajas.id', 'desc')->paginate(3);
         }
 
         return [
             'pagination' => [
-                'total'        => $compras->total(),
-                'current_page' => $compras->currentPage(),
-                'per_page'     => $compras->perPage(),
-                'last_page'    => $compras->lastPage(),
-                'from'         => $compras->firstItem(),
-                'to'           => $compras->lastItem(),
+                'total'        => $cajas->total(),
+                'current_page' => $cajas->currentPage(),
+                'per_page'     => $cajas->perPage(),
+                'last_page'    => $cajas->lastPage(),
+                'from'         => $cajas->firstItem(),
+                'to'           => $cajas->lastItem(),
             ],
-            'compras' => $compras
+            'cajas' => $cajas
         ];
     }
 
@@ -54,10 +51,10 @@ class CompraController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $filtro = $request->filtro;
-        $compras = Compra::where('num_compra','=', $filtro)
+        $cajas = Compra::where('num_compra','=', $filtro)
         ->select('id','idproveedor','idusuario','tipo_identificacion','num_compra','fecha_compra')->orderBy('num_compra', 'asc')->take(1)->get();
 
-        return ['compras' => $compras];
+        return ['cajas' => $cajas];
 
     }
 
@@ -65,13 +62,13 @@ class CompraController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $id = $request->id;
-        $compra = Compra::join('proveedores','compras.idproveedor','=','proveedores.id')
-        ->join('users','compras.idusuario','=','users.id')
-        ->select('compras.id','compras.tipo_identificacion',
-        'compras.num_compra','compras.fecha_compra','compras.total',
-        'compras.estado','proveedores.nombre','users.usuario')
-        ->where('compras.id','=',$id)
-        ->orderBy('compras.id', 'desc')->take(1)->get();
+        $compra = Compra::join('proveedores','cajas.idproveedor','=','proveedores.id')
+        ->join('users','cajas.idusuario','=','users.id')
+        ->select('cajas.id','cajas.tipo_identificacion',
+        'cajas.num_compra','cajas.fecha_compra','cajas.total',
+        'cajas.estado','proveedores.nombre','users.usuario')
+        ->where('cajas.id','=',$id)
+        ->orderBy('cajas.id', 'desc')->take(1)->get();
 
         return ['compra' => $compra];
 
@@ -82,10 +79,10 @@ class CompraController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $id = $request->id;
-        $detalles = DetalleCompra::join('productos','detalle_compras.idproducto','=','productos.id')
-        ->select('detalle_compras.cantidad','detalle_compras.precio','productos.nombre as producto')
-        ->where('detalle_compras.idcompra','=',$id)
-        ->orderBy('detalle_compras.id','desc')->get();
+        $detalles = DetalleCompra::join('productos','detalle_cajas.idproducto','=','productos.id')
+        ->select('detalle_cajas.cantidad','detalle_cajas.precio','productos.nombre as producto')
+        ->where('detalle_cajas.idcompra','=',$id)
+        ->orderBy('detalle_cajas.id','desc')->get();
 
         return ['detalles' => $detalles];
 
@@ -93,25 +90,25 @@ class CompraController extends Controller
 
     public function pdf(Request $request,$id){
 
-        $compras = Compra::join('proveedores','compras.idproveedor','=','proveedores.id')
-        ->join('users','compras.idusuario','=','users.id')
-        ->select('compras.id','compras.tipo_identificacion','compras.num_compra',
-        'compras.created_at','compras.total',
-        'compras.estado','proveedores.nombre','proveedores.tipo_documento',
+        $cajas = Compra::join('proveedores','cajas.idproveedor','=','proveedores.id')
+        ->join('users','cajas.idusuario','=','users.id')
+        ->select('cajas.id','cajas.tipo_identificacion','cajas.num_compra',
+        'cajas.created_at','cajas.total',
+        'cajas.estado','proveedores.nombre','proveedores.tipo_documento',
         'proveedores.num_documento','proveedores.direccion','proveedores.email',
         'proveedores.telefono','users.usuario','users.nombre as nom_usuario')
-        ->where('compras.id','=',$id)
-        ->orderBy('compras.id', 'desc')->take(1)->get();
+        ->where('cajas.id','=',$id)
+        ->orderBy('cajas.id', 'desc')->take(1)->get();
 
-        $detalles = DetalleCompra::join('productos','detalle_compras.idproducto','=','productos.id')
-        ->select('detalle_compras.cantidad','detalle_compras.precio','productos.id',
+        $detalles = DetalleCompra::join('productos','detalle_cajas.idproducto','=','productos.id')
+        ->select('detalle_cajas.cantidad','detalle_cajas.precio','productos.id',
         'productos.nombre as producto','productos.stock')
-        ->where('detalle_compras.id','=',$id)
-        ->orderBy('detalle_compras.id', 'desc')->get();
+        ->where('detalle_cajas.id','=',$id)
+        ->orderBy('detalle_cajas.id', 'desc')->get();
 
         $numcompra=Compra::select('num_compra')->where('id',$id)->get();
 
-        $pdf = \PDF::loadView('pdf.compra',['compras'=>$compras,'detalles'=>$detalles]);
+        $pdf = \PDF::loadView('pdf.compra',['cajas'=>$cajas,'detalles'=>$detalles]);
         return $pdf->download('compra-'.$numcompra[0]->num_compra.'.pdf');
 
 
@@ -147,7 +144,7 @@ class CompraController extends Controller
             {
                 $detalle = new DetalleCompra();
                 /*enviamos valores a las propiedades del objeto detalle*/
-                /*al idcompra del objeto detalle le envio el id del objeto compra, que es el objeto que se ingresó en la tabla compras de la bd*/
+                /*al idcompra del objeto detalle le envio el id del objeto compra, que es el objeto que se ingresó en la tabla cajas de la bd*/
                 $detalle->idcompra = $compra->id;
                 $detalle->idproducto = $det['idproducto'];
                 $detalle->cantidad = $det['cantidad'];

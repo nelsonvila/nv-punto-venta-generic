@@ -17,9 +17,9 @@ class CreateCajasTable extends Migration
             $table->increments('id');
             $table->dateTime('fecha');
             $table->decimal('monto_inicio', 11, 2);
-            $table->decimal('monto_final', 11, 2);
+            $table->decimal('monto_final', 11, 2)->nullable();
             $table->integer('idusuario')->unsigned();
-            $table->string('estado', 20);
+            $table->string('estado', 20)->nullable();
             $table->timestamps();
         });
     }

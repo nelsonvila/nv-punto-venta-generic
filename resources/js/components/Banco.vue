@@ -15,8 +15,8 @@
 
                                 <h2>Listado de Cierres de Caja</h2><br/>
 
-                                <button class="btn btn-primary btn-lg" type="button" @click="mostrarDetalle()">
-                                    <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Compra
+                                <button class="btn btn-primary btn-lg" type="button" @click="abrirModal1()">
+                                    <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Caja
                                 </button>
                             </div>
                             <!--listado-->
@@ -55,31 +55,31 @@
 
                                         <td v-text="compra.fecha"></td>
                                         <td v-text="'$ '+ compra.monto_inicio"></td>
-                                        <td v-text="'$ '+ compra.monto_final"></td>
-                                        <td v-text="'$ '+ (compra.monto_final - compra.monto_inicio).toFixed(2)"></td>
+                                        <td>{{compra.monto_final != null ? '$'+ compra.monto_final.toFixed(2) : '$ 0.00'}}</td>
+                                        <td>{{compra.monto_final != null ? '$'+(compra.monto_final - compra.monto_inicio).toFixed(2) : '$ 0.00'}}</td>
                                         <td v-text="compra.usuario"></td>
                                         <td>
 
-                                            <button type="button" v-if="compra.estado=='Registrado'" class="btn btn-success btn-sm">
-                                                <i class="fa fa-check fa-2x"></i> Registrado
+                                            <button type="button" v-if="compra.estado=='Activo'" class="btn btn-danger btn-sm ">
+                                                <i class="fa fa-times fa-2x"></i> Abierta
                                             </button>
 
-                                            <button type="button" v-else class="btn btn-danger btn-sm">
-                                                <i class="fa fa-times fa-2x"></i> Anulado
+                                            <button type="button" v-else class="btn btn-success btn-sm">
+                                                <i class="fa fa-check fa-2x"></i> Cerrada
                                             </button>
 
                                         </td>
 
                                         <td>
-                                            <template v-if="compra.estado=='Registrado'">
+                                            <template v-if="compra.estado=='Activo'">
                                                 <button type="button" class="btn btn-danger btn-sm" @click="desactivarCompra(compra.id)">
-                                                    <i class="fa fa-times fa-2x"></i> Anular Compra
+                                                    <i class="fa fa-times fa-2x"></i> Cerrar Caja
                                                 </button>
                                             </template>
 
                                             <template v-else>
-                                                <button type="button" class="btn btn-danger btn-sm">
-                                                    <i class="fa fa-check fa-2x"></i> Cambiado
+                                                <button type="button" class="btn btn-success btn-sm">
+                                                    <i class="fa fa-check fa-2x"></i> Caja Cerrada
                                                 </button>
                                             </template>
                                         </td>
@@ -116,60 +116,58 @@
                 </div>
             </template>
 
-            <!--Inicio del modal agregar/actualizar-->
-            <div class="modal fade" :class="{'mostrar':modal}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" v-text="tituloModal"></h4>
-                            <button type="button" @click="cerrarModal()" class="close" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
+       <!--Inicio del modal agregar/actualizar-->
+       <div class="modal fade" :class="{'mostrar':modal}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
+           <div class="modal-dialog modal-primary modal-lg" role="document">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <h4 class="modal-title" v-text="tituloModal"></h4>
+                       <button type="button" @click="cerrarModal()" class="close" aria-label="Close">
+                           <span aria-hidden="true">×</span>
+                       </button>
+                   </div>
 
-                        <div class="modal-body">
+                   <div class="modal-body">
 
-                            <div v-show="errorBanco" class="form-group row div-error">
+                       <div v-show="errorCaja" class="form-group row div-error">
 
-                                <div class="text-center text-error">
+                           <div class="text-center text-error">
 
-                                    <div v-for="error in errorMostrarMsjBanco" :key="error" v-text="error"></div>
+                               <div v-for="error in errorMostrarMsjCaja" :key="error" v-text="error"></div>
 
-                                </div>
+                           </div>
 
-                            </div>
-
-
-                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Nombre</label>
-                                    <div class="col-md-9">
-                                        <input type="text" v-model="nombre" class="form-control" placeholder="Nombre de Banco">
-
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Descripción</label>
-                                    <div class="col-md-9">
-                                        <input type="email" v-model="descripcion" class="form-control" placeholder="Ingrese descripcion">
-                                    </div>
-                                </div>
+                       </div>
 
 
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" @click="cerrarModal()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
-                            <button type="button" @click="registrarBanco()" v-if="tipoAccion==1" class="btn btn-success"><i class="fa fa-save fa-2x"></i> Guardar</button>
-                            <button type="button" @click="actualizarBanco()" v-if="tipoAccion==2" class="btn btn-success"><i class="fa fa-save fa-2x"></i> Actualizar</button>
+                       <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                           <div class="form-group row">
+                               <label class="col-md-3 form-control-label" for="text-input">Fecha</label>
+                               <div class="col-md-9">
+                                   <input type="text" readonly="readonly" v-model="fecha" class="form-control" placeholder="Nombre de categoría">
 
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!--Fin del modal-->
+                               </div>
+                           </div>
+                           <div class="form-group row">
+                               <label class="col-md-3 form-control-label" for="email-input">Monto Inicial ($)</label>
+                               <div class="col-md-9">
+                                   <input type="number" min="1" max="100" v-model="montoInicial" class="form-control" placeholder="Ingrese monto del inicio de caja">
+                               </div>
+                           </div>
+                       </form>
+                   </div>
+                   <div class="modal-footer">
+                       <button type="button" @click="cerrarModal()" class="btn btn-danger"><i class="fa fa-times fa-2x"></i> Cerrar</button>
+                       <button type="button" @click="registrarCaja()" v-if="tipoAccion==1" class="btn btn-success"><i class="fa fa-save fa-2x"></i> Guardar</button>
+                       <button type="button" @click="actualizarCaja()" v-if="tipoAccion==2" class="btn btn-success"><i class="fa fa-save fa-2x"></i> Actualizar</button>
+
+                   </div>
+               </div>
+               <!-- /.modal-content -->
+           </div>
+           <!-- /.modal-dialog -->
+       </div>
+       <!--Fin del modal-->
         </main>
 </template>
 
@@ -183,6 +181,10 @@ import Datepicker from 'vuejs-datepicker';
         data(){
 
             return {
+                errorCaja:'',
+                validator: '',
+                montoInicial: '',
+                errorMostrarMsjCaja:'',
                 buscarS: '',
                 criterioS: 'fecha',
                 fecha:'',
@@ -227,7 +229,8 @@ import Datepicker from 'vuejs-datepicker';
                 criterioP:'nombre',
                 buscarP:'',
                 criterioQ:'nombre',
-                buscarQ:''
+                buscarQ:'',
+                valor: ''
             }
 
         },
@@ -606,9 +609,19 @@ import Datepicker from 'vuejs-datepicker';
 
             abrirModal1(){
 
-                this.arrayCliente=[];
-                this.modal1=1;
-                this.tituloModal='Seleccione uno o varios clientes';
+
+                let today = new Date();
+                let options = {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit"
+                };
+                today = today.toLocaleDateString("fr-CA", options).replace(/\//g, "-");
+                this.modal=1;
+                this.tituloModal="Nueva Caja";
+                this.fecha=today;
+                this.montoInicial="";
+                this.tipoAccion=1;
 
             },
 
@@ -628,7 +641,7 @@ import Datepicker from 'vuejs-datepicker';
                 })
 
                 swalWithBootstrapButtons({
-                title: 'Estas seguro de desactivar la categoria?',
+                title: 'Estas seguro de desactivar la Caja?',
                 //type: 'warning',
                 showCancelButton: true,
                 confirmButtonText: '<i class="fa fa-check fa-2x"></i> Aceptar',
@@ -683,7 +696,7 @@ import Datepicker from 'vuejs-datepicker';
                 })
 
                 swalWithBootstrapButtons({
-                title: 'Estas seguro de activar la categoria?',
+                title: 'Estas seguro de activar la Caja?',
                 //type: 'warning',
                 showCancelButton: true,
                 confirmButtonText: '<i class="fa fa-check fa-2x"></i> Aceptar',
@@ -704,7 +717,7 @@ import Datepicker from 'vuejs-datepicker';
                }).then(function (response) {
                     // handle success
                     //console.log(response);
-                    me.listarCategoria(1,'','nombre');
+                    me.listarCaja(1,'','nombre');
 
                      swalWithBootstrapButtons(
                     'Activado!',
@@ -790,7 +803,6 @@ import Datepicker from 'vuejs-datepicker';
 
 
            abrirModal(modelo,accion,data=[]){
-
                  switch(modelo){
 
                     case "banco":
@@ -819,7 +831,7 @@ import Datepicker from 'vuejs-datepicker';
                                     this.modal=1;
                                     this.tituloModal="Editar Banco";
                                     this.tipoAccion=2;
-                                    this.categoria_id=data["id"];
+                                    this.Caja_id=data["id"];
                                     this.nombre=data["nombre"];
                                     this.descripcion=data["descripcion"];
                                     break;
@@ -833,12 +845,83 @@ import Datepicker from 'vuejs-datepicker';
                 }
 
 
-           }
+           },
+            registrarCaja(){
+
+                if(this.validarCaja()){
+
+                    return;
+                }
+
+                let me=this;
+
+                const axios = require('axios');
+
+                axios.post('/caja/registrar',{
+
+                    'monto':me.montoInicial,
+                    'fecha':me.fecha,
+
+
+                }).then(function (response) {
+                    // handle success
+                    //console.log(response);
+                    me.cerrarModal();
+                    me.listarCaja(1,'','nombre');
+
+                }).catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+
+            },
+            validarCaja(){
+                this.errorCaja=0;
+                this.errorMostrarMsjCaja=[];
+                if(!this.montoInicial)  this.errorMostrarMsjCaja.push("(*)El monton de la Caja no puede estar vacio");
+                if(this.errorMostrarMsjCaja.length) this.errorCaja=1;
+
+                return this.errorCaja;
+            },
+
+            verficarCajaCreadaToday(fecha){
+                const axios = require('axios');
+                let url= '/caja/verificarCaja?filtro='+fecha;
+                var valor;
+               const val =  axios.get(url).then(function (response) {
+                    var respuesta = response.data;
+                    if(response.data.caja != null){
+                      return valor = 1;
+
+                    }
+                    else{
+                       return valor = 2;
+
+                    }
+                })
+                    .catch(function (error) {
+                        // handle error
+                        console.log(error);
+                    });
+
+               return val;
+
+
+            },
 
         },
 
         mounted() {
             //console.log('Component mounted.')
+            let today = new Date();
+            let options = {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit"
+            };
+            today = today.toLocaleDateString("fr-CA", options).replace(/\//g, "-");
+           let resultado = this.verficarCajaCreadaToday(today);
+           console.log(resultado);
             this.listarCaja(1,this.buscar,this.criterio);
         }
     }

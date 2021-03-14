@@ -46,15 +46,14 @@ class CajaController extends Controller
         ];
     }
 
-    public function buscarCompra(Request $request){
+    public function verificarCaja(Request $request){
 
         if (!$request->ajax()) return redirect('/');
 
         $filtro = $request->filtro;
-        $cajas = Compra::where('num_compra','=', $filtro)
-        ->select('id','idproveedor','idusuario','tipo_identificacion','num_compra','fecha_compra')->orderBy('num_compra', 'asc')->take(1)->get();
+        $caja = Caja::where('fecha','like','%'.$filtro.'%')->first();
 
-        return ['cajas' => $cajas];
+        return ['caja' => $caja];
 
     }
 
@@ -62,7 +61,7 @@ class CajaController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         $id = $request->id;
-        $compra = Compra::join('proveedores','cajas.idproveedor','=','proveedores.id')
+        $caja = Compra::join('proveedores','cajas.idproveedor','=','proveedores.id')
         ->join('users','cajas.idusuario','=','users.id')
         ->select('cajas.id','cajas.tipo_identificacion',
         'cajas.num_compra','cajas.fecha_compra','cajas.total',
@@ -70,7 +69,7 @@ class CajaController extends Controller
         ->where('cajas.id','=',$id)
         ->orderBy('cajas.id', 'desc')->take(1)->get();
 
-        return ['compra' => $compra];
+        return ['compra' => $caja];
 
 
     }
@@ -124,34 +123,12 @@ class CajaController extends Controller
             DB::beginTransaction();
 
             $mytime= new \DateTime();
-            $compra = new Compra();
-            $compra->idproveedor = $request->idproveedor;
-            $compra->idusuario = \Auth::user()->id;
-            $compra->tipo_identificacion = $request->tipo_identificacion;
-            $compra->num_compra = $request->num_compra;
-            $compra->fecha_compra = $mytime->format('Y-m-d H:i:s');
-            $compra->total = $request->total;
-            $compra->estado = 'Registrado';
-            $compra->save();
-
-            //Array de detalles
-            $detalles = $request->data;
-
-
-            //Recorro todos los elementos
-
-            foreach($detalles as $a=>$det)
-            {
-                $detalle = new DetalleCompra();
-                /*enviamos valores a las propiedades del objeto detalle*/
-                /*al idcompra del objeto detalle le envio el id del objeto compra, que es el objeto que se ingresó en la tabla cajas de la bd*/
-                $detalle->idcompra = $compra->id;
-                $detalle->idproducto = $det['idproducto'];
-                $detalle->cantidad = $det['cantidad'];
-                $detalle->precio = $det['precio'];
-                $detalle->save();
-            }
-            $this->sumarStock($detalles);
+            $caja = new Caja();
+            $caja->fecha = $mytime->format('Y-m-d H:i:s');
+            $caja->monto_inicio = $request->monto;
+            $caja->idusuario = \Auth::user()->id;
+            $caja->estado = 'Activo';
+            $caja->save();
 
             DB::commit();
         } catch (Exception $e){
@@ -162,9 +139,9 @@ class CajaController extends Controller
     public function desactivar(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-        $compra = Compra::findOrFail($request->id);
-        $compra->estado = 'Anulado';
-        $compra->save();
+        $caja = Compra::findOrFail($request->id);
+        $caja->estado = 'Anulado';
+        $caja->save();
     }
     public function sumarStock($detalles){
 

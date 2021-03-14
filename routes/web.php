@@ -233,6 +233,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/pago/pagar', 'PagoController@store');
 
         Route::get('/caja', 'CajaController@index');
+        Route::get('/caja/verificarCaja', 'CajaController@verificarCaja');
+        Route::post('/caja/registrar', 'CajaController@store');
 
     });
 

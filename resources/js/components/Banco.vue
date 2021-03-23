@@ -51,16 +51,16 @@
                                     </thead>
                                     <tbody v-if="arrayCaja.length">
 
-                                    <tr v-for="compra in arrayCaja" :key="compra.id">
+                                    <tr v-for="caja in arrayCaja" :key="caja.id">
 
-                                        <td v-text="compra.fecha"></td>
-                                        <td v-text="'$ '+ compra.monto_inicio"></td>
-                                        <td>{{compra.monto_final != null ? '$'+ compra.monto_final.toFixed(2) : '$ 0.00'}}</td>
-                                        <td>{{compra.monto_final != null ? '$'+(compra.monto_final - compra.monto_inicio).toFixed(2) : '$ 0.00'}}</td>
-                                        <td v-text="compra.usuario"></td>
+                                        <td v-text="caja.fecha"></td>
+                                        <td v-text="'$ '+ caja.monto_inicio"></td>
+                                        <td>{{caja.monto_final != null ? '$'+ (caja.monto_final) : '$ 0.00'}}</td>
+                                        <td>{{caja.monto_final != null ? '$'+(caja.monto_final - caja.monto_inicio) : '$ 0.00'}}</td>
+                                        <td v-text="caja.usuario"></td>
                                         <td>
 
-                                            <button type="button" v-if="compra.estado=='Activo'" class="btn btn-danger btn-sm ">
+                                            <button type="button" v-if="caja.estado=='Activo'" class="btn btn-danger btn-sm ">
                                                 <i class="fa fa-times fa-2x"></i> Abierta
                                             </button>
 
@@ -71,8 +71,8 @@
                                         </td>
 
                                         <td>
-                                            <template v-if="compra.estado=='Activo'">
-                                                <button type="button" class="btn btn-danger btn-sm" @click="desactivarCompra(compra.id)">
+                                            <template v-if="caja.estado=='Activo'">
+                                                <button type="button" class="btn btn-danger btn-sm" @click="cerrarCaja(caja.id)">
                                                     <i class="fa fa-times fa-2x"></i> Cerrar Caja
                                                 </button>
                                             </template>
@@ -151,7 +151,7 @@
                            <div class="form-group row">
                                <label class="col-md-3 form-control-label" for="email-input">Monto Inicial ($)</label>
                                <div class="col-md-9">
-                                   <input type="number" min="1" max="100" v-model="montoInicial" class="form-control" placeholder="Ingrese monto del inicio de caja">
+                                   <input type="number" min="1"  v-model="montoInicial" class="form-control" placeholder="Ingrese monto del inicio de caja">
                                </div>
                            </div>
                        </form>
@@ -230,7 +230,8 @@ import Datepicker from 'vuejs-datepicker';
                 buscarP:'',
                 criterioQ:'nombre',
                 buscarQ:'',
-                valor: ''
+                valor: '',
+                cierreCaja:''
             }
 
         },
@@ -907,6 +908,50 @@ import Datepicker from 'vuejs-datepicker';
                return val;
 
 
+            },
+            cerrarCaja(id){
+                swal({
+                    title: 'Cierre de Caja',
+                    //type: 'warning',
+                    showCancelButton: true,
+                    input:'text',
+                    inputValue: this.cierreCaja,
+                    inputPlaceholder:'Ingrese el monto de cierre del dia',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '<i class="fa fa-check fa-2x"></i> Aceptar!',
+                    cancelButtonText: '<i class="fa fa-times fa-2x"></i> Cancelar',
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false,
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.value) {
+                        let me = this;
+                        const axios = require('axios');
+
+                        axios.post('/caja/cerrar',{
+                            'id': id,
+                            'montoCierre': result.value
+                        }).then(function (response) {
+                            swal(
+                                'Caja Cerrada!',
+                                'La caja ha sido cerrada con éxito.',
+                                'success'
+                            );
+                            me.listarCaja(1,'','nombre');
+                        }).catch(function (error) {
+                            console.log(error);
+                        });
+
+
+                    } else if (
+                        // Read more about handling dismissals
+                        result.dismiss === swal.DismissReason.cancel
+                    ) {
+
+                    }
+                })
             },
 
         },

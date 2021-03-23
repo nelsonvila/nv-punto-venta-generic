@@ -152,4 +152,20 @@ class CajaController extends Controller
             $detalle->save();
         }
     }
+    public function cerrarCaja(Request $request){
+        if (!$request->ajax()) return redirect('/');
+        try{
+            DB::beginTransaction();
+
+            $mytime= new \DateTime();
+            $caja = Caja::where('id',$request->id)->first();
+            $caja->monto_final = $request->montoCierre;
+            $caja->estado = 'Cerrada';
+            $caja->save();
+
+            DB::commit();
+        } catch (Exception $e){
+            DB::rollBack();
+        }
+    }
 }

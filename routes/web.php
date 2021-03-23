@@ -235,6 +235,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/caja', 'CajaController@index');
         Route::get('/caja/verificarCaja', 'CajaController@verificarCaja');
         Route::post('/caja/registrar', 'CajaController@store');
+        Route::post('/caja/cerrar', 'CajaController@cerrarCaja');
 
     });
 

@@ -167,7 +167,7 @@
                                     <label>Producto <h6><span class="badge badge-danger" v-show="idproducto==0">(*Ingrese código del producto1)</span>
                                     </h6></label>
                                     <div class="form-inline">
-                                        <input type="text" ref="inputCodigo" class="form-control" v-model="codigo" v-on:keyup="buscarProducto()"
+                                        <input type="text" ref="inputCodigo" class="form-control" v-model="codigo" @blur="buscarProducto()"
                                                @keyup.enter="buscarProducto()" autofocus placeholder="Ingrese código">
                                         <button @click="abrirModal()" class="btn btn-primary">
 

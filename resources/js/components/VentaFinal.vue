@@ -134,7 +134,7 @@
 
                     <div class="card-body">
 
-                        <div class="form-group row border">
+                        <div class="form-group row border" style="display: none">
 
                             <div class="col-md-8">
                                 <div class="form-group">x
@@ -167,8 +167,8 @@
                                     <label>Producto <h6><span class="badge badge-danger" v-show="idproducto==0">(*Ingrese código del producto1)</span>
                                     </h6></label>
                                     <div class="form-inline">
-                                        <input type="text" ref="inputCodigo" class="form-control" v-model="codigo" @blur="buscarProducto()"
-                                               @keyup.enter="buscarProducto()" autofocus placeholder="Ingrese código">
+                                        <input type="text" ref="inputCodigo" class="form-control" v-model="codigo" @blur="buscarProducto(codigo)"
+                                               @keyup.enter="buscarProducto(codigo)" autofocus placeholder="Ingrese código">
                                         <button @click="abrirModal()" class="btn btn-primary">
 
                                             <i class="fa fa-search"></i>&nbsp;Buscar Productos
@@ -191,8 +191,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <br/><br/>
 
                         <div class="form-group row border">
 
@@ -219,8 +217,7 @@
                                         </td>
                                         <td v-text="detalle.producto">
                                         </td>
-                                        <td>
-                                            <input v-model="detalle.precio" type="number" class="form-control">
+                                        <td v-text="detalle.precio" >
                                         </td>
                                         <td>
                                             <span style="color:red;"
@@ -929,7 +926,7 @@ export default {
         },
 
 
-        buscarProducto() {
+        buscarProducto(value) {
             let me = this;
 
             const axios = require('axios');
@@ -1008,9 +1005,9 @@ if(me.codigo.length > 3){
                         title: 'Error...',
                         text: 'Ese producto ya fue agregado',
                     });
-                    me.codigo = "";
+                    me.codigo = '';
                     me.idproducto = 0;
-                    me.producto = "";
+                    me.producto = '';
                     me.cantidad = 0;
                     me.precio = 0;
                     me.stock = 0;
@@ -1031,9 +1028,9 @@ if(me.codigo.length > 3){
                             precio: me.precio,
                             stock: me.stock
                         });
-                        me.codigo = "";
+                        me.codigo = '';
                         me.idproducto = 0;
-                        me.producto = "";
+                        me.producto = '';
                         me.cantidad = 0;
                         me.precio = 0;
                         me.stock = 0;
@@ -1064,6 +1061,8 @@ if(me.codigo.length > 3){
                     precio: data['precio_venta'],
                     stock: data['stock']
                 });
+                me.buscarP;
+                this.cerrarModal();
             }
 
         },
@@ -1200,6 +1199,11 @@ if(me.codigo.length > 3){
                 'data': this.arrayDetalle
 
             }).then(function (response) {
+                swal(
+                    'Venta registrada!',
+                    'La venta ha sido registrada con éxito.',
+                    'success'
+                );
                 /*no hace nada solo si es en efectivo*/
                 me.listado = 1;
                 me.listarVenta(1, '', 'num_venta');
@@ -1214,6 +1218,7 @@ if(me.codigo.length > 3){
                 me.stock = 0;
                 me.codigo = '';
                 me.arrayDetalle = [];
+                this.buscarNumVenta();
 
             }).catch(function (error) {
                 console.log(error);
@@ -1257,6 +1262,7 @@ if(me.codigo.length > 3){
             me.cantidad = 0;
             me.precio = 0;
             me.arrayDetalle = [];
+            me.buscarNumVenta();
 
         },
 
@@ -1346,6 +1352,7 @@ if(me.codigo.length > 3){
 
             this.arrayProducto = [];
             this.modal = 1;
+            this.buscarP = '';
             this.tituloModal = 'Seleccione uno o varios productos';
 
         },

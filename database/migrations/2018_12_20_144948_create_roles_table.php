@@ -26,13 +26,13 @@ class CreateRolesTable extends Migration
                 $table->boolean('condicion')->default(1);
                 //$table->timestamps();
             });
-    
+
             DB::table('roles')->insert(array('id'=>'1','nombre'=>'Administrador','descripcion'=>'Administrador'));
             DB::table('roles')->insert(array('id'=>'2','nombre'=>'Vendedor','descripcion'=>'Vendedor'));
             DB::table('roles')->insert(array('id'=>'3','nombre'=>'Comprador','descripcion'=>'Comprador'));
 
         }
-        
+
     }
 
     /**

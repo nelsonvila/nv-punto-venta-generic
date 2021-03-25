@@ -41,65 +41,67 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-bordered table-striped table-sm">
-                            <thead>
-                            <tr class="bg-primary">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-sm">
+                                <thead>
+                                <tr class="bg-primary">
 
-                                <th>Ver Detalle</th>
-                                <th>Fecha Venta</th>
-                                <th>Número Venta</th>
-                                <th>Vendedor</th>
-                                <th>Total ($)</th>
-                                <th>Estado</th>
-                                <th>Cambiar estado</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                                    <th>Ver Detalle</th>
+                                    <th>Fecha Venta</th>
+                                    <th>Número Venta</th>
+                                    <th>Vendedor</th>
+                                    <th>Total ($)</th>
+                                    <th>Estado</th>
+                                    <th>Cambiar estado</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                            <tr v-for="venta in arrayVenta" :key="venta.id">
+                                <tr v-for="venta in arrayVenta" :key="venta.id">
 
-                                <td>
-                                    <!--compra.id-->
-                                    <button type="button" @click="verVenta(venta.id)" class="btn btn-warning btn-sm">
-                                        <i class="fa fa-eye fa-2x"></i> Ver detalle
-                                    </button> &nbsp;
+                                    <td>
+                                        <!--compra.id-->
+                                        <button type="button" @click="verVenta(venta.id)" class="btn btn-warning btn-sm">
+                                            <i class="fa fa-eye fa-2x"></i> Ver detalle
+                                        </button> &nbsp;
 
-                                </td>
-                                <td v-text="venta.fecha_venta"></td>
-                                <td v-text="venta.num_venta"></td>
-                                <td v-text="venta.usuario"></td>
-                                <td v-text="venta.total"></td>
-                                <td>
+                                    </td>
+                                    <td v-text="venta.fecha_venta"></td>
+                                    <td v-text="venta.num_venta"></td>
+                                    <td v-text="venta.usuario"></td>
+                                    <td v-text="venta.total"></td>
+                                    <td>
 
-                                    <button type="button" v-if="venta.estado=='Registrado'"
-                                            class="btn btn-success btn-sm">
-                                        <i class="fa fa-check fa-2x"></i> Registrado
-                                    </button>
-
-                                    <button type="button" v-else class="btn btn-danger btn-sm">
-                                        <i class="fa fa-times fa-2x"></i> Anulado
-                                    </button>
-
-                                </td>
-
-                                <td>
-                                    <template v-if="venta.estado=='Registrado'">
-                                        <button type="button" class="btn btn-danger btn-sm"
-                                                @click="desactivarVenta(venta.id)">
-                                            <i class="fa fa-times fa-2x"></i> Anular Venta
+                                        <button type="button" v-if="venta.estado=='Registrado'"
+                                                class="btn btn-success btn-sm">
+                                            <i class="fa fa-check fa-2x"></i> Registrado
                                         </button>
-                                    </template>
 
-                                    <template v-else>
-                                        <button type="button" class="btn btn-danger btn-sm">
-                                            <i class="fa fa-check fa-2x"></i> Cambiado
+                                        <button type="button" v-else class="btn btn-danger btn-sm">
+                                            <i class="fa fa-times fa-2x"></i> Anulado
                                         </button>
-                                    </template>
-                                </td>
-                            </tr>
 
-                            </tbody>
-                        </table>
+                                    </td>
+
+                                    <td>
+                                        <template v-if="venta.estado=='Registrado'">
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                    @click="desactivarVenta(venta.id)">
+                                                <i class="fa fa-times fa-2x"></i> Anular Venta
+                                            </button>
+                                        </template>
+
+                                        <template v-else>
+                                            <button type="button" class="btn btn-danger btn-sm">
+                                                <i class="fa fa-check fa-2x"></i> Cambiado
+                                            </button>
+                                        </template>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
                         <nav>
                             <ul class="pagination">
                                 <li class="page-item" v-f="pagination.current_page > 1">

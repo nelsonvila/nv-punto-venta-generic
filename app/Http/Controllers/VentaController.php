@@ -26,7 +26,7 @@ class VentaController extends Controller
             $ventas = Venta::join('users','ventas.idusuario','=','users.id')
             ->select('ventas.id','ventas.num_venta','ventas.fecha_venta','ventas.total',
             'ventas.estado','users.usuario')
-            ->orderBy('ventas.id', 'desc')->paginate(3);
+            ->orderBy('ventas.id', 'desc')->paginate(10);
         }
         else{
             $ventas = Venta::join('users','ventas.idusuario','=','users.id')
@@ -185,7 +185,7 @@ class VentaController extends Controller
         $ventas->save();
     }
     public function obtenerUltimoNumeroVenta(Request $request){
-        $ultimoNumeroVenta = Venta::orderBy('num_venta', 'desc')->first() != null ? Venta::orderBy('num_venta', 'desc')->first()->num_venta + 1 : 1;
+        $ultimoNumeroVenta = Venta::orderBy('id', 'desc')->first() != null ? Venta::orderBy('id', 'desc')->first()->num_venta + 1 : 1;
         return ['numeroVenta'=> $ultimoNumeroVenta];
     }
     public function restarStock($detalles){

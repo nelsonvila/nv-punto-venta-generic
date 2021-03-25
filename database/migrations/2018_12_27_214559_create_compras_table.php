@@ -26,7 +26,7 @@ class CreateComprasTable extends Migration
                 $table->integer('idusuario')->unsigned();
                 $table->foreign('idusuario')->references('id')->on('users');
                 $table->string('tipo_identificacion', 20);
-                $table->string('num_compra', 10);
+                $table->string('num_compra', 50);
                 $table->dateTime('fecha_compra');
                 $table->decimal('total', 11, 2);
                 $table->string('estado', 20);

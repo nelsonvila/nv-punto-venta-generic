@@ -182,14 +182,18 @@
                                 <div class="form-group">
                                     <label>Producto <span class="text-error" v-show="idproducto==0">(*Ingrese código del producto)</span></label>
                                     <div class="form-inline">
-                                        <input type="text" class="form-control" v-model="codigo" @keyup.enter="buscarProducto()" placeholder="Ingrese código">
+                                        <input type="text" ref="inputCodigo" class="form-control" v-model="codigo" @blur="buscarProducto(codigo)"
+                                               @keyup.enter="buscarProducto(codigo)" autofocus placeholder="Ingrese código">
                                         <button @click="abrirModal()" class="btn btn-primary">
 
                                            <i class="fa fa-search"></i>&nbsp;Buscar Productos
 
                                         </button>
-                                        <input type="text" readonly class="form-control" v-model="producto">
                                     </div>
+                                    <div>
+                                        <input type="text" style="font-weight: bold;font-size: 16px" readonly class="form-control" v-model="producto">
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -996,8 +1000,21 @@
         mounted() {
             //console.log('Component mounted.')
             this.listarCompra(1,this.buscar,this.criterio);
-        }
-    }
+        },
+       abrirModalProducto(modelo,accion,data=[]) {
+
+
+           this.modal = 1;
+           this.tituloModal = 'Agregar Producto';
+           this.idcategoria = 0;
+           this.nombre_categoria = "";
+           this.codigo = "";
+           this.nombre = "";
+           this.precio_venta = 0;
+           this.stock = 0;
+           this.tipoAccion = 1;
+       }
+   }
 </script>
 
 <style>

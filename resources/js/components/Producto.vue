@@ -547,9 +547,6 @@
 
                  if(this.idcategoria==0) this.errorMostrarMsjProducto.push("(*)Selecciona una categoria");
                  if(!this.nombre) this.errorMostrarMsjProducto.push("(*)El nombre del producto no puede estar vacio");
-                 if(!this.precio_venta) this.errorMostrarMsjProducto.push("(*)El precio venta del producto debe ser un numero y no puede estar vacio");
-                 if(!this.stock) this.errorMostrarMsjProducto.push("(*)El stock del producto debe ser un numero y no puede estar vacio");
-
                  if(this.errorMostrarMsjProducto.length) this.errorProducto=1;
 
                  return this.errorProducto;

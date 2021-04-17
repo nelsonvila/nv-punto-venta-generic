@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="b150c922-7a6d-4eba-bb88-c5b51902e14e" name="Default Changelist" comment="" />
+    <list default="true" id="b150c922-7a6d-4eba-bb88-c5b51902e14e" name="Default Changelist" comment="Remove footer">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Producto.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Producto.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/VentaFinal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/VentaFinal.vue" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -131,25 +153,44 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Http/Controllers" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php.zend.framework.tool" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PhpStorm 2020.2.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\NelsonVila\Downloads\proyectolaravel-master\proyectolaravel-master\app\Http\Controllers" />
+      <recent name="C:\Users\NelsonVila\Downloads\proyectolaravel-master\proyectolaravel-master\resources\js\components" />
+    </key>
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="composer install" />
       <command value="npm install" />
-      <command value="npm run watch" />
-      <command value="artisan migrate" />
       <command value="artisan migrate:refresh --seed" />
       <command value="artisan db:seed --class=UserSeeder" />
       <command value="php artisan migrate:fresh --seed" />
-      <command value="artisan migrate:fresh --seed" />
-      <command value="composer dump-autoload" />
-      <command value="artisan config:cache" />
       <command value="artisan migrate:refresh" />
       <command value="artisan migrate --path=/database/migrations/2018_12_20_144948_create_roles_table.php" />
+      <command value="composer dump-autoload" />
+      <command value="artisan cache:clear" />
+      <command value="artisan clear-compiled" />
+      <command value="artisan config:cache" />
+      <command value="artisan migrate" />
+      <command value="artisan migrate:fresh" />
+      <command value="npm run watch" />
+      <command value="artisan make:model Caja --migration" />
+      <command value="artisan make:model Caja" />
+      <command value="npm install vuejs-datepicker --save" />
+      <command value="artisan migrate:fresh --seed" />
       <command value="artisan serve" />
     </option>
   </component>
@@ -185,85 +226,191 @@
       <workItem from="1613261315532" duration="3093000" />
       <workItem from="1613828319732" duration="6024000" />
       <workItem from="1614040447897" duration="639000" />
-      <workItem from="1614466056655" duration="4901000" />
+      <workItem from="1614466056655" duration="6959000" />
+      <workItem from="1614803993035" duration="1321000" />
+      <workItem from="1615040594721" duration="295000" />
+      <workItem from="1615040916311" duration="767000" />
+      <workItem from="1615041698043" duration="18276000" />
+      <workItem from="1615144683044" duration="12805000" />
+      <workItem from="1615165595478" duration="710000" />
+      <workItem from="1615381986117" duration="1957000" />
+      <workItem from="1615603265500" duration="31357000" />
+      <workItem from="1615732878343" duration="22472000" />
+      <workItem from="1615855591781" duration="649000" />
+      <workItem from="1615939419692" duration="9388000" />
+      <workItem from="1616073412655" duration="2630000" />
+      <workItem from="1616460862185" duration="6064000" />
+      <workItem from="1616626712908" duration="3628000" />
+      <workItem from="1616686480994" duration="3653000" />
+      <workItem from="1616710564438" duration="2396000" />
+      <workItem from="1618693414366" duration="1794000" />
     </task>
+    <task id="LOCAL-00001" summary="Initial commit">
+      <created>1614476207371</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1614476207371</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Remove footer">
+      <created>1614476585940</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1614476585940</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fix migrations">
+      <created>1615059772502</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1615059772502</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Base template">
+      <created>1615063863435</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1615063863435</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Remove image property from Categoria, Producto y User">
+      <created>1615065835879</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1615065835879</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Remove Reporte PDF">
+      <created>1615066031081</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1615066031081</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Remove image property from Compras">
+      <created>1615072825726</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1615072825726</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Refactor Venta">
+      <created>1615087676838</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1615087676838</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Sistema para drugtore">
+      <created>1615156787635</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1615156787635</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Modify UserSeeder">
+      <created>1615157493429</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1615157493429</updated>
+    </task>
+    <task id="LOCAL-00011" summary="The modules Ventas and Compras works">
+      <created>1615684695570</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1615684695570</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Add module Caja">
+      <created>1615765183726</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1615765183726</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Cierre de Caja and performace of search producto on sale">
+      <created>1616461420354</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1616461420354</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Fix ventas">
+      <created>1616467392118</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1616467392119</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Fix property num_vent">
+      <created>1616631551503</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1616631551503</updated>
+    </task>
+    <task id="LOCAL-00016" summary="The value changed num_compra">
+      <created>1616692244456</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1616692244456</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Se quito la validacion de precio y stock en producto. Se mejoro el modulo de compra">
+      <created>1618695033387</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1618695033387</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="356" y="0" key="CommitChangelistDialog2" timestamp="1614471326658">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state x="356" y="0" key="CommitChangelistDialog2/0.0.1463.783@0.0.1463.783" timestamp="1614471326658" />
-    <state x="457" y="269" key="ComposerCompositePathDialog" timestamp="1613261568710">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state x="457" y="269" key="ComposerCompositePathDialog/0.0.1463.783@0.0.1463.783" timestamp="1613261568710" />
-    <state x="509" y="274" width="445" height="264" key="ComposerInitDialogKey" timestamp="1613261355981">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state x="509" y="274" width="445" height="264" key="ComposerInitDialogKey/0.0.1463.783@0.0.1463.783" timestamp="1613261355981" />
-    <state x="512" y="134" key="FileChooserDialogImpl" timestamp="1613263801617">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state x="512" y="134" key="FileChooserDialogImpl/0.0.1463.783@0.0.1463.783" timestamp="1613263801617" />
-    <state x="495" y="261" key="FrameworkEditDialogDimensionKey" timestamp="1613261654876">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state x="495" y="261" key="FrameworkEditDialogDimensionKey/0.0.1463.783@0.0.1463.783" timestamp="1613261654876" />
-    <state x="577" y="290" key="Github.ShareDialog" timestamp="1614470763368">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state x="577" y="290" key="Github.ShareDialog/0.0.1463.783@0.0.1463.783" timestamp="1614470763368" />
-    <state x="376" y="97" key="Github.UntrackedFilesDialog" timestamp="1614470813707">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state x="376" y="97" key="Github.UntrackedFilesDialog/0.0.1463.783@0.0.1463.783" timestamp="1614470813707" />
-    <state width="1420" height="269" key="GridCell.Tab.0.bottom" timestamp="1614471276109">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state width="1420" height="299" key="GridCell.Tab.0.bottom/0.0.1463.783/2560.0.1920.1040@0.0.1463.783" timestamp="1613584241338" />
-    <state width="1420" height="269" key="GridCell.Tab.0.bottom/0.0.1463.783/351.-1080.1920.1040@0.0.1463.783" timestamp="1613998646084" />
-    <state width="1420" height="269" key="GridCell.Tab.0.bottom/0.0.1463.783@0.0.1463.783" timestamp="1614471276109" />
-    <state width="1420" height="269" key="GridCell.Tab.0.center" timestamp="1614471276109">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state width="1420" height="299" key="GridCell.Tab.0.center/0.0.1463.783/2560.0.1920.1040@0.0.1463.783" timestamp="1613584241338" />
-    <state width="1420" height="269" key="GridCell.Tab.0.center/0.0.1463.783/351.-1080.1920.1040@0.0.1463.783" timestamp="1613998646084" />
-    <state width="1420" height="269" key="GridCell.Tab.0.center/0.0.1463.783@0.0.1463.783" timestamp="1614471276109" />
-    <state width="1420" height="269" key="GridCell.Tab.0.left" timestamp="1614471276109">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state width="1420" height="299" key="GridCell.Tab.0.left/0.0.1463.783/2560.0.1920.1040@0.0.1463.783" timestamp="1613584241337" />
-    <state width="1420" height="269" key="GridCell.Tab.0.left/0.0.1463.783/351.-1080.1920.1040@0.0.1463.783" timestamp="1613998646084" />
-    <state width="1420" height="269" key="GridCell.Tab.0.left/0.0.1463.783@0.0.1463.783" timestamp="1614471276109" />
-    <state width="1420" height="269" key="GridCell.Tab.0.right" timestamp="1614471276109">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state width="1420" height="299" key="GridCell.Tab.0.right/0.0.1463.783/2560.0.1920.1040@0.0.1463.783" timestamp="1613584241338" />
-    <state width="1420" height="269" key="GridCell.Tab.0.right/0.0.1463.783/351.-1080.1920.1040@0.0.1463.783" timestamp="1613998646084" />
-    <state width="1420" height="269" key="GridCell.Tab.0.right/0.0.1463.783@0.0.1463.783" timestamp="1614471276109" />
-    <state x="241" y="37" key="SettingsEditor" timestamp="1613261684142">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state x="241" y="37" key="SettingsEditor/0.0.1463.783@0.0.1463.783" timestamp="1613261684142" />
-    <state x="501" y="252" key="SymfonyComponentCompositeDataDialog" timestamp="1613261679773">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state x="501" y="252" key="SymfonyComponentCompositeDataDialog/0.0.1463.783@0.0.1463.783" timestamp="1613261679773" />
-    <state x="449" y="126" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1614471324720">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state x="449" y="126" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.0.1463.783@0.0.1463.783" timestamp="1614471324720" />
-    <state x="534" y="298" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1614468948853">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state x="534" y="298" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1463.783@0.0.1463.783" timestamp="1614468948853" />
-    <state x="389" y="177" width="672" height="677" key="run.anything.popup" timestamp="1614468053209">
-      <screen x="0" y="0" width="1463" height="783" />
-    </state>
-    <state x="389" y="177" width="672" height="677" key="run.anything.popup/0.0.1463.783@0.0.1463.783" timestamp="1614468053209" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit" />
+    <MESSAGE value="Remove footer" />
+    <MESSAGE value="Fix migrations" />
+    <MESSAGE value="Base template" />
+    <MESSAGE value="Remove image property from Categoria, Producto y User" />
+    <MESSAGE value="Remove Reporte PDF" />
+    <MESSAGE value="Remove image property from Compras" />
+    <MESSAGE value="Refactor Venta" />
+    <MESSAGE value="Sistema para drugtore" />
+    <MESSAGE value="Modify UserSeeder" />
+    <MESSAGE value="The modules Ventas and Compras works" />
+    <MESSAGE value="Add module Caja" />
+    <MESSAGE value="Cierre de Caja and performace of search producto on sale" />
+    <MESSAGE value="Fix ventas" />
+    <MESSAGE value="Fix property num_vent" />
+    <MESSAGE value="The value changed num_compra" />
+    <MESSAGE value="Se quito la validacion de precio y stock en producto. Se mejoro el modulo de compra" />
+    <option name="LAST_COMMIT_MESSAGE" value="Se quito la validacion de precio y stock en producto. Se mejoro el modulo de compra" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/routes/web.php</url>
+          <line>178</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

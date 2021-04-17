@@ -21,6 +21,7 @@
                                 <div class="input-group">
                                     <select class="form-control col-md-3" v-model="criterio">
                                       <option value="nombre">Producto</option>
+                                      <option value="codigo">Codigo Producto</option>
 
                                     </select>
                                     <input type="text"  @keyup.enter="listarProducto(1,buscar,criterio);" v-model="buscar" class="form-control" placeholder="Buscar texto">

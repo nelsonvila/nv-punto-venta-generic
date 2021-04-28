@@ -21,14 +21,14 @@ class ProductoController extends Controller
 
             $productos= Producto::join('categorias','productos.idcategoria','=','categorias.id')
             ->select('productos.id','productos.idcategoria','productos.codigo','productos.nombre','categorias.nombre as nombre_categoria','productos.precio_venta','productos.stock','productos.condicion')
-            ->orderBy('productos.id', 'desc')->paginate(3);
+            ->orderBy('productos.id', 'desc')->paginate(8);
 
         } else{
 
             $productos = Producto::join('categorias','productos.idcategoria','=','categorias.id')
             ->select('productos.id','productos.idcategoria','productos.codigo','productos.nombre','categorias.nombre as nombre_categoria','productos.precio_venta','productos.stock','productos.condicion')
             ->where('productos.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('productos.id', 'desc')->paginate(3);
+            ->orderBy('productos.id', 'desc')->paginate(8);
         }
 
 

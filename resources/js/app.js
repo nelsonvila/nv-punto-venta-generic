@@ -29,6 +29,7 @@ Vue.component('rol', require('./components/Rol.vue'));
 Vue.component('user', require('./components/User.vue'));
 Vue.component('compra', require('./components/Compra.vue'));
 Vue.component('venta', require('./components/VentaFinal.vue'));
+Vue.component('ventasdia', require('./components/VentasDia.vue'));
 Vue.component('dashboard', require('./components/Dashboard.vue'));
 Vue.component('dashboarddetalle', require('./components/DashboardDetalle.vue'));
 Vue.component('banco', require('./components/Banco.vue'));

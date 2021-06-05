@@ -32,7 +32,7 @@ class VentaController extends Controller
             $ventas = Venta::join('users','ventas.idusuario','=','users.id')
             ->select('ventas.id','ventas.num_venta','venta.fecha_venta','ventas.total',
             'ventas.estado','users.usuario')
-            ->where('ventas.'.$criterio, 'like', '%'. $buscar . '%')->orderBy('ventas.id', 'desc')->paginate(3);
+            ->where('ventas.'.$criterio, 'like', '%'. $buscar . '%')->orderBy('ventas.id', 'desc')->paginate(10);
         }
 
         return [
@@ -196,6 +196,15 @@ class VentaController extends Controller
             $detalle->stock = $detalle->stock - $det['cantidad'];
             $detalle->save();
         }
+    }
+    public function montoTotalVenta(Request $request){
+
+        $fecha = $request->fecha;
+        $ventas=Venta::where('fecha_venta', 'like', '%'. $fecha . '%')
+            ->select(DB::raw('COUNT(ventas.id) as cantidad, SUM(ventas.total) as total'))
+            ->first();
+
+        return ['ventas'=>$ventas];
     }
 
 }

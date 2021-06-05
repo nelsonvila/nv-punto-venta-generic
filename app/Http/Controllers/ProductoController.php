@@ -139,7 +139,7 @@ class ProductoController extends Controller
         $filtro = $request->filtro;
         $productos = Producto::where('codigo','=', $filtro)
         ->select('id','nombre','stock','precio_venta')
-        ->where('stock','>','0')
+//        ->where('stock','>','0')
         ->orderBy('nombre', 'asc')
         ->take(1)->get();
 

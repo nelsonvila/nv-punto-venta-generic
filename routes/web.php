@@ -99,6 +99,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('/venta/desactivar', 'VentaController@desactivar');
         Route::get('/venta/pdf{id}', 'VentaController@pdf')->name('venta_pdf');
         Route::get('/venta/obtenerUltimoNumeroVenta','VentaController@obtenerUltimoNumeroVenta');
+        Route::get('/venta/montoTotalVenta','VentaController@montoTotalVenta');
 
         Route::get('/detalle', 'DashboardDetalleController');
 

@@ -4,11 +4,11 @@
         <ol class="breadcrumb mb-0">
 
 
-                    <div class="d-flex justify-content-between">
-                    <div><a href="/">Inicio</a></div>
-                        <div><h3 v-if="listado==0">Nueva Venta</h3></div>
-                        <div></div>
-                    </div>
+            <div class="d-flex justify-content-between">
+                <div><a href="/">Inicio</a></div>
+                <div><h3 v-if="listado==0">Nueva Venta</h3></div>
+                <div></div>
+            </div>
 
 
         </ol>
@@ -20,16 +20,36 @@
                     <div class="card-header">
 
                         <h2>Listado de Ventas</h2><br/>
+                        <div class="d-flex justify-content-between mt-1">
+                            <div>
+                                <button class="btn btn-primary btn-lg" type="button" @click="mostrarDetalle()">
+                                    <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Venta
+                                </button>
+                            </div>
+<!--                            <div>-->
+<!--                                <div class="form-check">-->
+<!--                                    <input class="form-check-input" type="radio" name="exampleRadios"-->
+<!--                                           id="exampleRadios1" value="Today" :checked="radio === 'Today'"-->
+<!--                                           @change="radio = $event.target.value">-->
+<!--                                    <label class="form-check-label" for="exampleRadios1">-->
+<!--                                        Hoy-->
+<!--                                    </label>-->
+<!--                                </div>-->
+<!--                                <div class="form-check">-->
+<!--                                    <input class="form-check-input" type="radio" name="exampleRadios"-->
+<!--                                           id="exampleRadios2" value="All" :checked="radio === 'All'"-->
+<!--                                           @change="radio = $event.target.value">-->
+<!--                                    <label class="form-check-label" for="exampleRadios2">-->
+<!--                                        Todas-->
+<!--                                    </label>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                            <VentasDia :today="{today}"></VentasDia>
+                            <!--                        <button class="btn btn-primary btn-lg" type="button" @click="mostrarPagos()">-->
+                            <!--                            <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Pagos-->
+                            <!--                        </button>-->
 
-                        <button class="btn btn-primary btn-lg" type="button" @click="mostrarDetalle()">
-                            <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Venta
-                        </button>
-
-<!--                        <button class="btn btn-primary btn-lg" type="button" @click="mostrarPagos()">-->
-<!--                            <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Pagos-->
-<!--                        </button>-->
-
-
+                        </div>
                     </div>
                     <!--listado-->
 
@@ -69,7 +89,8 @@
 
                                     <td>
                                         <!--compra.id-->
-                                        <button type="button" @click="verVenta(venta.id)" class="btn btn-warning btn-sm">
+                                        <button type="button" @click="verVenta(venta.id)"
+                                                class="btn btn-warning btn-sm">
                                             <i class="fa fa-eye fa-2x"></i> Ver detalle
                                         </button> &nbsp;
 
@@ -170,7 +191,8 @@
                             <div class="col-md-10 mt-1">
                                 <div class="form-group">
                                     <div class="form-inline">
-                                        <input type="text" ref="inputCodigo" class="form-control" v-model="codigo" @blur="buscarProducto(codigo)"
+                                        <input type="text" ref="inputCodigo" class="form-control" v-model="codigo"
+                                               @blur="buscarProducto(codigo)"
                                                @keyup.enter="buscarProducto(codigo)" placeholder="Ingrese código">
                                         <button @click="abrirModal" class="btn btn-primary">
 
@@ -179,7 +201,9 @@
                                         </button>
                                     </div>
                                     <div>
-                                        <input type="text" style="font-weight: bold;font-size: 16px" readonly :class="(stock !== 0) ? 'form-control' : 'form-control text-danger'" v-model="producto">
+                                        <input type="text" style="font-weight: bold;font-size: 16px" readonly
+                                               :class="(stock !== 0) ? 'form-control' : 'form-control text-danger'"
+                                               v-model="producto">
                                     </div>
 
 
@@ -220,20 +244,24 @@
                                         </td>
                                         <td v-text="detalle.producto">
                                         </td>
-                                        <td v-text="detalle.precio" >
+                                        <td v-text="detalle.precio">
                                         </td>
                                         <td>
                                             <span style="color:red;"
-                                                  v-show="detalle.cantidad>detalle.stock">Stock: {{ detalle.stock }}</span>
+                                                  v-show="detalle.cantidad>detalle.stock">Stock: {{
+                                                    detalle.stock
+                                                }}</span>
                                             <input v-model="detalle.cantidad" type="number" class="form-control">
                                         </td>
                                         <td>
                                             {{ (detalle.precio * detalle.cantidad).toFixed(2) }}
                                         </td>
                                     </tr>
-                                    <tr style="background-color: grey;">
-                                        <td colspan="4" align="right"><h3><strong class="text-light">Total:</strong></h3></td>
-                                        <td><h3><strong class="text-light">$ {{ total = calcularTotal }}</strong></h3></td>
+                                    <tr style="background-color: #b03626;">
+                                        <td colspan="4" align="right"><h3><strong class="text-light">Total:</strong>
+                                        </h3></td>
+                                        <td><h3><strong class="text-light">$ {{ total = calcularTotal }}</strong></h3>
+                                        </td>
                                     </tr>
                                     </tbody>
                                     <tbody v-else>
@@ -471,7 +499,8 @@
                                         <option value="nombre">Producto</option>
                                         <option value="codigo">Código</option>
                                     </select>
-                                    <input type="text" ref="focusInputBusqueda" @keyup.enter="listarProducto(buscarP,criterioP);"
+                                    <input type="text" ref="focusInputBusqueda"
+                                           @keyup.enter="listarProducto(buscarP,criterioP);"
                                            v-model="buscarP" class="form-control" placeholder="Buscar texto">
                                     <button type="submit" @click="listarProducto(buscarP,criterioP);"
                                             class="btn btn-primary"><i class="fa fa-search"></i> Buscar
@@ -559,31 +588,39 @@
 
                     <div class="modal-body">
 
-                            <div class="d-flex justify-content-around">
-                                <div class="form-inline">
-                                    <label >Total:</label>
-                                    <h2 class="mb-2 ml-sm-2">${{totalVenta}}</h2>
-                                    <!--                                <input type="text" class="form-control mb-2 ml-sm-2" id="recipient-name">-->
+                        <div class="d-flex justify-content-around">
+                            <div class="form-inline">
+                                <label>Total:</label>
+                                <h2 class="mb-2 ml-sm-2">${{ totalVenta }}</h2>
+                                <!--                                <input type="text" class="form-control mb-2 ml-sm-2" id="recipient-name">-->
+                            </div>
+                            <div class="form-inline">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" v-model="dinero" ref="btnregistrar" placeholder="Ingrese el dinero entregado" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-primary" type="button" id="button-addon2"  @click="calcularDineroVuelto()">Calcular</button>
+                                    </div>
                                 </div>
-                                <div class="form-inline">
-                                    <label for="message-text" >Dinero:</label>
-                                    <input type="text" v-model="dinero" ref="btnregistrar" class="form-control mb-2 ml-sm-2" @keyup.enter="calcularDineroVuelto" id="message-text">
-                                </div>
+                            </div>
+
                         </div>
 
-                            <div class="form-inline d-flex justify-content-center">
-                                <label >Vuelto:</label>
-                                <h2 :class="(resultadVuelto >= 0) ? 'mb-2 ml-sm-2 text-success' : 'mb-2 ml-sm-2 text-danger'">${{resultadVuelto}}</h2>
-                                <!--                                <input type="text" class="form-control mb-2 ml-sm-2" id="recipient-name">-->
+                        <div class="form-inline d-flex justify-content-center">
+                            <label>Vuelto:</label>
+                            <h2 :class="(resultadVuelto >= 0) ? 'mb-2 ml-sm-2 text-success' : 'mb-2 ml-sm-2 text-danger'">
+                                ${{ resultadVuelto }}</h2>
+                            <!--                                <input type="text" class="form-control mb-2 ml-sm-2" id="recipient-name">-->
 
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" ref="confirmRegistry"  @click="confirmarRegistro()" @keyup.enter="confirmarRegistro()">Registrar</button>
-                        <button type="button" class="btn btn-secondary"  @click="cerrarModalVuelto()">Cancelar</button>
+                        <button type="button" class="btn btn-primary" ref="confirmRegistry" @click="confirmarRegistro()"
+                                @keyup.enter="confirmarRegistro">Registrar
+                        </button>
+                        <button type="button" class="btn btn-secondary" @click="cerrarModalVuelto()">Cancelar</button>
                     </div>
-                                  </div>
+                </div>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
@@ -598,6 +635,7 @@
 <script>
 
 import vSelect from 'vue-select';
+import VentasDia from "./VentasDia";
 
 export default {
     created() {
@@ -625,7 +663,7 @@ export default {
             idtarjeta: 0,
             idtarjeta1: 0,
             usuario: '',
-            fecha_venta:'',
+            fecha_venta: '',
             tipo_identificacion: 'FACTURA',
             num_venta: '',
             total: 0.0,
@@ -669,11 +707,10 @@ export default {
                 'to': 0,
 
             },
-
+            criterio: 'fecha_venta',
+            buscar: '',
             offset: 3,
             offset2: 3,
-            criterio: 'num_venta',
-            buscar: '',
             criterioP: 'nombre',
             buscarP: '',
             criterioQ: 'nombre_cliente',
@@ -691,13 +728,17 @@ export default {
             precio: 0,
             cantidad: 1,
             stock: 0,
-            resultadVuelto: 0
+            resultadVuelto: 0,
+            today: '',
+            radio: 'Today',
+            statSend: false
         }
 
     },
 
     components: {
-        vSelect
+        vSelect,
+        VentasDia
     },
 
     computed: {
@@ -782,8 +823,8 @@ export default {
 
     },
     watch: {
-        producto: function(newValue) {
-            if(newValue != null){
+        producto: function (newValue) {
+            if (newValue != null) {
 
             }
         },
@@ -794,10 +835,8 @@ export default {
 
             let me = this;
 
-            const axios = require('axios');
-
             var url = '/venta?page=' + page + '&buscar=' + buscar + '&criterio=' + criterio;
-
+            console.log('Url venta:',url);
             axios.get(url).then(function (response) {
                 // handle success
                 //console.log(response);
@@ -893,20 +932,19 @@ export default {
                 axios.get(url).then(function (response) {
                     var respuesta = response.data;
                     me.arrayProducto = respuesta.productos;
-                    if (me.arrayProducto.length > 0){
+                    if (me.arrayProducto.length > 0) {
                         if (me.arrayProducto[0].stock > 0) {
                             me.producto = me.arrayProducto[0]['nombre'] + ' - ' + 'Stock: ' + me.arrayProducto[0]['stock'] + ' - ' + 'Precio: $' + me.arrayProducto[0]['precio_venta'];
                             me.idproducto = me.arrayProducto[0]['id'];
                             me.precio = me.arrayProducto[0]['precio_venta'];
                             me.stock = me.arrayProducto[0]['stock'];
                         } else {
-                            me.producto = 'NO HAY STOCK - '+ me.arrayProducto[0]['nombre'] + ' - ' + 'Stock: ' + me.arrayProducto[0]['stock'] + ' - ' + 'Precio: $' + me.arrayProducto[0]['precio_venta'];
+                            me.producto = 'NO HAY STOCK - ' + me.arrayProducto[0]['nombre'] + ' - ' + 'Stock: ' + me.arrayProducto[0]['stock'] + ' - ' + 'Precio: $' + me.arrayProducto[0]['precio_venta'];
                             me.idproducto = me.arrayProducto[0]['id'];
                             me.precio = me.arrayProducto[0]['precio_venta'];
                             me.stock = me.arrayProducto[0]['stock'];
                         }
-                    }
-                    else {
+                    } else {
                         me.producto = 'NO EXISTE EL PRODUCTO';
                         me.idproducto = 0;
                     }
@@ -1166,43 +1204,56 @@ export default {
 
 
         },
-confirmarRegistro(){
-    let me = this;
-    const axios = require('axios');
+        confirmarRegistro() {
+            let me = this;
+            const axios = require('axios');
+            let flagCheck = this.checkSubmit();
 
-    axios.post('/venta/registrar', {
-        'num_venta': this.num_venta,
-        'total': this.total,
-        'data': this.arrayDetalle
+            if(flagCheck){
+                axios.post('/venta/registrar', {
+                    'num_venta': this.num_venta,
+                    'total': this.total,
+                    'data': this.arrayDetalle
 
-    }).then(function (response) {
-        swal(
-            'Venta registrada!',
-            'La venta ha sido registrada con éxito.',
-            'success'
-        );
-        /*no hace nada solo si es en efectivo*/
-        me.listado = 1;
-        me.listarVenta(1, '', 'num_venta');
-        me.tipo_identificacion = 'FACTURA';
-        me.idcliente = 0;
-        me.num_venta = '';
-        me.total = 0.0;
-        me.idproducto = 0;
-        me.producto = '';
-        me.cantidad = 0;
-        me.precio = 0;
-        me.stock = 0;
-        me.codigo = '';
-        me.arrayDetalle = [];
-        me.cerrarModal1();
-        this.buscarNumVenta();
+                }).then(function (response) {
+                    swal(
+                        'Venta registrada!',
+                        'La venta ha sido registrada con éxito.',
+                        'success'
+                    );
+                    /*no hace nada solo si es en efectivo*/
+                    me.listado = 1;
+                    me.listarVenta(1, me.today, me.criterio);
+                    me.tipo_identificacion = 'FACTURA';
+                    me.idcliente = 0;
+                    me.num_venta = '';
+                    me.total = 0.0;
+                    me.idproducto = 0;
+                    me.producto = '';
+                    me.cantidad = 0;
+                    me.precio = 0;
+                    me.stock = 0;
+                    me.codigo = '';
+                    me.arrayDetalle = [];
+                    me.cerrarModal1();
+                    this.buscarNumVenta();
 
-    }).catch(function (error) {
-        console.log(error);
-    });
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
 
-},
+
+        },
+        checkSubmit() {
+            if (!this.statSend) {
+                this.statSend = true;
+                return true;
+            } else {
+                alert("El formulario ya se esta enviando...");
+                return false;
+            }
+        },
         validarVenta() {
 
             let me = this;
@@ -1263,10 +1314,10 @@ confirmarRegistro(){
             this.listado = 1;
 
         },
-        calcularDineroVuelto(){
+        calcularDineroVuelto() {
             let resultado = this.dinero - this.total
             this.resultadVuelto = resultado.toFixed(2);
-            resultado >=0 ? this.$refs.confirmRegistry.focus() : this.$refs.btnregistrar.focus();
+            resultado >= 0 ? this.$refs.confirmRegistry.focus() : this.$refs.btnregistrar.focus();
         },
 
         verVenta(id) {
@@ -1319,7 +1370,7 @@ confirmarRegistro(){
             this.titulo_modal1 = '';
             this.resultadVuelto = 0;
             this.resultadVuelto = 0;
-            this.dinero= '';
+            this.dinero = '';
             this.focusInput();
 
         },
@@ -1329,7 +1380,7 @@ confirmarRegistro(){
             this.titulo_modal1 = '';
             this.resultadVuelto = 0;
             this.resultadVuelto = 0;
-            this.dinero= '';
+            this.dinero = '';
 
         },
 
@@ -1422,13 +1473,21 @@ confirmarRegistro(){
                 this.$refs.btnregistrar.focus();
             });
         },
-
+        dateCurrent() {
+            let today = new Date();
+            let options = {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit"
+            };
+            this.today = today.toLocaleDateString("fr-CA", options).replace(/\//g, "-");
+        },
     },
 
     mounted() {
-
+        this.dateCurrent();
         this.buscarNumVenta();
-        this.listarVenta(1, this.buscar, this.criterio);
+        this.listarVenta(1, this.today, this.criterio);
     }
 }
 </script>

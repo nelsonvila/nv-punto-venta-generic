@@ -17,7 +17,7 @@
                                     <h2 class="ml-1">Listado de Cierres de Cajas</h2><br/>
                                 </div>
                                 <div>
-                                    <h4>Fecha: {{today}}</h4>
+                                    <h4>Fecha: {{ today }}</h4>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between mt-1">
@@ -26,12 +26,13 @@
                                         <i class="fa fa-plus fa-2x"></i>&nbsp;&nbsp;Nueva Caja
                                     </button>
                                 </div>
-                                <div>
-                                    <h4>Cant Ventas del dia: {{cantidadVentas}}</h4>
-                                </div>
-                                <div>
-                                    <h4>Monto del dia: $ {{montoVentas}}</h4>
-                                </div>
+                                <VentasDia :today="{ today }"></VentasDia>
+                                <!--                                <div>-->
+                                <!--                                    <h4>Cant Ventas del dia: {{cantidadVentas}}</h4>-->
+                                <!--                                </div>-->
+                                <!--                                <div>-->
+                                <!--                                    <h4>Monto del dia: $ {{montoVentas}}</h4>-->
+                                <!--                                </div>-->
                             </div>
 
                         </div>
@@ -78,8 +79,8 @@
                                     <td>{{ caja.monto_final != null ? '$' + (caja.monto_final) : '$ 0.00' }}</td>
                                     <td>
                                         {{
-                                            (caja.monto_final != null) ? '$' + (caja.monto_final - caja.monto_inicio) : '$'+
-                                        '0.00'
+                                            (caja.monto_final != null) ? '$' + (caja.monto_final - caja.monto_inicio) : '$' +
+                                                '0.00'
                                         }}
                                     </td>
                                     <td v-text="caja.usuario"></td>
@@ -214,10 +215,12 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
 import Datepicker from 'vuejs-datepicker';
+import VentasDia from "./VentasDia";
 
 export default {
     components: {
         Datepicker,
+        VentasDia
 
     },
     data() {
@@ -275,8 +278,8 @@ export default {
             valor: '',
             cierreCaja: '',
             today: '',
-            cantidadVentas: 0,
-            montoVentas: 0
+            // cantidadVentas: 0,
+            // montoVentas: 0
         }
 
     },
@@ -979,21 +982,21 @@ export default {
                 }
             })
         },
-        obtenerDetallesVentas() {
-            let me = this;
-
-            const axios = require('axios');
-            let url = '/venta/montoTotalVenta/' + '?fecha=' + this.today
-            axios.get(url).then(function (response) {
-                me.cantidadVentas = response.data.ventas.cantidad;
-                me.montoVentas = response.data.ventas.total;
-                console.log(response.data.ventas);
-
-            }).catch(function (error) {
-                // handle error
-                console.log(error);
-            });
-        }
+        // obtenerDetallesVentas() {
+        //     let me = this;
+        //
+        //     const axios = require('axios');
+        //     let url = '/venta/montoTotalVenta/' + '?fecha=' + this.today
+        //     axios.get(url).then(function (response) {
+        //         me.cantidadVentas = response.data.ventas.cantidad;
+        //         me.montoVentas = response.data.ventas.total;
+        //         console.log(response.data.ventas);
+        //
+        //     }).catch(function (error) {
+        //         // handle error
+        //         console.log(error);
+        //     });
+        // }
     },
 
     mounted() {

@@ -18,4 +18,8 @@ class Venta extends Model
         'total',
         'estado'
     ];
+
+//    public function choferes(){
+//        return $this->belon
+//    }
 }

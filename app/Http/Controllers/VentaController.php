@@ -30,7 +30,7 @@ class VentaController extends Controller
         }
         else{
             $ventas = Venta::join('users','ventas.idusuario','=','users.id')
-            ->select('ventas.id','ventas.num_venta','venta.fecha_venta','ventas.total',
+            ->select('ventas.id','ventas.num_venta','ventas.fecha_venta','ventas.total',
             'ventas.estado','users.usuario')
             ->where('ventas.'.$criterio, 'like', '%'. $buscar . '%')->orderBy('ventas.id', 'desc')->paginate(10);
         }
